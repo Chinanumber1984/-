@@ -7,6 +7,8 @@ if [[ -r /etc/ssl/certs/java/cacerts ]]; then
   export MAVEN_OPTS="${MAVEN_OPTS:-} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts"
 fi
 mkdir -p .runtime
+srm_settings="${SRM_MAVEN_SETTINGS:-.runtime/maven-settings.xml}"
+if [[ -z "${SRM_MAVEN_SETTINGS:-}" ]]; then
 python3 - <<'PY'
 import os, pathlib, urllib.parse
 from xml.sax.saxutils import escape
@@ -17,6 +19,8 @@ if u.hostname:
 s+='</settings>'
 pathlib.Path('.runtime/maven-settings.xml').write_text(s)
 PY
+fi
+[[ -r "$srm_settings" ]] || { echo "Maven settings file is missing" >&2; exit 1; }
 if command -v mvn >/dev/null; then
   mvn_cmd="$(command -v mvn)"
 elif [[ -x /workspace/.tools/apache-maven-3.9.11/bin/mvn ]]; then
@@ -25,4 +29,4 @@ else
   echo 'Maven 3.9+ required; run scripts/install.sh.' >&2
   exit 1
 fi
-exec "$mvn_cmd" -B -ntp -Daether.connector.connectTimeout=10000 -Daether.connector.requestTimeout=20000 -s .runtime/maven-settings.xml -Dmaven.repo.local="${SRM_TOOL_ROOT:-/workspace/.tools}/m2" "$@"
+exec "$mvn_cmd" -B -ntp -Daether.connector.connectTimeout=10000 -Daether.connector.requestTimeout=20000 -s "$srm_settings" -Dmaven.repo.local="${SRM_TOOL_ROOT:-/workspace/.tools}/m2" "$@"

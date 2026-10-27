@@ -1,0 +1,10 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "actual_twelve_month_history_complete_and_exact_mean",
+    "parallel_period_calculation_serializes_per_supplier",
+    "two_suppliers_with_real_scores_remain_isolated_in_portal",
+    "xlsx_export_with_populated_suppliers_preserves_supplier_isolation"
+  ]
+}

@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: SRM W10–11 performance
+  version: 1.0.0
+  description: Same endpoints under /client/c/srm/v1/performance for supplier sessions. Organization and supplier identity are always server-derived; CommonResult.code carries 200/400/401/403/404/409.
+servers:
+  - url: http://localhost:18080/api/srm/v1/performance
+    description: Local review gateway, internal session
+  - url: http://localhost:18080/api/client/c/srm/v1/performance
+    description: Local review gateway, bound supplier session
+  - url: http://localhost:8080/srm/v1/performance
+    description: Direct development backend
+security:
+  - token: []
+paths:
+  /templates:
+    get:
+      summary: List immutable global template revisions
+      responses: {'200': {description: All-company weights and grade thresholds}}
+    post:
+      summary: SQE or CAT-MGR publishes global template with optimistic version
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [expectedVersion, effectivePeriod, weights, thresholds]
+              properties:
+                expectedVersion: {type: integer, minimum: 1}
+                effectivePeriod: {$ref: '#/components/schemas/Period'}
+                weights: {$ref: '#/components/schemas/Scores'}
+                thresholds: {$ref: '#/components/schemas/Scores'}
+      responses: {'200': {description: New global version}, '409': {description: Stale version or effective month conflict}}
+  /imports:
+    post:
+      summary: Atomic source import, max 500 rows, keyed idempotency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [requestKey, rows]
+              properties:
+                requestKey: {type: string, minLength: 8, maxLength: 64}
+                rows:
+                  type: array
+                  minItems: 1
+                  maxItems: 500
+                  items: {$ref: '#/components/schemas/Input'}
+      responses: {'200': {description: Batch id and replay status}, '409': {description: Same key different content or pending appeal}}
+  /calculate:
+    post:
+      summary: Idempotently compute from latest immutable input and effective template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [supplierId, period]
+              properties:
+                supplierId: {type: string}
+                period: {$ref: '#/components/schemas/Period'}
+      responses: {'200': {description: Score detail and snapshots}, '409': {description: Missing sources or pending appeal}}
+  /scores:
+    get:
+      summary: Scope-filtered scorecards
+      parameters:
+        - {name: current, in: query, schema: {type: integer, minimum: 1, default: 1}}
+        - {name: size, in: query, schema: {type: integer, minimum: 1, maximum: 100, default: 20}}
+        - {name: period, in: query, schema: {type: string}}
+        - {name: category, in: query, schema: {type: string}}
+        - {name: grade, in: query, schema: {type: string}}
+      responses: {'200': {description: Page of scorecards in permitted org/SELF/supplier scope}}
+  /scores/{id}:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get:
+      summary: Score details with input, formula, template versions and appeals
+      responses: {'200': {description: Score and immutable snapshots}, '404': {description: Missing or inaccessible}}
+  /scores/{id}/appeals:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post:
+      summary: Bound supplier contact submits appeal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [scoreVersion, reason]
+              properties:
+                scoreVersion: {type: integer, minimum: 1}
+                reason: {type: string, minLength: 1, maxLength: 1000}
+      responses: {'200': {description: Pending appeal}, '409': {description: Stale version or existing pending appeal}}
+  /appeals/{id}/review:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    post:
+      summary: SQE reviews appeal in a single transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [scoreVersion, approve, comment]
+              properties:
+                scoreVersion: {type: integer, minimum: 1}
+                approve: {type: boolean}
+                comment: {type: string, minLength: 1, maxLength: 1000}
+                correctedScores: {$ref: '#/components/schemas/Scores'}
+      responses: {'200': {description: Corrected score and retained prior versions}, '409': {description: Already reviewed or stale version}}
+  /suppliers/{id}/summary:
+    parameters: [{name: id, in: path, required: true, schema: {type: string}}]
+    get:
+      summary: Actual-history averages, missing-month policy and trend
+      parameters:
+        - {name: endPeriod, in: query, schema: {type: string}, description: Defaults to previous Shanghai month}
+        - {name: months, in: query, schema: {type: integer, minimum: 1, maximum: 36, default: 12}}
+      responses: {'200': {description: Null scores and requiresApprovedException=true with no history; actual month count otherwise}}
+  /export:
+    get:
+      summary: XLSX export with identical scope and period/category/grade filters (max 10000)
+      parameters:
+        - {name: period, in: query, schema: {type: string}}
+        - {name: category, in: query, schema: {type: string}}
+        - {name: grade, in: query, schema: {type: string}}
+      responses: {'200': {description: Scope-filtered XLSX file}}
+components:
+  securitySchemes:
+    token: {type: apiKey, in: header, name: token}
+  schemas:
+    Period: {type: string, pattern: '^[0-9]{4}-(0[1-9]|1[0-2])$'}
+    Scores:
+      type: array
+      minItems: 4
+      maxItems: 4
+      description: Delivery, quality, cost and service; template threshold arrays use strategic/preferred/qualified/watch order
+      items: {type: number, minimum: 0, maximum: 100, multipleOf: 0.01}
+    Input:
+      type: object
+      required: [supplierId, period, sourceType, sourceRef, scores]
+      properties:
+        supplierId: {type: string, pattern: '^[0-9]{1,20}$'}
+        period: {$ref: '#/components/schemas/Period'}
+        sourceType: {type: string, enum: [HISTORICAL, SANDBOX]}
+        sourceRef: {type: string, minLength: 1, maxLength: 256}
+        scores: {$ref: '#/components/schemas/Scores'}

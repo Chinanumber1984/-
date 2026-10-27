@@ -2,7 +2,7 @@
 
 编制日期：2026-10-26。依据当前仓库、架构方案 v1.1、FRD v1.0、PRD 定稿。本文为研发排期基线，未将方案建议自动视为用户批准，也不表示所列功能已经实现。
 
-当前进展以 [W3–6交付](workspace/README.md)、[W7–9首版交付](lifecycle/README.md) 和 backlog.csv 为准；下文起点描述保留制定排期时的状态。
+当前进展以 [W3–6交付](workspace/README.md)、[W7–9首版交付](lifecycle/README.md)、[W10–11绩效前置](performance/README.md) 和 backlog.csv 为准；下文起点描述保留制定排期时的状态。
 
 ## 1. 当前起点与交付目标
 

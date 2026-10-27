@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "null_import_row_is_validation_error",
+    "missing_review_decision_cannot_silently_reject",
+    "pending_lifecycle_locks_tier_then_same_input_recompute_applies_deferred_tier",
+    "concurrent_global_template_publish_has_one_winner",
+    "captcha_uses_distinct_uuid_request_nonces",
+    "uuid_captcha_registration_retains_trusted_invitation_org"
+  ]
+}

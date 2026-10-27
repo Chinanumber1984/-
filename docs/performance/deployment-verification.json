@@ -1,0 +1,45 @@
+{
+  "result": "passed",
+  "stage": "W10–11 performance foundation, local review delivery",
+  "entry": "http://localhost:18080/",
+  "baselineCommit": "780bb3e9d20b24647cd4120e9a0a8679ab1a0b7d",
+  "sourceStateAtVerification": "local working-tree changes; no commit or push performed",
+  "javaTests": 26,
+  "apiChecks": 28,
+  "browserChecks": 12,
+  "windows": {
+    "checkedAt": "2026-10-27T22:30:21.9475903+08:00",
+    "browser": "Windows Microsoft Edge headless",
+    "result": "passed",
+    "loginFormRendered": true,
+    "httpStatus": 200,
+    "entry": "http://localhost:18080/"
+  },
+  "preservation": {
+    "result": "passed",
+    "originalSupplierRowsPreserved": 1,
+    "originalAttachmentsPreserved": 2,
+    "originalAccountsAndKeysUnchanged": true
+  },
+  "originalAccountLogin": "passed",
+  "backendSHA256": "3fe7bb91d18d15eee64cf58cb06c4398a5b2e9fd0c2a3257bec743dfda437dda",
+  "frontendSHA256": {
+    "workspace.html": "b67bf0dd490e4fd6ed6ae391595b3d925bbdd029e85b973471801d6bb0bd8498",
+    "assets/workspace-D4Fm-GPt.js": "8f2c59aaeded852bc02096ffa5a60a8c67bb82c048d71ec06984b3ef7fb849de",
+    "assets/workspace-Dfzgi1_5.css": "4ecf29e8935c3209664304cdc1907830872f419d334511998b5fff60a8badafb"
+  },
+  "migrationV6": "checksum verified; repeated additive upgrade retained data",
+  "sources": "explicit HISTORICAL/SANDBOX and traceable appeal corrections; no live ERP/MES/QMS integration claimed",
+  "partialRequirements": [
+    "FR-PER-102",
+    "FR-PER-104"
+  ],
+  "businessIds": "unchanged; only temporary picture-captcha nonces switched to UUID",
+  "reports": {
+    "api": 18,
+    "boundaries": 6,
+    "history": 4,
+    "browser": 8,
+    "csvBrowser": 4
+  }
+}

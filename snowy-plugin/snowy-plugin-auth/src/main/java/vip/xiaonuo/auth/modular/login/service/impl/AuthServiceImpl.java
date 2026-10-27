@@ -192,7 +192,8 @@ public class AuthServiceImpl implements AuthService {
         // 获取验证码的base64
         String validCodeBase64 = circleCaptcha.getImageBase64Data();
         // 生成请求号
-        String validCodeReqNo = IdWorker.getIdStr();
+        // Challenge nonces do not require sortable business IDs and must survive WSL clock rollback.
+        String validCodeReqNo = java.util.UUID.randomUUID().toString().replace("-", "");
         // 将base64返回前端
         authPicValidCodeResult.setValidCodeBase64(validCodeBase64);
         // 将请求号返回前端

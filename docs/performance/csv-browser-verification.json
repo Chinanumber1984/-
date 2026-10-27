@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "actual_csv_file_upload_with_bom_and_quoted_source_ref",
+    "bulk_import_calculates_and_preserves_quoted_trace_source",
+    "period_filtered_xlsx_download_from_browser",
+    "selectable_trend_window_and_actual_missing_months"
+  ],
+  "runtimeErrors": []
+}

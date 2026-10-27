@@ -2,7 +2,7 @@
 
 基于真实Snowy v3.7.0源码，Java17 / Vue3 / AntDV4 / Vite5 / MySQL8 / Redis7 / Flowable7。来源与版权见 [PROVENANCE](docs/upstream/PROVENANCE.md)。
 
-当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；完整SRM尚未全部交付。
+当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)、[W10–11绩效前置](docs/performance/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；完整SRM尚未全部交付。
 
 ## 本地启动
 
@@ -49,7 +49,7 @@ python scripts/test-lifecycle-browser.py
 
 真实准入、补正重提、驳回、关键资料变更、冻结/解冻/淘汰、领取/转办/加签、超时催办与站内消息已接入。流程管理支持受控BPMN上传和版本挂起，不允许任意脚本/服务任务。企微/钉钉适配器已有持久化重试，但未配置真实Webhook，不能宣称外部消息送达已验收。
 
-绩效、寻源竞价、采购协同、质量风险和ERP/MES/QMS/财务真实集成尚未交付。冻结/淘汰提供新增业务阻断API，后续业务入口必须调用并再次验收。等保、生产密钥轮换、审计长期保存、性能压测和信创适配需要独立验证。
+绩效已交付统一模板、历史/沙箱导入、月度评分、分级趋势、导出和门户申诉复核。寻源竞价、采购协同、质量风险和ERP/MES/QMS/财务真实集成尚未交付。冻结/淘汰提供新增业务阻断API，后续业务入口必须调用并再次验收。等保、生产密钥轮换、审计长期保存、性能压测和信创适配需要独立验证。
 
 需求基线在 `docs/requirements/`，排期见 [DEVELOPMENT_PLAN](docs/DEVELOPMENT_PLAN.md)，跨阶段未完成AC保持PARTIAL。
 

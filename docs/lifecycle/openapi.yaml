@@ -194,7 +194,7 @@ paths:
                 contact: {type: object, description: Validated ContactInput, enabled ADMIN only}
                 account: {type: object, description: Native account and SM2 passwordCipher, never plaintext password}
                 validCode: {type: string, maxLength: 10}
-                validCodeReqNo: {type: string, maxLength: 20}
+                validCodeReqNo: {type: string, maxLength: 32, pattern: '^(?:[0-9]{1,20}|[0-9a-f]{32})$'}
       responses:
         '200': {description: CommonResult with generated supplier code and next step, no credentials or sensitive fields}
 components:

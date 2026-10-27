@@ -1,0 +1,16 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "environment": "actual WSL Playwright Chromium through the local review gateway",
+  "checks": [
+    "internal_performance_navigation_and_real_score_list",
+    "actual_month_trend_and_partial_history_notice",
+    "source_contributions_and_revision_history_visible",
+    "browser_downloads_real_xlsx",
+    "history_entry_calculates_from_actual_ui",
+    "portal_bound_supplier_view_and_actual_appeal",
+    "independent_sqe_reviews_and_preserves_old_versions",
+    "portal_refresh_preserves_reviewed_score"
+  ],
+  "runtimeErrors": []
+}

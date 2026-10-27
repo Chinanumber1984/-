@@ -12,7 +12,7 @@ scripts/test-review-package.py通过实际打包目录启动的服务，在同�
 
 重新生成时不要删除已使用验收包的runtime或数据库卷。scripts/package-review.py会保留既有目录并拒绝覆盖，需要保留旧包后另行准备新版本。
 
-**W10–11尚未启动：仅在用户明确反馈本地验收完成后开始。**
+**2026-10-27用户反馈初步验证无大问题并明确批准开始W10–11。绩效前置首版已按此授权部署，见 ../performance/README.md。**
 
 ## GitHub源码交付
 

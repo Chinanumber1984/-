@@ -2,7 +2,7 @@
 
 ## 用户目标与开始条件
 
-用户要求由本地Codex实际完成部署与验证，而不是仅提供教程。当前环境是Windows的WSL Ubuntu，Docker/Compose已安装；此前Docker socket权限被拒绝。W10–11必须等用户明确确认验收完成后才开始，当前禁止自动进入。
+用户要求由本地Codex实际完成部署与验证，而不是仅提供教程。当前环境是Windows的WSL Ubuntu，Docker/Compose已安装；此前Docker socket权限被拒绝。原约束为W10–11必须等待用户明确许可。2026-10-27用户已反馈初步验证无大问题并明确指示开始W10–11，此开工授权已生效；本机绩效交付见docs/performance/README.md。不要自动扩大到后续阶段。
 
 ## 代码与部署包的位置
 

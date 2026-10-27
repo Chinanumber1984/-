@@ -1,0 +1,27 @@
+{
+  "result": "passed",
+  "date": "2026-10-27T14:30:43.802Z",
+  "entry": "http://localhost:18080",
+  "environment": "actual WSL Docker MySQL8, Redis7, Flowable7 via review gateway",
+  "checks": [
+    "existing_two_level_onboarding_regression",
+    "anonymous_and_shipping_role_denied",
+    "no_history_never_fabricates_scores",
+    "write_role_org_self_and_portal_guards",
+    "multirow_cross_org_failure_rolls_back",
+    "invalid_scores_dates_sources_and_missing_trace_rejected",
+    "concurrent_import_idempotency_and_content_conflict",
+    "weighted_score_source_and_formula_snapshot",
+    "concurrent_monthly_recompute_idempotent_and_tier_linked",
+    "list_detail_summary_org_self_and_supplier_isolation",
+    "older_recompute_cannot_override_latest_grade_and_partial_history_is_explicit",
+    "appeal_locks_evidence_and_sqe_review_permission",
+    "concurrent_sqe_correction_preserves_history_and_recalculates_once",
+    "stale_appeal_denied_and_rejection_preserves_score",
+    "low_score_recommends_elimination_without_bypassing_approval",
+    "filtered_xlsx_export_real_entry",
+    "uniform_versioned_template_thresholds_conflicts_and_immutable_history",
+    "performance_business_events_have_valid_signatures"
+  ],
+  "externalSystems": "historical/sandbox only; real ERP/MES/QMS not connected"
+}
