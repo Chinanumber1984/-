@@ -23,12 +23,20 @@ for name in set(filter(None,files)):
 PY
 srm_cache="${SRM_MAVEN_CACHE:-$HOME/.cache/srm-review-m2}"
 mkdir -p "$srm_cache"
-srm_maven_args=(-B -ntp -T 2 -Dmaven.repo.local=/m2)
+srm_network_args=()
+for srm_var in HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy; do
+ if [[ -n "${!srm_var:-}" ]]; then srm_network_args+=(-e "$srm_var"); fi
+done
+srm_java_ca=()
+if [[ -r /etc/ssl/certs/java/cacerts ]]; then srm_java_ca+=(-v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts:ro); fi
+srm_node_ca=()
+if [[ -r /etc/ssl/certs/ca-certificates.crt ]]; then srm_node_ca+=(-v /etc/ssl/certs/ca-certificates.crt:/tmp/srm-host-ca.pem:ro -e NODE_EXTRA_CA_CERTS=/tmp/srm-host-ca.pem); fi
+srm_maven_args=(-T 2)
 if [[ "${SRM_MAVEN_OFFLINE:-0}" == 1 ]]; then srm_maven_args+=(-o); fi
-docker run --rm --user "$(id -u):$(id -g)" -e MAVEN_CONFIG=/tmp/maven-config \
- -v "$srm_build_dir:/src" -v "$srm_cache:/m2" -w /src \
- maven:3.9.11-eclipse-temurin-17 mvn "${srm_maven_args[@]}" package
-docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/tmp/npm-cache \
+docker run --rm --user "$(id -u):$(id -g)" -e MAVEN_CONFIG=/tmp/maven-config -e SRM_TOOL_ROOT=/cache "${srm_network_args[@]}" "${srm_java_ca[@]}" \
+ -v "$srm_build_dir:/src" -v "$srm_cache:/cache/m2" -w /src \
+ maven:3.9.11-eclipse-temurin-17 bash scripts/mvn.sh "${srm_maven_args[@]}" package
+docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/tmp/npm-cache "${srm_network_args[@]}" "${srm_node_ca[@]}" \
  -v "$srm_build_dir:/src" -w /src/snowy-admin-web \
  node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 \
  sh -c 'npm ci --no-audit --no-fund && npm run workspace:build'
