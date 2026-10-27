@@ -31,8 +31,8 @@ s='<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">'
 if u.hostname:s+='<proxies><proxy><id>review</id><active>true</active><protocol>http</protocol><host>'+escape(u.hostname)+'</host><port>'+str(u.port or 80)+'</port><nonProxyHosts>localhost|127.0.0.1</nonProxyHosts></proxy></proxies>'
 s+='</settings>';p=Path(sys.argv[1])/'.runtime';p.mkdir(exist_ok=True,mode=0o700);(p/'docker-maven-settings.xml').write_text(s)
 PY_SETTINGS
-srm_cache="${SRM_MAVEN_CACHE:-$HOME/.cache/srm-review-m2}"
-srm_npm_cache="${SRM_NPM_CACHE:-$HOME/.cache/srm-review-npm}"
+srm_cache="${SRM_MAVEN_CACHE:-$srm_repo/.runtime/build-cache/m2}"
+srm_npm_cache="${SRM_NPM_CACHE:-$srm_repo/.runtime/build-cache/npm}"
 mkdir -p "$srm_cache" "$srm_npm_cache"
 srm_network_args=()
 for srm_var in HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy; do

@@ -51,7 +51,7 @@ node scripts/test-lifecycle-api.mjs
 python scripts/test-lifecycle-browser.py
 ```
 
-重跑前可用 `node scripts/cleanup-workspace-fixture.mjs` 清理专属测试组织：先撤回该夹具未结束流程，再删除该夹具业务记录和私有对象，不删除用户数据库卷。Flowable引擎历史不作为普通业务夹具强行清库；保留审计引用。CI工作流在 `.github/workflows/workspace.yml`，尚未在远端执行，远端通过状态不在本轮证据内。
+重跑前可用 `node scripts/cleanup-workspace-fixture.mjs` 清理专属测试组织：先撤回该夹具未结束流程，再删除该夹具业务记录和私有对象，不删除用户数据库卷。Flowable引擎历史不作为普通业务夹具强行清库；保留审计引用。CI工作流在 `.github/workflows/workspace.yml`，尚未核验远端执行结果，远端通过状态不在本轮证据内。
 
 ## 回写失败如何恢复
 

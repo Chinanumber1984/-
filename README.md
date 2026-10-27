@@ -43,7 +43,7 @@ node scripts/test-lifecycle-api.mjs
 python scripts/test-lifecycle-browser.py
 ```
 
-浏览器测试需要Playwright及Chromium。优先使用 `/usr/bin/chromium`，可用 `SRM_CHROMIUM_PATH` 指定，或使用Playwright安装的浏览器。重跑整套前可执行 `node scripts/cleanup-workspace-fixture.mjs`，仅清理脚本所属的测试组织与记录；不要在生产环境运行验收夹具。报告与截图见 `docs/workspace/`、`docs/lifecycle/`、`workspace/`。新增CI工作流已编写，尚未在远端执行。
+浏览器测试需要Playwright及Chromium。优先使用 `/usr/bin/chromium`，可用 `SRM_CHROMIUM_PATH` 指定，或使用Playwright安装的浏览器。重跑整套前可执行 `node scripts/cleanup-workspace-fixture.mjs`，仅清理脚本所属的测试组织与记录；不要在生产环境运行验收夹具。报告与截图见 `docs/workspace/`、`docs/lifecycle/`、`workspace/`。新增CI工作流已编写，尚未核验远端执行结果。
 
 ## 当前边界
 
