@@ -21,6 +21,16 @@ for name in set(filter(None,files)):
  if any(x in {'.runtime','artifacts','node_modules','target','.git','app-log'} for x in Path(name).parts):raise SystemExit('Unexpected private/build path in source list')
  out=target/name;out.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,out)
 PY
+python3 - "$srm_build_dir" <<'PY_SETTINGS'
+from pathlib import Path
+from urllib.parse import urlsplit
+from xml.sax.saxutils import escape
+import os,sys
+u=urlsplit(os.environ.get('HTTPS_PROXY',os.environ.get('https_proxy','')))
+s='<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">'
+if u.hostname:s+='<proxies><proxy><id>review</id><active>true</active><protocol>http</protocol><host>'+escape(u.hostname)+'</host><port>'+str(u.port or 80)+'</port><nonProxyHosts>localhost|127.0.0.1</nonProxyHosts></proxy></proxies>'
+s+='</settings>';p=Path(sys.argv[1])/'.runtime';p.mkdir(exist_ok=True,mode=0o700);(p/'docker-maven-settings.xml').write_text(s)
+PY_SETTINGS
 srm_cache="${SRM_MAVEN_CACHE:-$HOME/.cache/srm-review-m2}"
 mkdir -p "$srm_cache"
 srm_network_args=()
@@ -28,14 +38,14 @@ for srm_var in HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy; 
  if [[ -n "${!srm_var:-}" ]]; then srm_network_args+=(-e "$srm_var"); fi
 done
 srm_java_ca=()
-if [[ -r /etc/ssl/certs/java/cacerts ]]; then srm_java_ca+=(-v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts:ro); fi
+if [[ -r /etc/ssl/certs/java/cacerts ]]; then srm_java_ca+=(-v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts:ro -e MAVEN_OPTS=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts); fi
 srm_node_ca=()
 if [[ -r /etc/ssl/certs/ca-certificates.crt ]]; then srm_node_ca+=(-v /etc/ssl/certs/ca-certificates.crt:/tmp/srm-host-ca.pem:ro -e NODE_EXTRA_CA_CERTS=/tmp/srm-host-ca.pem); fi
-srm_maven_args=(-T 2)
+srm_maven_args=(-B -ntp -T 2 -s /src/.runtime/docker-maven-settings.xml -Dmaven.repo.local=/cache/m2)
 if [[ "${SRM_MAVEN_OFFLINE:-0}" == 1 ]]; then srm_maven_args+=(-o); fi
 docker run --rm --user "$(id -u):$(id -g)" -e MAVEN_CONFIG=/tmp/maven-config -e SRM_TOOL_ROOT=/cache "${srm_network_args[@]}" "${srm_java_ca[@]}" \
  -v "$srm_build_dir:/src" -v "$srm_cache:/cache/m2" -w /src \
- maven:3.9.11-eclipse-temurin-17 bash scripts/mvn.sh "${srm_maven_args[@]}" package
+ maven:3.9.11-eclipse-temurin-17 mvn "${srm_maven_args[@]}" package
 docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/tmp/npm-cache "${srm_network_args[@]}" "${srm_node_ca[@]}" \
  -v "$srm_build_dir:/src" -w /src/snowy-admin-web \
  node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 \
