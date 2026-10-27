@@ -13,3 +13,7 @@ scripts/test-review-package.py通过实际打包目录启动的服务，在同�
 重新生成时不要删除已使用验收包的runtime或数据库卷。scripts/package-review.py会保留既有目录并拒绝覆盖，需要保留旧包后另行准备新版本。
 
 **W10–11尚未启动：仅在用户明确反馈本地验收完成后开始。**
+
+## GitHub源码交付
+
+聊天构件下载不可用，已改为在 Chinanumber1984/- 的 codex/srm-local-delivery-20261027 分支交付真实源码。`scripts/build-local-review.sh` 可从克隆后的源码生成可启动验收包。干净副本的容器Maven构建（17项Java测试）、前端npm ci/构建、独立环境启动及13项浏览器检查均通过；验证使用已有依赖缓存，不冒称冷网络首次下载或用户Windows/WSL已经验证。证据见 source-build-verification.json。

@@ -1,0 +1,25 @@
+{
+  "result": "passed",
+  "sourceBuildCommit": "1c77a8f22938bccecf103de5067a51dc3bf16a9a",
+  "deliveryBranch": "codex/srm-local-delivery-20261027",
+  "javaTests": 17,
+  "browserChecks": [
+    "downloadable_bundle_entry_page_loads",
+    "private_files_and_source_are_not_served",
+    "untrusted_host_rejected",
+    "anonymous_business_access_denied",
+    "generated_owner_account_logs_in_via_gateway",
+    "fresh_database_chinese_category_encoding",
+    "supplier_persists_to_packaged_mysql",
+    "real_upload_to_private_local_volume",
+    "flowable_submission_from_packaged_frontend",
+    "srm.sqe_completes_real_task",
+    "srm.manager_completes_real_task",
+    "approved_status_visible_after_account_switch",
+    "database_state_survives_page_reload"
+  ],
+  "browserRuntimeErrors": [],
+  "isolatedEntryHealth": "HTTP 200",
+  "dependencyCache": "Existing Maven and npm caches reused; cold network dependency download not claimed",
+  "localWindowsWsl": "Pending execution by local Codex after Docker permission is granted"
+}
