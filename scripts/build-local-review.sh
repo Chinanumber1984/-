@@ -32,7 +32,8 @@ if u.hostname:s+='<proxies><proxy><id>review</id><active>true</active><protocol>
 s+='</settings>';p=Path(sys.argv[1])/'.runtime';p.mkdir(exist_ok=True,mode=0o700);(p/'docker-maven-settings.xml').write_text(s)
 PY_SETTINGS
 srm_cache="${SRM_MAVEN_CACHE:-$HOME/.cache/srm-review-m2}"
-mkdir -p "$srm_cache"
+srm_npm_cache="${SRM_NPM_CACHE:-$HOME/.cache/srm-review-npm}"
+mkdir -p "$srm_cache" "$srm_npm_cache"
 srm_network_args=()
 for srm_var in HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy; do
  if [[ -n "${!srm_var:-}" ]]; then srm_network_args+=(-e "$srm_var"); fi
@@ -45,11 +46,11 @@ srm_maven_args=(-B -ntp -T 2 -s /src/.runtime/docker-maven-settings.xml -Dmaven.
 if [[ "${SRM_MAVEN_OFFLINE:-0}" == 1 ]]; then srm_maven_args+=(-o); fi
 docker run --rm --user "$(id -u):$(id -g)" -e MAVEN_CONFIG=/tmp/maven-config -e SRM_TOOL_ROOT=/cache "${srm_network_args[@]}" "${srm_java_ca[@]}" \
  -v "$srm_build_dir:/src" -v "$srm_cache:/cache/m2" -w /src \
- maven:3.9.11-eclipse-temurin-17 mvn "${srm_maven_args[@]}" package
-docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/tmp/npm-cache "${srm_network_args[@]}" "${srm_node_ca[@]}" \
- -v "$srm_build_dir:/src" -w /src/snowy-admin-web \
+ maven:3.9.11-eclipse-temurin-17@sha256:e4a7ace3dc0d645ed97f8d9ad0b0d3f0b14fa8d150138f27f116d7105a639b82 mvn "${srm_maven_args[@]}" package
+docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/npm-cache "${srm_network_args[@]}" "${srm_node_ca[@]}" \
+ -v "$srm_build_dir:/src" -v "$srm_npm_cache:/npm-cache" -w /src/snowy-admin-web \
  node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 \
- sh -c 'npm ci --no-audit --no-fund && npm run workspace:build'
+ sh -c 'npm ci --no-audit --no-fund --maxsockets=5 && npm run workspace:build'
 python3 "$srm_build_dir/scripts/package-review.py"
 cp -a "$srm_build_dir/artifacts/SRM-local-review" "$srm_output"
 echo 'Built real review package. Next: bash artifacts/SRM-local-review/start.sh'
