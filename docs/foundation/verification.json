@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-26",
+  "java_suites": [
+    {
+      "name": "vip.xiaonuo.srm.FoundationPolicyTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "vip.xiaonuo.srm.SupplierScopeTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "vip.xiaonuo.srm.SupplierReadTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "vip.xiaonuo.flow.OnboardingTemplateTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "demo_model_tests": 5,
+  "browser_checks": {
+    "result": "passed",
+    "checks": [
+      "offline_no_requests",
+      "search",
+      "organization_scope",
+      "create_draft",
+      "certificate_gate",
+      "sqe_then_manager",
+      "role_gate",
+      "history",
+      "reload_persistence",
+      "portal_scope",
+      "reset",
+      "mobile_no_page_overflow"
+    ],
+    "console_errors": [],
+    "external_requests": []
+  },
+  "mysql_migration_checks": [
+    "fresh_schema",
+    "repeat_no_changes",
+    "legacy_fixture_upgrade",
+    "child_organization_backfill",
+    "credit_fingerprint_org_uniqueness"
+  ],
+  "ci_status": "workflow_created_not_run_remotely",
+  "demo_dev_startup": "passed"
+}

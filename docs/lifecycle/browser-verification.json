@@ -1,0 +1,18 @@
+{
+  "result": "passed",
+  "checks": [
+    "submit_real_onboarding_from_profile",
+    "requester_has_no_self_approval_action",
+    "sqe_inbox_and_actions_visible",
+    "sqe_reviews_real_certificates_before_decision",
+    "return_for_correction_ui",
+    "correction_resubmission_ui",
+    "sqe_approval_routes_to_manager",
+    "manager_approval_completes_real_workflow",
+    "qualified_status_persisted_after_login",
+    "critical_change_request_ui",
+    "critical_change_approved_ui",
+    "approved_change_persisted_in_profile"
+  ],
+  "runtimeErrors": []
+}

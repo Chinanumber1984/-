@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "checks": [
+    "offline_no_requests",
+    "search",
+    "organization_scope",
+    "create_draft",
+    "certificate_gate",
+    "sqe_then_manager",
+    "role_gate",
+    "history",
+    "reload_persistence",
+    "portal_scope",
+    "reset",
+    "mobile_no_page_overflow"
+  ],
+  "console_errors": [],
+  "external_requests": []
+}

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Build a runnable review package from Git source without installing Java/Maven/Node on the host.
+set -euo pipefail
+srm_repo=$(cd "$(dirname "$0")/.." && pwd)
+cd "$srm_repo"
+command -v python3 >/dev/null || { echo 'Python 3 is required for packaging.' >&2; exit 1; }
+docker info >/dev/null 2>&1 || { echo 'Docker access is required for this WSL user.' >&2; exit 1; }
+srm_output="$srm_repo/artifacts/SRM-local-review"
+[[ ! -e "$srm_output" ]] || { echo 'Existing review package retained. Use its start.sh; do not overwrite runtime or data.' >&2; exit 1; }
+mkdir -p "$srm_repo/artifacts"
+srm_build_dir=$(mktemp -d "$srm_repo/artifacts/review-build.XXXXXX")
+trap 'rm -rf "$srm_build_dir"' EXIT
+# Copy only source accepted by Git ignore rules; never copy local runtime credentials or caches.
+python3 - "$srm_repo" "$srm_build_dir" <<'PY'
+from pathlib import Path
+import subprocess,shutil,sys
+source,target=map(Path,sys.argv[1:]);files=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z'],cwd=source).decode().split('\0')
+for name in set(filter(None,files)):
+ p=source/name
+ if not p.is_file():continue
+ if any(x in {'.runtime','artifacts','node_modules','target','.git','app-log'} for x in Path(name).parts):raise SystemExit('Unexpected private/build path in source list')
+ out=target/name;out.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,out)
+PY
+srm_cache="${SRM_MAVEN_CACHE:-$HOME/.cache/srm-review-m2}"
+mkdir -p "$srm_cache"
+srm_maven_args=(-B -ntp -T 2 -Dmaven.repo.local=/m2)
+if [[ "${SRM_MAVEN_OFFLINE:-0}" == 1 ]]; then srm_maven_args+=(-o); fi
+docker run --rm --user "$(id -u):$(id -g)" -e MAVEN_CONFIG=/tmp/maven-config \
+ -v "$srm_build_dir:/src" -v "$srm_cache:/m2" -w /src \
+ maven:3.9.11-eclipse-temurin-17 mvn "${srm_maven_args[@]}" package
+docker run --rm --user "$(id -u):$(id -g)" -e NPM_CONFIG_CACHE=/tmp/npm-cache \
+ -v "$srm_build_dir:/src" -w /src/snowy-admin-web \
+ node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 \
+ sh -c 'npm ci --no-audit --no-fund && npm run workspace:build'
+python3 "$srm_build_dir/scripts/package-review.py"
+cp -a "$srm_build_dir/artifacts/SRM-local-review" "$srm_output"
+echo 'Built real review package. Next: bash artifacts/SRM-local-review/start.sh'

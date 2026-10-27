@@ -1,0 +1,923 @@
+openapi: 3.0.3
+info:
+  title: SRM W1–2 Contract Baseline
+  version: 0.1.0
+  description: 'Design contract. Only /srm/supplier/page currently exists; all x-delivery:
+    contract-only operations are planned and not served by the demo or backend. Demo
+    is entirely local. Approval actions and sensitive fields require separate business
+    implementation.'
+security:
+- SnowyToken: []
+paths:
+  /srm/supplier/page:
+    get:
+      summary: Existing read-only, current-organization supplier page
+      operationId: currentSupplierPage
+      x-delivery: implemented-partially
+      description: Current API uses current/size/searchKey. No client-defined scope.
+        Additional future filters are not yet implemented.
+      parameters:
+      - name: current
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: size
+        in: query
+        schema:
+          type: integer
+          default: 20
+      - name: searchKey
+        in: query
+        schema:
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierPageResult'
+  /srm/v1/session/context:
+    get:
+      summary: getTrustedSessionContext
+      operationId: getTrustedSessionContext
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    type: object
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /srm/v1/suppliers:
+    post:
+      summary: createSupplierDraft
+      operationId: createSupplierDraft
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/SupplierSummary'
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierDraft'
+  /srm/v1/suppliers/{supplierId}:
+    get:
+      summary: getSupplierDetail
+      operationId: getSupplierDetail
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/SupplierSummary'
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+  /srm/v1/suppliers/{supplierId}/certificates:
+    post:
+      summary: createCertificateVersion
+      operationId: createCertificateVersion
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    type: object
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Certificate'
+  /srm/v1/suppliers/{supplierId}/onboarding:
+    post:
+      summary: submitOnboarding
+      operationId: submitOnboarding
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    type: object
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 128
+  /srm/v1/tasks/{taskId}/actions:
+    post:
+      summary: reviewOnboardingTask
+      operationId: reviewOnboardingTask
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    type: object
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskAction'
+  /srm/v1/portal/profile:
+    get:
+      summary: getBoundPortalProfile
+      operationId: getBoundPortalProfile
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/SupplierSummary'
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /srm/v1/attachments/{fileId}/download-ticket:
+    post:
+      summary: createAuthorizedDownloadTicket
+      operationId: createAuthorizedDownloadTicket
+      x-delivery: contract-only
+      responses:
+        '200':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - code
+                - msg
+                properties:
+                  code:
+                    type: integer
+                  msg:
+                    type: string
+                  data:
+                    type: object
+                  traceId:
+                    type: string
+                    nullable: true
+        '400':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CommonResult envelope; inspect business code as well as HTTP
+            status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          maxLength: 128
+  /srm/v1/suppliers/{supplierId}/contacts:
+    post:
+      summary: createSupplierContact
+      operationId: createSupplierContact
+      x-delivery: contract-only
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CommonResult with business code, traceId and authorized data
+        '403':
+          description: Scope or action denied
+        '409':
+          description: State, version or last-admin conflict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInput'
+    get:
+      summary: listAuthorizedSupplierContacts
+      operationId: listAuthorizedSupplierContacts
+      x-delivery: contract-only
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CommonResult with business code, traceId and authorized data
+        '403':
+          description: Scope or action denied
+        '409':
+          description: State, version or last-admin conflict
+  /srm/v1/suppliers/{supplierId}/contacts/{contactId}/roles:
+    post:
+      summary: updateContactRoles
+      operationId: updateContactRoles
+      x-delivery: contract-only
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CommonResult with business code, traceId and authorized data
+        '403':
+          description: Scope or action denied
+        '409':
+          description: State, version or last-admin conflict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRoleUpdate'
+  /srm/v1/suppliers/{supplierId}/lifecycle-requests:
+    post:
+      summary: createLifecycleApproval
+      operationId: createLifecycleApproval
+      x-delivery: contract-only
+      parameters:
+      - name: supplierId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CommonResult with business code, traceId and authorized data
+        '403':
+          description: Scope or action denied
+        '409':
+          description: State, version or last-admin conflict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LifecycleRequest'
+  /srm/v1/tasks:
+    get:
+      summary: listAuthorizedTasks
+      operationId: listAuthorizedTasks
+      x-delivery: contract-only
+      parameters: []
+      responses:
+        '200':
+          description: CommonResult with business code, traceId and authorized data
+        '403':
+          description: Scope or action denied
+        '409':
+          description: State, version or last-admin conflict
+components:
+  securitySchemes:
+    SnowyToken:
+      type: apiKey
+      in: header
+      name: token
+  schemas:
+    SupplierSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        supplierCode:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        tier:
+          type: string
+        status:
+          type: string
+          enum:
+          - POTENTIAL
+          - REVIEWING
+          - QUALIFIED
+          - FROZEN
+          - ELIMINATED
+        orgId:
+          type: string
+        rowVersion:
+          type: integer
+          format: int64
+      description: No raw credit code, phone or bank account; authorized fields use
+        separate response DTOs.
+    Page:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierSummary'
+        current:
+          type: integer
+        size:
+          type: integer
+        total:
+          type: integer
+    SupplierDraft:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - category
+      - creditCode
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 128
+        category:
+          type: string
+          maxLength: 32
+        creditCode:
+          type: string
+          minLength: 18
+          maxLength: 18
+          writeOnly: true
+          x-sensitive: true
+        bankAccount:
+          type: string
+          maxLength: 64
+          writeOnly: true
+          x-sensitive: true
+        address:
+          type: string
+          maxLength: 255
+      description: No client orgId/status/tier. Server derives trusted organization,
+        initial tier and potential state.
+    Certificate:
+      type: object
+      additionalProperties: false
+      required:
+      - certType
+      - certNo
+      - validFrom
+      - validTo
+      - fileId
+      - rowVersion
+      properties:
+        certType:
+          type: string
+        certNo:
+          type: string
+          maxLength: 64
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        fileId:
+          type: string
+        rowVersion:
+          type: integer
+    TaskAction:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      - comment
+      - rowVersion
+      properties:
+        action:
+          type: string
+          enum:
+          - APPROVE
+          - REJECT
+          - RETURN
+          - TRANSFER
+          - ADD_SIGN
+        comment:
+          type: string
+          minLength: 1
+          maxLength: 512
+        rowVersion:
+          type: integer
+        targetUserId:
+          type: string
+      description: TRANSFER/ADD_SIGN require validated targetUserId. Server validates
+        actor, organization, assignment and transition.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+        traceId:
+          type: string
+        data:
+          type: object
+          nullable: true
+          properties:
+            reason:
+              type: string
+              enum:
+              - SCOPE_DENIED
+              - INVALID_STATE
+              - CERT_REQUIRED
+              - VERSION_CONFLICT
+              - DUPLICATE_IDENTITY
+              - INVALID_REVIEWER
+    SupplierPageResult:
+      type: object
+      required:
+      - code
+      - msg
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+        data:
+          $ref: '#/components/schemas/Page'
+        traceId:
+          type: string
+          nullable: true
+    SupplierResult:
+      type: object
+      required:
+      - code
+      - msg
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+        data:
+          $ref: '#/components/schemas/SupplierSummary'
+        traceId:
+          type: string
+          nullable: true
+    ContactInput:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - phone
+      - roles
+      properties:
+        name:
+          type: string
+          maxLength: 32
+        phone:
+          type: string
+          writeOnly: true
+          x-sensitive: true
+          maxLength: 32
+        email:
+          type: string
+          format: email
+          maxLength: 64
+        roles: &id001
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - ADMIN
+            - QUOTE
+            - SHIP
+            - QUALITY
+            - FINANCE
+    ContactRoleUpdate:
+      type: object
+      additionalProperties: false
+      required:
+      - roles
+      - rowVersion
+      properties:
+        roles: *id001
+        rowVersion:
+          type: integer
+      description: Last enabled ADMIN cannot be removed; enforce under transaction
+        lock.
+    LifecycleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - action
+      - reason
+      - rowVersion
+      properties:
+        action:
+          type: string
+          enum:
+          - FREEZE
+          - UNFREEZE
+          - ELIMINATE
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 512
+        rowVersion:
+          type: integer
+      description: Creates an approval request, never directly updates supplier status.

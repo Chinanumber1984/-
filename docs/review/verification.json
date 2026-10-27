@@ -1,0 +1,28 @@
+{
+  "result": "passed",
+  "testedEntry": "user-computer localhost:18080 via the actual Docker bundle",
+  "environment": "Linux Docker containers and Chromium; Windows/macOS launchers not executed here",
+  "checks": [
+    "downloadable_bundle_entry_page_loads",
+    "private_files_and_source_are_not_served",
+    "untrusted_host_rejected",
+    "anonymous_business_access_denied",
+    "generated_owner_account_logs_in_via_gateway",
+    "fresh_database_chinese_category_encoding",
+    "supplier_persists_to_packaged_mysql",
+    "real_upload_to_private_local_volume",
+    "flowable_submission_from_packaged_frontend",
+    "srm.sqe_completes_real_task",
+    "srm.manager_completes_real_task",
+    "approved_status_visible_after_account_switch",
+    "database_state_survives_page_reload"
+  ],
+  "runtimeErrors": [],
+  "restart": {
+    "result": "passed",
+    "actualStopAndStart": true,
+    "businessRowsPreserved": true,
+    "accountsAndKeysPreserved": true,
+    "privateAttachmentHashesPreserved": true
+  }
+}

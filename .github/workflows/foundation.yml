@@ -1,0 +1,62 @@
+name: SRM foundation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: snowy-admin-web/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Foundation and Flowable tests
+        run: mvn -B -ntp -T 2 -pl snowy-plugin/snowy-plugin-srm-core,snowy-plugin/snowy-plugin-flow -am test
+      - name: Clean frontend install, model tests and standalone build
+        run: |
+          npm --prefix snowy-admin-web ci --no-audit --no-fund
+          npm --prefix snowy-admin-web run demo:test
+          npm --prefix snowy-admin-web run demo:build
+      - name: Browser smoke
+        run: |
+          python -m pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium
+          python scripts/test-demo-browser.py
+      - name: MySQL migration and legacy-fixture tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          export SRM_DB_PASSWORD="$(openssl rand -hex 24)"
+          export MYSQL_ROOT_PASSWORD="$SRM_DB_PASSWORD"
+          docker run -d --name srm-foundation-ci -p 127.0.0.1:13306:3306 -e MYSQL_ROOT_PASSWORD mysql:8.0
+          trap 'docker rm -f srm-foundation-ci >/dev/null' EXIT
+          ready=0
+          for attempt in {1..60}; do
+            if docker exec srm-foundation-ci sh -c 'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql -uroot --protocol=TCP -h127.0.0.1 -e "SELECT 1" >/dev/null 2>&1'; then ready=1; break; fi
+            sleep 2
+          done
+          [[ "$ready" == 1 ]] || { echo 'MySQL did not become ready'; exit 1; }
+          SRM_USE_SYSTEM_MAVEN=1 SRM_TEST_MYSQL_CONTAINER=srm-foundation-ci ./scripts/test-foundation-db.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: srm-foundation-demo-and-reports
+          path: |
+            demo/*.html
+            demo/*.png
+            demo/browser-validation.json
+            snowy-plugin/*/target/surefire-reports/*.xml

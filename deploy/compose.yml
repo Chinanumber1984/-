@@ -1,0 +1,27 @@
+name: srm-dev
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SRM_DB_PASSWORD:?Run scripts/init-local.sh first}
+      MYSQL_DATABASE: snowy
+    ports: ["127.0.0.1:13306:3306"]
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../snowy-web-app/src/main/resources/_sql/snowy_mysql.sql:/docker-entrypoint-initdb.d/00-snowy.sql:ro
+      - ./sql/01-srm-core.sql:/docker-entrypoint-initdb.d/01-srm-core.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", 'MYSQL_PWD="$${MYSQL_ROOT_PASSWORD}" mysql --protocol=TCP -h127.0.0.1 -uroot -e "SELECT 1" snowy >/dev/null 2>&1']
+      interval: 5s
+      timeout: 5s
+      retries: 36
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:16379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+volumes:
+  mysql-data:

@@ -1,0 +1,254 @@
+openapi: 3.0.3
+info:
+  title: SRM lifecycle first release
+  version: 0.3.0
+  description: Actual endpoints. Internal and portal identities are separate; portal cannot use internal tasks or workflow administration. Business codes are inside Snowy CommonResult.
+servers:
+  - url: /srm/v1
+  - url: /client/c/srm/v1
+security:
+  - token: []
+paths:
+  /suppliers/{sid}/approvals:
+    parameters:
+      - $ref: '#/components/parameters/supplierId'
+    get:
+      summary: Scoped supplier approval history
+      responses:
+        '200': {description: CommonResult with scoped history}
+    post:
+      summary: Submit a versioned lifecycle request
+      description: Same organization requestKey and identical payload replay returns the same request. Pending requests lock the aggregate; client cannot set identity scopes or lifecycle states.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Submit'}
+      responses:
+        '200': {description: CommonResult. Business 400 validation, 403 role, 404 scope, 409 conflict or workflow suspended.}
+  /approvals/tasks:
+    get:
+      summary: Internal role, organization, data-scope and assignment filtered tasks
+      responses:
+        '200': {description: CommonResult with tasks and supplier names. Portal forbidden.}
+  /approvals/{aid}:
+    parameters:
+      - $ref: '#/components/parameters/approvalId'
+    get:
+      summary: Scoped approval with tasks, actions, encrypted-at-rest comments and field-filtered change snapshots
+      responses:
+        '200': {description: CommonResult. Sensitive before/after only with field permission.}
+  /approvals/{aid}/withdraw:
+    parameters:
+      - $ref: '#/components/parameters/approvalId'
+    post:
+      summary: Applicant or super administrator withdraws a pending application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment: {type: string, minLength: 1, maxLength: 1000}
+      responses:
+        '200': {description: CommonResult; onboarding restores prior potential/correction state.}
+  /approvals/{aid}/tasks/{tid}:
+    parameters:
+      - $ref: '#/components/parameters/approvalId'
+      - $ref: '#/components/parameters/taskId'
+    post:
+      summary: Process a real Flowable task
+      description: Applicant cannot self approve. Assignment and role checks apply. RETURN only at onboarding SQE. Parent completion blocked until add-sign tasks finish. Callback failures roll back task and business changes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Decision'}
+      responses:
+        '200': {description: CommonResult. Duplicate completion 409; scope 404; role or ownership 403.}
+  /approvals/{aid}/tasks/{tid}/candidates:
+    parameters:
+      - $ref: '#/components/parameters/approvalId'
+      - $ref: '#/components/parameters/taskId'
+    get:
+      summary: Authorized active recipients for transfer or add-sign
+      responses:
+        '200': {description: CommonResult with minimal id/name list}
+  /suppliers/{sid}/versions:
+    parameters:
+      - $ref: '#/components/parameters/supplierId'
+    get:
+      summary: Version history with before/after field permission
+      responses:
+        '200': {description: CommonResult; snapshots encrypted at rest}
+  /workflow/definitions:
+    get:
+      summary: Workflow administrator lists definition versions
+      responses:
+        '200': {description: CommonResult; internal SYS-ADMIN or superAdmin only}
+    post:
+      summary: Publish a new controlled template version
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [kind]
+              properties:
+                kind: {$ref: '#/components/schemas/Kind'}
+      responses:
+        '200': {description: CommonResult with new definition id}
+  /workflow/definitions/upload:
+    post:
+      summary: Validate and publish constrained BPMN XML, maximum 100KB
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [kind, file]
+              properties:
+                kind: {$ref: '#/components/schemas/Kind'}
+                file: {type: string, format: binary}
+      responses:
+        '200': {description: CommonResult; external entities/scripts/arbitrary expressions rejected with business 400}
+  /workflow/definitions/{id}/xml:
+    parameters:
+      - $ref: '#/components/parameters/definitionId'
+    get:
+      summary: Workflow administrator exports an SRM definition
+      responses:
+        '200':
+          description: BPMN XML
+          content:
+            application/xml:
+              schema: {type: string}
+  /workflow/definitions/{id}/suspension:
+    parameters:
+      - $ref: '#/components/parameters/definitionId'
+    post:
+      summary: Suspend or activate definition without suspending existing instances
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [suspended]
+              properties:
+                suspended: {type: boolean}
+      responses:
+        '200': {description: CommonResult}
+  /maintenance/approval-reminders:
+    post:
+      summary: Super administrator manually triggers deduplicated overdue reminders
+      responses:
+        '200': {description: CommonResult}
+  /maintenance/messages:
+    get:
+      summary: Super administrator views outbox status, attempts, next retry and safe error code
+      responses:
+        '200': {description: CommonResult; no webhook credentials or sensitive payloads}
+  /maintenance/messages/{id}/retry:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: {type: string}
+    post:
+      summary: Super administrator retries a failed message
+      responses:
+        '200': {description: CommonResult; only FAILED messages can be retried}
+  /registration-invitations:
+    post:
+      summary: Internal supplier administrator issues a single-use seven-day invitation for own organization
+      responses:
+        '200': {description: CommonResult containing the invitation once; deliver through controlled channel}
+  /srm/public/categories:
+    servers: [{url: /}]
+    get:
+      security: []
+      summary: Enabled registration category code/name choices
+      responses:
+        '200': {description: CommonResult}
+  /srm/public/register:
+    servers: [{url: /}]
+    post:
+      security: []
+      summary: Register potential supplier with invitation and native picture captcha
+      description: Organization comes exclusively from the locked invitation. ADMIN contact and independent native C account are created atomically. Registration does not bypass certificate requirements.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [invitation, supplier, contact, account, validCode, validCodeReqNo]
+              properties:
+                invitation: {type: string, minLength: 43, maxLength: 43}
+                supplier: {type: object, description: Validated SupplierCreate fields; no org/status assignment}
+                contact: {type: object, description: Validated ContactInput, enabled ADMIN only}
+                account: {type: object, description: Native account and SM2 passwordCipher, never plaintext password}
+                validCode: {type: string, maxLength: 10}
+                validCodeReqNo: {type: string, maxLength: 20}
+      responses:
+        '200': {description: CommonResult with generated supplier code and next step, no credentials or sensitive fields}
+components:
+  securitySchemes:
+    token: {type: apiKey, in: header, name: token}
+  parameters:
+    supplierId:
+      name: sid
+      in: path
+      required: true
+      schema: {type: string, maxLength: 20}
+    approvalId:
+      name: aid
+      in: path
+      required: true
+      schema: {type: string, maxLength: 20}
+    taskId:
+      name: tid
+      in: path
+      required: true
+      schema: {type: string, maxLength: 64}
+    definitionId:
+      name: id
+      in: path
+      required: true
+      schema: {type: string}
+  schemas:
+    Kind:
+      type: string
+      enum: [ONBOARD, CHANGE, FREEZE, UNFREEZE, ELIMINATE]
+    Submit:
+      type: object
+      required: [requestKey, kind, rowVersion]
+      properties:
+        requestKey: {type: string, pattern: '^[A-Za-z0-9_-]{12,64}$'}
+        kind: {$ref: '#/components/schemas/Kind'}
+        rowVersion: {type: integer, format: int64, minimum: 0}
+        reason: {type: string, maxLength: 1000, description: Required except ONBOARD}
+        changes:
+          type: object
+          description: Required for CHANGE; validated SupplierEdit whitelist, no org/status fields
+          required: [name, category, rowVersion]
+          properties:
+            name: {type: string, minLength: 1, maxLength: 128}
+            category: {type: string}
+            creditCode: {type: string, maxLength: 18}
+            bankAccount: {type: string, maxLength: 64}
+            bankName: {type: string, maxLength: 64}
+            address: {type: string, maxLength: 255}
+            rowVersion: {type: integer, minimum: 0}
+    Decision:
+      type: object
+      required: [action, comment]
+      properties:
+        action: {type: string, enum: [CLAIM, APPROVE, REJECT, RETURN, TRANSFER, ADD_SIGN]}
+        comment: {type: string, minLength: 1, maxLength: 1000}
+        targetId: {type: string, nullable: true, description: Required for TRANSFER and ADD_SIGN; server validates role, organization, scope and enabled status}

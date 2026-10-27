@@ -1,0 +1,30 @@
+package vip.xiaonuo.flow;
+import java.util.*;
+import java.nio.charset.StandardCharsets;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.flowable.engine.*;
+import org.flowable.task.api.Task;
+import lombok.RequiredArgsConstructor;
+import vip.xiaonuo.flow.api.SrmFlowApi;
+import vip.xiaonuo.common.exception.CommonException;
+@Service @RequiredArgsConstructor
+public class SrmFlowProvider implements SrmFlowApi {
+ private final RuntimeService runtime;private final TaskService tasks;private final RepositoryService repository;private final HistoryService history;
+ private Map<String,Object> dto(Task t){var m=new LinkedHashMap<String,Object>();m.put("id",t.getId());m.put("processId",t.getProcessInstanceId());m.put("parentTaskId",t.getParentTaskId());m.put("node",t.getTaskDefinitionKey()==null?"ADD_SIGN":t.getTaskDefinitionKey());m.put("name",t.getName());m.put("assignee",t.getAssignee()==null?"":t.getAssignee());m.put("createdAt",t.getCreateTime());return m;}
+ public String start(String key,String business,Map<String,Object> vars){return runtime.startProcessInstanceByKey(key,business,vars).getId();}
+ public List<Map<String,Object>> tasks(String pid){var result=new ArrayList<Map<String,Object>>();for(Task t:tasks.createTaskQuery().processInstanceId(pid).list()){result.add(dto(t));for(Task sub:tasks.getSubTasks(t.getId()))result.add(dto(sub));}return result;}
+ public Map<String,Object> task(String id){var t=tasks.createTaskQuery().taskId(id).singleResult();if(t==null)throw new CommonException(409,"审批任务已处理或不存在");return dto(t);}
+ public void claim(String id,String uid){tasks.claim(id,uid);}
+ public void complete(String id,Map<String,Object> vars){var t=tasks.createTaskQuery().taskId(id).singleResult();if(t==null||!tasks.getSubTasks(id).isEmpty())throw new CommonException(409,"任务不存在或仍有未完成加签");if(t.getParentTaskId()!=null)tasks.complete(id);else tasks.complete(id,vars);}
+ public void stop(String pid,String reason){for(var t:tasks.createTaskQuery().processInstanceId(pid).list())for(Task sub:tasks.getSubTasks(t.getId()))tasks.deleteTask(sub.getId(),reason);runtime.deleteProcessInstance(pid,reason);}
+ public void transfer(String tid,String uid){tasks.setAssignee(tid,uid);}
+ public String addSign(String tid,String uid){Task sub=tasks.newTask();sub.setName("加签确认");sub.setParentTaskId(tid);sub.setAssignee(uid);tasks.saveTask(sub);return sub.getId();}
+ public boolean ended(String pid){return runtime.createProcessInstanceQuery().processInstanceId(pid).count()==0;}
+ public List<Map<String,Object>> history(String pid){return history.createHistoricTaskInstanceQuery().processInstanceId(pid).orderByHistoricTaskInstanceStartTime().asc().list().stream().map(t->{var m=new LinkedHashMap<String,Object>();m.put("id",t.getId());m.put("name",t.getName());m.put("assignee",t.getAssignee());m.put("start",t.getStartTime());m.put("end",t.getEndTime());m.put("deleteReason",t.getDeleteReason());return (Map<String,Object>)m;}).toList();}
+ public List<Map<String,Object>> definitions(){return repository.createProcessDefinitionQuery().orderByProcessDefinitionVersion().desc().list().stream().filter(d->d.getKey().startsWith("srm_")).map(d->Map.<String,Object>of("id",d.getId(),"key",d.getKey(),"version",d.getVersion(),"suspended",d.isSuspended(),"category",d.getCategory()==null?"":d.getCategory())).toList();}
+ @Transactional public String publish(String kind){if(!Set.of("ONBOARD","CHANGE","FREEZE","UNFREEZE","ELIMINATE").contains(kind))throw new CommonException(400,"不支持的流程分类");String key="srm_"+kind.toLowerCase(Locale.ROOT);String sqe=kind.equals("ONBOARD")?"<userTask id=\"sqe\" name=\"SQE资质审核\" flowable:candidateGroups=\"SQE\"/><sequenceFlow id=\"s2\" sourceRef=\"sqe\" targetRef=\"manager\"/>":"";String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:flowable=\"http://flowable.org/bpmn\" targetNamespace=\"srm.lifecycle\"><process id=\""+key+"\" name=\""+kind+"\" isExecutable=\"true\"><startEvent id=\"start\"/><sequenceFlow id=\"s1\" sourceRef=\"start\" targetRef=\""+(kind.equals("ONBOARD")?"sqe":"manager")+"\"/>"+sqe+"<userTask id=\"manager\" name=\"采购经理审批\" flowable:candidateGroups=\"CAT-MGR\"><extensionElements><flowable:taskListener event=\"complete\" delegateExpression=\"${srmFlowCompletion}\"/></extensionElements></userTask><sequenceFlow id=\"s3\" sourceRef=\"manager\" targetRef=\"end\"/><endEvent id=\"end\"/></process></definitions>";var d=repository.createDeployment().name("SRM "+kind).category(kind).addInputStream(key+".bpmn20.xml",new java.io.ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))).deploy();var def=repository.createProcessDefinitionQuery().deploymentId(d.getId()).singleResult();repository.setProcessDefinitionCategory(def.getId(),kind);return def.getId();}
+ public String publishXml(String kind,String xml){String validated=SrmBpmnValidator.validate(kind,xml);String key="srm_"+kind.toLowerCase(Locale.ROOT);var deployment=repository.createDeployment().name("SRM uploaded "+kind).category(kind).addString(key+".bpmn20.xml",validated).deploy();var def=repository.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();repository.setProcessDefinitionCategory(def.getId(),kind);return def.getId();}
+ public String exportXml(String id){var d=repository.getProcessDefinition(id);if(!d.getKey().startsWith("srm_"))throw new CommonException(403,"不属于SRM流程");try(var in=repository.getResourceAsStream(d.getDeploymentId(),d.getResourceName())){return new String(in.readAllBytes(),StandardCharsets.UTF_8);}catch(java.io.IOException ex){throw new CommonException(500,"流程文件读取失败");}}
+ public void suspend(String id,boolean value){var d=repository.getProcessDefinition(id);if(!d.getKey().startsWith("srm_"))throw new CommonException(403,"不属于SRM流程");if(value)repository.suspendProcessDefinitionById(id,false,null);else repository.activateProcessDefinitionById(id,false,null);}
+}

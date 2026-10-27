@@ -1,0 +1,20 @@
+{
+  "result": "passed",
+  "checks": [
+    "real_login_and_data",
+    "create_and_field_masking",
+    "refresh_persistence",
+    "edit_real_record",
+    "certificate_upload_to_private_storage",
+    "authorized_certificate_preview",
+    "certificate_renewal_history_ui",
+    "contact_real_record",
+    "server_search",
+    "other_organization_isolated",
+    "read_only_ui",
+    "real_portal_login",
+    "mobile_layout"
+  ],
+  "runtime_errors": [],
+  "data_source": "real_http_and_mysql_test_fixtures"
+}

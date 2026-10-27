@@ -1,0 +1,112 @@
+import dictApi from '@/api/dev/dictApi'
+import userCenterApi from '@/api/sys/userCenterApi'
+import router from '@/router'
+import tool from '@/utils/tool'
+import { message } from 'ant-design-vue'
+import routerUtil from '@/utils/routerUtil'
+import { useMenuStore } from '@/store/menu'
+import { useUserStore } from '@/store/user'
+import { globalStore } from '@/store'
+
+export const afterLogin = async (loginToken, targetPath) => {
+	const route = router.currentRoute.value
+	const menuStore = useMenuStore()
+	const userStore = useUserStore()
+	tool.data.set('TOKEN', loginToken)
+	// 重新登录一定不处于锁屏，清掉上次会话残留的锁屏状态（服务端同样会在登录时清除）
+	globalStore().setIsLocked(false)
+	// 初始化失败时回滚登录态，否则残留的 TOKEN 会让刷新后绕过登录页直接进入系统
+	const rollbackLogin = (err) => {
+		tool.clearLoginCache()
+		message.error('登录成功，但系统初始化失败，请重新登录')
+		throw err
+	}
+
+	// 并行初始化用户信息和获取用户的菜单，两者都结束后再判断，避免回滚后另一个请求才返回又写入缓存
+	const initResults = await Promise.allSettled([userStore.initUserInfo(), menuStore.fetchMenu()])
+	const initFailed = initResults.find((item) => item.status === 'rejected')
+	if (initFailed) {
+		rollbackLogin(initFailed.reason)
+	}
+	const menu = tool.data.get('MENU')
+	let indexMenu = routerUtil.getIndexMenu(menu).path
+
+	if (menu[0] && menu[0].id) {
+		// 重置系统默认应用
+		tool.data.set('SNOWY_MENU_MODULE_ID', menu[0].id)
+		globalStore().setModule(menu[0].id)
+	} else {
+		// 清理掉系统默认应用
+		tool.data.remove('SNOWY_MENU_MODULE_ID')
+	}
+	if (tool.data.get('LAST_VIEWS_PATH')) {
+		// 如果有缓存，将其登录跳转到最后访问的路由
+		indexMenu = tool.data.get('LAST_VIEWS_PATH')
+	}
+	// 如果存在退出后换新账号登录，进行重新匹配，匹配无果则默认首页
+	if (menu) {
+		let routerTag = 0
+		menu.forEach((item) => {
+			if (item.children) {
+				if (JSON.stringify(item.children).indexOf(indexMenu) > -1) {
+					routerTag++
+				}
+			}
+		})
+		if (routerTag === 0) {
+			// 取首页
+			indexMenu = routerUtil.getIndexMenu(menu).path
+		}
+	}
+	// 字典要在跳转前落缓存，否则首个页面顶层 tool.dictList() 会取到空数组
+	await dictApi
+		.dictTree()
+		.then((data) => {
+			tool.data.set('DICT_TYPE_TREE_DATA', data)
+		})
+		.catch(rollbackLogin)
+
+	// 第三方Token登录：直接跳转到指定目标路径
+	if (targetPath) {
+		router.replace({ path: targetPath }).then(() => {})
+		return
+	}
+
+	// 此处判断是否存在跳转页面，如存在则跳转，否则走原来逻辑
+	if (route.query.redirect_uri) {
+		// 跳转到回调页
+		message.success('登录成功，即将跳转...')
+		setTimeout(function () {
+			window.location.href = route.query.redirect_uri
+		}, 500)
+	} else if (route.query.redirect) {
+		// 跳转到回调页
+		message.success('登录成功，即将跳转...')
+		setTimeout(function () {
+			window.location.href = route.query.redirect
+		}, 500)
+	} else if (route.query.back) {
+		// 跳转到回调页
+		message.success('登录成功，即将跳转...')
+		setTimeout(function () {
+			window.location.href = route.query.back
+		}, 500)
+	} else {
+		message.success('登录成功，即将跳转...')
+		setTimeout(function () {
+			// 跳转到首页
+			router
+				.replace({
+					path: indexMenu
+				})
+				.then(() => {
+					// 判断用户密码是否过期
+					userCenterApi.userCenterIsUserPasswordExpired().then((expired) => {
+						if (expired) {
+							message.warning('当前登录密码已过期，请及时更改！')
+						}
+					})
+				})
+		}, 500)
+	}
+}

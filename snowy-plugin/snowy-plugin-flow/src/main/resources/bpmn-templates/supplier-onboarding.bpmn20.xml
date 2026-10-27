@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:flowable="http://flowable.org/bpmn" targetNamespace="https://srm.local/process">
+ <process id="srmSupplierOnboarding" name="供应商准入模板" isExecutable="true">
+  <startEvent id="start"/><sequenceFlow id="s1" sourceRef="start" targetRef="sqeReview"/>
+  <userTask id="sqeReview" name="SQE资质审核" flowable:candidateGroups="SQE"/>
+  <sequenceFlow id="s2" sourceRef="sqeReview" targetRef="managerApproval"/>
+  <userTask id="managerApproval" name="采购经理准入审批" flowable:candidateGroups="CAT-MGR"/>
+  <sequenceFlow id="s3" sourceRef="managerApproval" targetRef="end"/><endEvent id="end"/>
+ </process>
+</definitions>

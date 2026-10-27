@@ -1,0 +1,54 @@
+name: srm-review
+services:
+  mysql:
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SRM_DB_PASSWORD:?Run start first}
+      MYSQL_DATABASE: snowy
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [CMD-SHELL, 'MYSQL_PWD="$${MYSQL_ROOT_PASSWORD}" mysql -uroot --protocol=TCP -h127.0.0.1 -e "SELECT 1" snowy >/dev/null 2>&1']
+      interval: 5s
+      timeout: 5s
+      retries: 48
+  redis:
+    image: redis:7-alpine@sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  backend:
+    image: eclipse-temurin:17-jdk@sha256:fe947d993c32dd9cf651a4353a6ed723c2370b3a9d034ea4cab4775404ea531a
+    working_dir: /app
+    env_file: ./runtime/backend.env
+    command: [java, -Xms256m, -Xmx1536m, -jar, /app/backend.jar, --spring.profiles.active=srm-local, '--spring.datasource.dynamic.datasource.master.url=jdbc:mysql://mysql:3306/snowy?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&useInformationSchema=true', --spring.data.redis.host=redis, --spring.data.redis.port=6379, --srm.storage.directory=/app/files]
+    volumes:
+      - ./backend.jar:/app/backend.jar:ro
+      - files:/app/files
+    depends_on:
+      mysql: {condition: service_healthy}
+      redis: {condition: service_healthy}
+  gateway:
+    image: node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+    working_dir: /bundle
+    command: [node, scripts/serve-review.mjs]
+    environment:
+      SRM_REVIEW_HOST: 0.0.0.0
+      SRM_REVIEW_ALLOWED_HOSTS: localhost,127.0.0.1
+      SRM_REVIEW_BACKEND: http://backend:8080
+    ports: ['127.0.0.1:${SRM_REVIEW_PORT:-18080}:5176']
+    volumes:
+      - .:/bundle:ro
+    depends_on:
+      backend: {condition: service_started}
+    healthcheck:
+      test: [CMD, node, -e, 'fetch("http://127.0.0.1:5176/healthz").then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))']
+      interval: 5s
+      timeout: 7s
+      retries: 60
+volumes:
+  mysql-data:
+  files:
