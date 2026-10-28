@@ -15,5 +15,7 @@
   "backendApiRestartSeconds": 60.69,
   "syntheticSupplierCount": 10000,
   "originalEntryReturned200DuringBothOutages": true,
-  "fixtureCountBeforeAndAfterRestartEqual": true
+  "fixtureCountBeforeAndAfterRestartEqual": true,
+  "cloneStoppedAfterVerification": true,
+  "cloneVolumesAndBackupRetained": true
 }
