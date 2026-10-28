@@ -1,0 +1,32 @@
+{
+  "result": "passed",
+  "project": "srm-drill-p8-20261028",
+  "versions": {
+    "6": {
+      "sourceSha256": "ae55db640b3e7fa44f68cf61de8f1f1228aec283907c10cae0d0726f700d8201",
+      "packageSha256": "ae55db640b3e7fa44f68cf61de8f1f1228aec283907c10cae0d0726f700d8201",
+      "databaseStatus": "APPLIED",
+      "databaseSha256": "ae55db640b3e7fa44f68cf61de8f1f1228aec283907c10cae0d0726f700d8201"
+    },
+    "7": {
+      "sourceSha256": "258ae318baf23a4faf4e1344b1e28c847c1ba22316b5423c556b8a50fef3fb11",
+      "packageSha256": "258ae318baf23a4faf4e1344b1e28c847c1ba22316b5423c556b8a50fef3fb11",
+      "databaseStatus": "APPLIED",
+      "databaseSha256": "258ae318baf23a4faf4e1344b1e28c847c1ba22316b5423c556b8a50fef3fb11"
+    },
+    "8": {
+      "sourceSha256": "5d5c1286245ad62e084707bdb7f6281dd9f6c1239b141d3dd7572b50a7bcc0c1",
+      "packageSha256": "5d5c1286245ad62e084707bdb7f6281dd9f6c1239b141d3dd7572b50a7bcc0c1",
+      "databaseStatus": "APPLIED",
+      "databaseSha256": "5d5c1286245ad62e084707bdb7f6281dd9f6c1239b141d3dd7572b50a7bcc0c1"
+    },
+    "9": {
+      "sourceSha256": "c07331ae190157a9995baee1a3e064914ef90580e49170e0f8fef689bebd4378",
+      "packageSha256": "c07331ae190157a9995baee1a3e064914ef90580e49170e0f8fef689bebd4378",
+      "databaseStatus": "APPLIED",
+      "databaseSha256": "c07331ae190157a9995baee1a3e064914ef90580e49170e0f8fef689bebd4378"
+    }
+  },
+  "databaseModified": false,
+  "check": "read-only; no migration was replayed"
+}

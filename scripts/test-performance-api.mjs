@@ -2,10 +2,12 @@
 import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs'
 import {execFileSync} from 'node:child_process'
 import {createRequire} from 'node:module'
+import {resolve as resolvePath} from 'node:path'
 import crypto from 'node:crypto'
 import assert from 'node:assert/strict'
-const require=createRequire(import.meta.url),{sm2,sm3}=require('../artifacts/SRM-local-review/vendor/node_modules/sm-crypto')
-const bundle=new URL('../artifacts/SRM-local-review/',import.meta.url).pathname,key=readFileSync(bundle+'public-key.txt','utf8').trim()
+const require=createRequire(import.meta.url)
+const bundle=resolvePath(process.env.SRM_TEST_BUNDLE||new URL('../artifacts/SRM-local-review/',import.meta.url).pathname)+'/'
+const {sm2,sm3}=require(bundle+'vendor/node_modules/sm-crypto'),key=readFileSync(bundle+'public-key.txt','utf8').trim()
 const origin=process.env.SRM_TEST_ENTRY||'http://localhost:18080',checks=[];const pass=name=>{checks.push(name);console.log('PASS:',name)}
 const iid=()=>String(BigInt(Date.now())*1000000n+BigInt(crypto.randomInt(1,999999))),quote=v=>"'"+String(v).replaceAll('\\','\\\\').replaceAll("'","''")+"'"
 function sql(text){return execFileSync('docker',['compose','--env-file','runtime/compose.env','exec','-T','mysql','sh','-c','MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql --default-character-set=utf8mb4 -uroot --batch --skip-column-names snowy'],{cwd:bundle,input:text,encoding:'utf8',maxBuffer:16*1024*1024}).trim()}

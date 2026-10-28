@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "checks": [
+    "admin sees Settings > Portal Login Settings; saved captcha state unchanged",
+    "ordinary internal tester does not see admin Settings menu",
+    "supplier portal reaches sourcing workspace without internal settings"
+  ],
+  "settingsChanged": false,
+  "screenshots": 2
+}

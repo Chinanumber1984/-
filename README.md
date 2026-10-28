@@ -2,7 +2,7 @@
 
 基于真实Snowy v3.7.0源码，Java17 / Vue3 / AntDV4 / Vite5 / MySQL8 / Redis7 / Flowable7。来源与版权见 [PROVENANCE](docs/upstream/PROVENANCE.md)。
 
-当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)、[W10–11绩效前置](docs/performance/README.md)。另已交付 [W12–15寻源与竞价](docs/sourcing/README.md)、[W16–19采购协同本机版](docs/collaboration/README.md)、[W20–22质量风险本机版](docs/quality/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；真实外部联调与总体验收尚未全部完成。
+当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)、[W10–11绩效前置](docs/performance/README.md)。另已交付 [W12–15寻源与竞价](docs/sourcing/README.md)、[W16–19采购协同本机版](docs/collaboration/README.md)、[W20–22质量风险本机版](docs/quality/README.md)，并完成 [W23–24本地总体验收与试点准备](docs/pilot/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；真实外部联调、30项部分实现补齐和业务逐项签收尚未全部完成。
 
 ## 本地启动
 

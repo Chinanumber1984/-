@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "dataset": "10,000 retained, synthetic POTENTIAL suppliers in clone only; no active supplier identities created",
+  "measuredRequests": 100,
+  "warmupRequests": 15,
+  "concurrency": 8,
+  "p50Ms": 249.62,
+  "p95Ms": 298.02,
+  "maxMs": 325.57,
+  "requirement": "P95 < 1000 ms",
+  "productionCapacityClaim": false
+}

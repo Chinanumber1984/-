@@ -17,3 +17,7 @@ scripts/test-review-package.py通过实际打包目录启动的服务，在同�
 ## GitHub源码交付
 
 聊天构件下载不可用，已改为在 Chinanumber1984/- 的 codex/srm-local-delivery-20261027 分支交付真实源码。`scripts/build-local-review.sh` 可从克隆后的源码生成可启动验收包。干净副本的容器Maven构建（17项Java测试）、前端npm ci/构建、独立环境启动及13项浏览器检查均通过；验证使用已有依赖缓存，不冒称冷网络首次下载或用户Windows/WSL已经验证。证据见 source-build-verification.json。
+
+## W23–24本地总体验收准备
+
+P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis/后端重启证据在 `P8-*-verification.json`。业务签收矩阵和本地试点手册见 [pilot](../pilot/README.md)。共114个编号、84项标记已实现、30项PARTIAL；114项当前均待业务逐项按PRD特异AC和G1–G6验收。P8自动验证不关闭需求或替代业务签字。

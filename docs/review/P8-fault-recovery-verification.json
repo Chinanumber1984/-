@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "project": "srm-drill-p8-20261028",
+  "cloneEntry": "http://localhost:18081",
+  "originalEntry": "http://localhost:18080",
+  "checks": [
+    "clone Redis stopped",
+    "original instance remained available during clone Redis outage",
+    "clone Redis restart and API readiness",
+    "clone backend stopped",
+    "original instance remained available during clone backend outage",
+    "clone backend restart and API readiness",
+    "clone SQL marker and 10k retained performance fixtures persisted"
+  ],
+  "backendApiRestartSeconds": 60.69,
+  "syntheticSupplierCount": 10000,
+  "originalEntryReturned200DuringBothOutages": true,
+  "fixtureCountBeforeAndAfterRestartEqual": true
+}

@@ -1,0 +1,25 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T13:33:08.617Z",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "mutation": "none; isolated recovery marker verified before logins",
+  "checks": [
+    "login:lijunhua",
+    "login:admin",
+    "login:lixiaolong",
+    "login:gysadmin",
+    "internal supplier detail",
+    "internal published RFQ detail",
+    "portal identities restricted to bound supplier and cannot enter internal API realm",
+    "admin can read portal-login configuration",
+    "public login bootstrap exposes the captcha flag; settings page remains a separate role-gated UI"
+  ],
+  "accounts": [
+    "lijunhua",
+    "admin",
+    "lixiaolong",
+    "gysadmin"
+  ],
+  "scope": "clone database and clone gateway only"
+}

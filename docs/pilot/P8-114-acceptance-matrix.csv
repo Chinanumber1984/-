@@ -1,0 +1,115 @@
+﻿需求编号,需求标题,当前实现状态,P8业务验收状态,已有阶段证据（不代表该编号全部AC通过）,待补证据/签收
+FR-CORE-101,供应商新建（内部录入）,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-102,供应商列表与检索,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-103,供应商详情查看,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-104,供应商编辑,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-105,品类字典维护,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-106,供应商分级维护,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-201,资质录入,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-202,资质查看与分类,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-203,资质到期预警,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-204,资质续期/变更,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-205,资质完备性校验,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-301,联系人新增,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-302,联系人列表与编辑,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-303,联系人角色分配,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-304,联系人停用/启用,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-305,门户账号关联,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-401,准入申请发起,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-402,SQE 资质审核,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-403,采购经理准入审批,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-404,准入结果回写,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-405,资料补充（退回）,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-501,变更申请,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-502,变更审批联动,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-503,变更历史追溯,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-601,冻结（手工/风险联动）,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-602,解冻,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-603,淘汰,部分实现,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-CORE-604,生命周期状态查询,已实现（未等于业务验收）,待业务逐项验收,docs/review/four-accounts-verification.json; docs/review/manual-acceptance/W12-15-手工验收用例.xlsx; docs/review/manual-acceptance/W16-19-采购协同验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-101,RFQ 创建,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-102,RFQ 发布,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-103,RFQ 查看/撤回/延期,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-104,物料行维护,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-201,供应商报价提交,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-202,报价查看,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-203,综合到厂价计算,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-204,比价看板,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-205,澄清/答疑(Q&A),已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-301,竞价创建,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-302,实时出价,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-303,实时最低价广播,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-304,结束与延时,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-305,成交/流标判定,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-306,竞价明细审计,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-401,定点建议生成,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-402,定点审批,部分实现,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-403,定点结果发布,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-SRC-404,落选通知,已实现（未等于业务验收）,待业务逐项验收,docs/sourcing/api-verification.json; docs/sourcing/load-verification.json; docs/sourcing/fault-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-101,PO 同步（来自 ERP）,部分实现,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-102,PO 查看,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-103,PO 确认,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-104,PO 变更通知,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-201,ASN 创建,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-202,ASN 查看,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-203,收货登记,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-204,收货容差校验,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-205,逾期预警,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-301,交付进度看板,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-302,交付异常预警,部分实现,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-401,对账单生成,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-402,对账差异处理,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-403,双方对账确认,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-404,对账争议,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-501,发票登记,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-502,发票校验,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-503,发票推送财务共享,部分实现,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-101,评分卡模板,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-102,月度评分计算,部分实现,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-103,评分查看,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-104,评分明细,部分实现,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-105,评分申诉/复核,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-201,等级划分,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-202,分级查看与导出,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-203,绩效趋势,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-301,PPAP 提交,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-302,PPAP 审批,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-303,来料检验回写,部分实现,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-304,检验不合格扣分,部分实现,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-401,SCAR 发起,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-402,8D 回复提交,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-403,8D 验证,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-404,SCAR 闭环/升级,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-501,风险事件登记,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-502,风险等级评估,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-503,风险预警,已实现（未等于业务验收）,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-PER-504,风险处置与联动,部分实现,待业务逐项验收,docs/performance/api-verification.json; docs/review/W20-22-api-verification.json; docs/review/W20-22-java-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-101,供应商注册申请,部分实现,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-102,多联系人登录,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-103,门户工作台,部分实现,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-201,资质自助维护,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-202,联系人/角色自助,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-203,基础信息查看,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-301,RFQ 响应/报价,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-302,竞价参与,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-303,PO 确认/ASN,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-304,对账确认,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-305,绩效/评分查看,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-306,SCAR/8D 处理,已实现（未等于业务验收）,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-401,供应商数据隔离,部分实现,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-POR-402,联系人角色权限,部分实现,待业务逐项验收,docs/review/P8-browser-verification.json; docs/review/manual-acceptance/W20-22-质量风险验收用例.xlsx,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-101,BPMN 设计/上传,部分实现,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-102,流程发布/挂起,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-103,流程分类,部分实现,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-201,待办列表,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-202,待办处理,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-203,已办/审批历史,部分实现,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-301,TaskListener 联动,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-302,流程变量,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-FLOW-303,审批超时提醒,已实现（未等于业务验收）,待业务逐项验收,docs/review/W20-22-java-verification.json; docs/review/W20-22-api-verification.json,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-101,ERP 主数据/PO/价格,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-102,MES 排产领用,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-103,QMS 质量数据,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-104,财务共享对账/发票,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-105,消息预警,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-INT-106,集成监控,部分实现,待业务逐项验收,docs/quality/INTEGRATION.md; docs/review/W20-22-api-verification.json,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
