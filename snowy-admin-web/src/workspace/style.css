@@ -2,3 +2,8 @@
 @media(max-width:760px){.real-login{grid-template-columns:1fr}.login-intro{padding:35px 30px;min-height:220px;justify-content:flex-end}.login-logo{top:28px;font-size:20px}.login-intro h1{font-size:26px;line-height:1.5;margin-top:40px;margin-bottom:10px}.login-intro h1 br{display:none}.login-intro p{font-size:11px}.login-foot{display:none}.login-card{padding:35px 10px}.real-workspace .sidebar .nav-item{font-size:0;min-height:46px;padding:10px}.real-workspace .sidebar .brand-mark{font-size:18px}.real-scope>span:last-child{display:none}.real-workspace .topbar-actions{gap:4px}.real-workspace .topbar{padding:10px 12px}.real-workspace .topbar-actions .scope-chip{font-size:8px}.real-workspace .heading-actions{flex-wrap:wrap;justify-content:flex-end}.real-workspace .page-heading h1{font-size:20px}.real-workspace .page-heading p{max-width:190px}.real-workspace .table-toolbar .search-field{width:100%}}
 
 .real-workspace .table-toolbar .org-filter{width:200px}.status.archived{background:#f0f2f0;color:#8c9b8e}
+
+/* Keep every workspace entry reachable on shorter laptop screens. */
+.real-workspace .sidebar{overflow-y:auto}.real-workspace .sidebar>.nav-item,.real-workspace .sidebar>.brand,.real-workspace .sidebar>.workspace-label,.real-workspace .sidebar>.sidebar-bottom{flex-shrink:0}
+
+.real-workspace .settings-nav-group{flex-shrink:0}.real-workspace .settings-parent{justify-content:space-between}.settings-chevron{margin-left:auto}.real-workspace .sidebar .settings-subnav .nav-item{padding-left:42px;font-size:11px;margin-top:0}.real-workspace .sidebar .settings-subnav .nav-item.active:before{left:18px;height:16px;width:2px}

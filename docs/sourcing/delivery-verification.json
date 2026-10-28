@@ -1,0 +1,24 @@
+{
+  "result": "passed",
+  "verifiedAt": "2026-10-28T02:17:04.355871+00:00",
+  "entry": "http://localhost:18080/",
+  "backendSHA256": "b38ce6735ce272da5bf27791918705054a20b51c2f4372cc90c7dadf781d5cea",
+  "workspaceAssetsSHA256": {
+    "assets/workspace-CkTf6_OG.js": "a6dd4f8d02ac52a7ada7810cb95fdf433849f592ee7c8a4d8c1647c1d5677b3d",
+    "assets/workspace-C2pUUvLL.css": "72fb0ea6be298db52df1480a95cd34a65887863c7c27f684327165ac007f9256"
+  },
+  "javaTests": 32,
+  "realIntegrationAndBrowserCheckGroups": 42,
+  "invitedSuppliersTested": 50,
+  "broadcastP95Ms": 144,
+  "broadcastMaximumMs": 146,
+  "windowsEntryEvidence": "windows-entry.json",
+  "originalDataAndKeysPreserved": true,
+  "riskSource": "Manual versioned assessment with evidence; external FR-PER-504 integration deferred to P7",
+  "sourceStateAtVerification": {
+    "baseCommit": "5e7f96d5c7a041dce49028263448064c342bc367",
+    "uncommittedW12Implementation": true
+  },
+  "backendRelease": "artifacts/SRM-w12-15-delivery-v2",
+  "workspaceBuild": "same locked dependencies, standalone workspace rebuild; backend unchanged"
+}

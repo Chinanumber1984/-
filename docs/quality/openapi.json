@@ -1,0 +1,1087 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SRM W20–22 local quality and risk contract",
+    "version": "1.0.0",
+    "description": "Typed inputs are derived from QualityInputs.java. Identity, org and supplier scopes are server-derived. Portal can only submit/read its own quality cases. Source ERP/QMS contracts are described in INTEGRATION.md. Real vendor validation pending."
+  },
+  "servers": [
+    {
+      "url": "/api/srm/v1/quality"
+    },
+    {
+      "url": "/api/client/c/srm/v1/quality"
+    }
+  ],
+  "security": [
+    {
+      "token": []
+    }
+  ],
+  "paths": {
+    "/cases": {
+      "get": {
+        "summary": "GET /cases",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/cases/{id}": {
+      "get": {
+        "summary": "GET /cases/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ]
+      }
+    },
+    "/ppaps": {
+      "post": {
+        "summary": "POST /ppaps",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Draft"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scars": {
+      "post": {
+        "summary": "POST /scars",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Scar"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cases/{id}/ppap-submit": {
+      "post": {
+        "summary": "POST /cases/{id}/ppap-submit",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ppap"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cases/{id}/8d": {
+      "post": {
+        "summary": "POST /cases/{id}/8d",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EightD"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cases/{id}/tasks/{tid}": {
+      "post": {
+        "summary": "POST /cases/{id}/tasks/{tid}",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          },
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Review"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cases/{id}/close": {
+      "post": {
+        "summary": "POST /cases/{id}/close",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Close"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "GET /tasks",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        }
+      }
+    },
+    "/cases/{id}/files": {
+      "post": {
+        "summary": "POST /cases/{id}/files",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Private PDF/PNG/JPEG; max 10MB."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/{id}": {
+      "get": {
+        "summary": "GET /files/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ]
+      }
+    },
+    "/risks": {
+      "get": {
+        "summary": "GET /risks",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "current",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "POST /risks",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Risk"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/risks/{id}": {
+      "get": {
+        "summary": "GET /risks/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ]
+      }
+    },
+    "/risks/{id}/assess": {
+      "post": {
+        "summary": "POST /risks/{id}/assess",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Assess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/risks/{id}/freeze": {
+      "post": {
+        "summary": "POST /risks/{id}/freeze",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Assess"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/risks/{id}/dispose": {
+      "post": {
+        "summary": "POST /risks/{id}/dispose",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "[0-9]{1,20}"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dispose"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/policy": {
+      "get": {
+        "summary": "GET /policy",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /policy",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Policy"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "summary": "GET /notices",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        }
+      }
+    },
+    "/source-mappings": {
+      "get": {
+        "summary": "GET /source-mappings",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /source-mappings",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mapping"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/source-preview": {
+      "get": {
+        "summary": "GET /source-preview",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "parameters": [
+          {
+            "name": "supplierId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/source-publish": {
+      "post": {
+        "summary": "POST /source-publish",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publish"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sandbox/source": {
+      "post": {
+        "summary": "POST /sandbox/source",
+        "responses": {
+          "200": {
+            "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Demo"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "token": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token"
+      }
+    },
+    "schemas": {
+      "Draft": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "supplierId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "requestKey",
+          "supplierId",
+          "title"
+        ]
+      },
+      "Scar": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "supplierId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "defectKey": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "severity": {
+            "type": "string",
+            "pattern": "MINOR|MAJOR|SEVERE"
+          }
+        },
+        "required": [
+          "requestKey",
+          "supplierId",
+          "title",
+          "defectKey",
+          "description",
+          "severity"
+        ]
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "fileId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "fileId"
+        ]
+      },
+      "Ppap": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "rowVersion",
+          "items",
+          "comment"
+        ]
+      },
+      "EightD": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "disciplines": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "minProperties": 8,
+            "maxProperties": 8
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20
+          }
+        },
+        "required": [
+          "rowVersion",
+          "disciplines",
+          "fileIds"
+        ]
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "pattern": "APPROVE|REJECT|RETURN"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "action",
+          "comment"
+        ]
+      },
+      "Close": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "effectiveness": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "evidenceRef": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "rowVersion",
+          "effectiveness",
+          "evidenceRef"
+        ]
+      },
+      "Risk": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "supplierId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "evidenceRef": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "requestKey",
+          "supplierId",
+          "description",
+          "evidenceRef"
+        ]
+      },
+      "Assess": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "level": {
+            "type": "string",
+            "pattern": "HIGH|MEDIUM|LOW"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "rowVersion",
+          "level",
+          "comment"
+        ]
+      },
+      "Dispose": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "action": {
+            "type": "string",
+            "pattern": "RECTIFIED|MONITOR|APPROVAL_SUBMITTED"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "evidenceRef": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "rowVersion",
+          "action",
+          "comment",
+          "evidenceRef"
+        ]
+      },
+      "Policy": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0.0
+          },
+          "responseDays": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1.0,
+            "maximum": 365.0
+          },
+          "repeatWindowDays": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1.0,
+            "maximum": 365.0
+          },
+          "minorDeduction": {
+            "type": "number",
+            "description": "Exact decimal; do not use binary floating point to construct monetary or score values.",
+            "minimum": 0.0,
+            "maximum": 100.0
+          },
+          "majorDeduction": {
+            "type": "number",
+            "description": "Exact decimal; do not use binary floating point to construct monetary or score values.",
+            "minimum": 0.0,
+            "maximum": 100.0
+          },
+          "severeDeduction": {
+            "type": "number",
+            "description": "Exact decimal; do not use binary floating point to construct monetary or score values.",
+            "minimum": 0.0,
+            "maximum": 100.0
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "responseDays",
+          "repeatWindowDays",
+          "minorDeduction",
+          "majorDeduction",
+          "severeDeduction",
+          "reason"
+        ]
+      },
+      "Mapping": {
+        "type": "object",
+        "properties": {
+          "connectorId": {
+            "type": "string"
+          },
+          "externalKey": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "supplierId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "connectorId",
+          "externalKey",
+          "supplierId"
+        ]
+      },
+      "Inspection": {
+        "type": "object",
+        "properties": {
+          "supplierKey": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "period": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string",
+            "pattern": "PASS|FAIL"
+          },
+          "severity": {
+            "type": "string",
+            "pattern": "MINOR|MAJOR|SEVERE"
+          },
+          "sourceRef": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "supplierKey",
+          "period",
+          "result",
+          "severity",
+          "sourceRef",
+          "description"
+        ]
+      },
+      "ErpScores": {
+        "type": "object",
+        "properties": {
+          "supplierKey": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "period": {
+            "type": "string"
+          },
+          "scores": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "description": "Exact decimal; do not use binary floating point to construct monetary or score values."
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "sourceRef": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "supplierKey",
+          "period",
+          "scores",
+          "sourceRef"
+        ]
+      },
+      "Publish": {
+        "type": "object",
+        "properties": {
+          "supplierId": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "pattern": "SANDBOX|LIVE"
+          },
+          "basisHash": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "supplierId",
+          "period",
+          "mode",
+          "basisHash"
+        ]
+      },
+      "Demo": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "supplierId": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "system": {
+            "type": "string",
+            "pattern": "QMS|ERP"
+          },
+          "result": {
+            "type": "string",
+            "pattern": "PASS|FAIL"
+          },
+          "severity": {
+            "type": "string",
+            "pattern": "MINOR|MAJOR|SEVERE"
+          }
+        },
+        "required": [
+          "requestKey",
+          "supplierId",
+          "period",
+          "system",
+          "result",
+          "severity"
+        ]
+      }
+    }
+  }
+}

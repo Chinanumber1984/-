@@ -1,0 +1,1463 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SRM sourcing W12–15",
+    "version": "1.0.0",
+    "description": "Same authenticated gateway at /api. REST deliberately has no bid creation endpoint: STOMP /api/srm-sourcing-ws, CONNECT ticket from /socket-ticket, SEND /app/bid/submit, private queues /user/queue/sourcing-state and /user/queue/sourcing-acks. See README.md for concurrency/price rules and Java validated records for exact DTO contracts."
+  },
+  "servers": [
+    {
+      "url": "/api/srm/v1/sourcing"
+    },
+    {
+      "url": "/api/client/c/srm/v1/sourcing"
+    }
+  ],
+  "security": [
+    {
+      "token": []
+    }
+  ],
+  "paths": {
+    "/rfqs": {
+      "get": {
+        "summary": "GET /rfqs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /rfqs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rfq"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/candidates": {
+      "get": {
+        "summary": "GET /candidates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}": {
+      "get": {
+        "summary": "GET /rfqs/{rid}",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/edit": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/edit",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rfq"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/publish": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/publish",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/extend": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/extend",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Extend"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/withdraw": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/withdraw",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Version"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/quotes": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/quotes",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /rfqs/{rid}/quotes",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quote"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/comparison": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/comparison",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/comparison-export": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/comparison-export",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private authorized binary download",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/questions": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/questions",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /rfqs/{rid}/questions",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Question"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/questions/{qid}/answer": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/questions/{qid}/answer",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "qid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Answer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/files": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/files",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/files/{fid}": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/files/{fid}",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Private authorized binary download",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "summary": "GET /notices",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suppliers/{sid}/risk": {
+      "get": {
+        "summary": "GET /suppliers/{sid}/risk",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /suppliers/{sid}/risk",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Risk"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/auction-state": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/auction-state",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/bid-history": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/bid-history",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/receipts/{key}": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/receipts/{key}",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/recover": {
+      "post": {
+        "summary": "POST /rfqs/{rid}/recover",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/socket-ticket": {
+      "post": {
+        "summary": "POST /socket-ticket",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ticket"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/awards": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/awards",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /rfqs/{rid}/awards",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Award"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/awards/{aid}": {
+      "get": {
+        "summary": "GET /awards/{aid}",
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "GET /tasks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/awards/{aid}/tasks/{tid}": {
+      "post": {
+        "summary": "POST /awards/{aid}/tasks/{tid}",
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Decision"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/awards/{aid}/publish": {
+      "post": {
+        "summary": "POST /awards/{aid}/publish",
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/awards/{aid}/withdraw": {
+      "post": {
+        "summary": "POST /awards/{aid}/withdraw",
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": false,
+          "description": "Validated DTO: SourcingInputs.java (Rfq,Version,Extend,Quote,Question,Answer,Risk,Award,Decision,Ticket); files accepts multipart/form-data file PDF/PNG/JPEG max10MB. Actor/org/supplier scope always server-derived.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rfqs/{rid}/result": {
+      "get": {
+        "summary": "GET /rfqs/{rid}/result",
+        "parameters": [
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "token": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token"
+      }
+    },
+    "schemas": {
+      "CommonResult": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "msg": {
+            "type": "string"
+          },
+          "data": {}
+        }
+      },
+      "Line": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "material": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0.001,
+            "maximum": 1000000,
+            "multipleOf": 0.001
+          },
+          "delivery": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "benchmark": {
+            "type": "number",
+            "nullable": true,
+            "multipleOf": 0.0001
+          },
+          "fileIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "maxItems": 10
+          }
+        },
+        "required": [
+          "id",
+          "material",
+          "quantity",
+          "delivery",
+          "fileIds"
+        ]
+      },
+      "Rfq": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64
+          },
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "rfqNo": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "COMPARE",
+              "AUCTION"
+            ]
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "CNY",
+              "USD",
+              "EUR"
+            ]
+          },
+          "deadline": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix epoch milliseconds, future and <=366 days"
+          },
+          "startAt": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "supplierIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 50
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Line"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "startingPrice": {
+            "type": "number"
+          },
+          "minDecrement": {
+            "type": "number"
+          },
+          "antiSnipeMinutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 60,
+            "default": 5
+          }
+        },
+        "required": [
+          "requestKey",
+          "title",
+          "category",
+          "strategy",
+          "currency",
+          "deadline",
+          "supplierIds",
+          "lines"
+        ]
+      },
+      "Version": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "rowVersion"
+        ]
+      },
+      "Extend": {
+        "type": "object",
+        "properties": {
+          "rowVersion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "deadline": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rowVersion",
+          "deadline",
+          "reason"
+        ]
+      },
+      "QuoteLine": {
+        "type": "object",
+        "properties": {
+          "lineId": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "minimum": 0.0001,
+            "multipleOf": 0.0001
+          },
+          "leadDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3650
+          }
+        },
+        "required": [
+          "lineId",
+          "unitPrice",
+          "leadDays"
+        ]
+      },
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string"
+          },
+          "expectedRound": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteLine"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "freight": {
+            "type": "number",
+            "minimum": 0,
+            "multipleOf": 0.01
+          },
+          "remark": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "requestKey",
+          "expectedRound",
+          "lines",
+          "freight"
+        ]
+      },
+      "Bid": {
+        "type": "object",
+        "properties": {
+          "rfqId": {
+            "type": "string"
+          },
+          "requestKey": {
+            "type": "string"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 90000000000,
+            "multipleOf": 0.01
+          }
+        },
+        "required": [
+          "rfqId",
+          "requestKey",
+          "expectedVersion",
+          "amount"
+        ]
+      },
+      "Question": {
+        "type": "object",
+        "properties": {
+          "isPublic": {
+            "type": "boolean"
+          },
+          "supplierId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Internal private question recipient only; portal identity is server-derived"
+          },
+          "question": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "isPublic",
+          "question"
+        ]
+      },
+      "Answer": {
+        "type": "object",
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ]
+      },
+      "Risk": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "evidenceRef": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "level",
+          "evidenceRef",
+          "note"
+        ]
+      },
+      "Award": {
+        "type": "object",
+        "properties": {
+          "supplierId": {
+            "type": "string"
+          },
+          "requestKey": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "noHistoryReason": {
+            "type": "string"
+          },
+          "discloseLoss": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "supplierId",
+          "requestKey",
+          "reason"
+        ]
+      },
+      "Decision": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "REJECT",
+              "TRANSFER",
+              "REASSIGN"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          },
+          "targetId": {
+            "type": "string",
+            "nullable": true
+          },
+          "approveNoHistory": {
+            "type": "boolean"
+          },
+          "acknowledgeRisk": {
+            "type": "boolean"
+          },
+          "noHistoryReason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "comment"
+        ]
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "rfqId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rfqId"
+        ]
+      }
+    }
+  }
+}

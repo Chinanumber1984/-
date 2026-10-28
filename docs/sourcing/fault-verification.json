@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:01:00.399Z",
+  "checks": [
+    "database_insert_failure_rolls_back_bid_version_and_cache",
+    "minimum_decrease_and_precision_rejected_over_stomp",
+    "arbitrary_stomp_topic_denied",
+    "no_bid_scheduled_close_is_failed",
+    "risk_basis_drift_preserves_task_and_requester_withdraws"
+  ]
+}

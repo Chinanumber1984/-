@@ -6,7 +6,7 @@ const rows=ref([]),templates=ref([]),suppliers=ref([]),summary=ref(null),selecte
 // Use a fixed YYYY-MM, independent of browser locale's field order.
 const nowParts=new Intl.DateTimeFormat('en',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit'}).formatToParts(new Date());const currentMonth=nowParts.find(x=>x.type==='year').value+'-'+nowParts.find(x=>x.type==='month').value;end.value=currentMonth
 const labels=['交付','质量','成本','服务'],gradeLabels={STRATEGIC:'战略',PREFERRED:'优选',QUALIFIED:'合格',WATCH:'观察',ELIMINATION_SUGGESTED:'淘汰建议（须审批）'}
-const sourceLabels={HISTORICAL:'历史导入',SANDBOX:'沙箱数据',APPEAL_CORRECTION:'申诉修正'}
+const sourceLabels={HISTORICAL:'历史导入',SANDBOX:'沙箱数据',SANDBOX_ERP_QMS:'本机ERP／QMS沙箱（不联动主档分级）',ERP_QMS:'真实ERP／QMS来源',APPEAL_CORRECTION:'申诉修正'}
 const canWrite=computed(()=>!props.context.portal&&props.context.roles.some(r=>['SQE','CAT-MGR','superAdmin'].includes(r)))
 const canReview=computed(()=>!props.context.portal&&props.context.roles.some(r=>['SQE','superAdmin'].includes(r)))
 const allowed=computed(()=>!props.context.portal||props.context.roles.some(r=>['ADMIN','QUOTE','QUALITY','FINANCE'].includes(r)))

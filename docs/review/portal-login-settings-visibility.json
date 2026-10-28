@@ -1,0 +1,8 @@
+{
+  "result": "passed",
+  "account": "admin",
+  "viewport": "1366x768",
+  "directEntry": "http://localhost:18080/?internal=1&view=portal-login-settings",
+  "topPageActionVisible": true,
+  "captchaRemainsDisabled": true
+}

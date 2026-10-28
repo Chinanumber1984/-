@@ -2,7 +2,7 @@
 
 基于真实Snowy v3.7.0源码，Java17 / Vue3 / AntDV4 / Vite5 / MySQL8 / Redis7 / Flowable7。来源与版权见 [PROVENANCE](docs/upstream/PROVENANCE.md)。
 
-当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)、[W10–11绩效前置](docs/performance/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；完整SRM尚未全部交付。
+当前交付：W1–2基础设计与离线Demo、[W3–6真实档案与门户](docs/workspace/README.md)、[W7–9首版真实准入与生命周期](docs/lifecycle/README.md)、[W10–11绩效前置](docs/performance/README.md)。另已交付 [W12–15寻源与竞价](docs/sourcing/README.md)、[W16–19采购协同本机版](docs/collaboration/README.md)、[W20–22质量风险本机版](docs/quality/README.md)。全114项需求的状态见 [backlog](docs/backlog.csv)；真实外部联调与总体验收尚未全部完成。
 
 ## 本地启动
 
@@ -17,18 +17,24 @@
 
 后端8080，真实工作台5175。原生Snowy前端可用 `./scripts/start-frontend.sh` 启动于5173，首页待办卡片与SRM菜单接入同一工作台。W1–2离线演示保留在 `demo/SRM演示.html`，其浏览器内审批与真实Flowable相互独立。
 
-本地开发账号：
+当前本机验收实例只启用四个账号（原验收账号停用，历史记录保留）：
 
-```bash
-node scripts/prepare-workspace-access.mjs
-node scripts/prepare-approval-access.mjs
-```
+| 账号 | 登录入口 | 用途 |
+| --- | --- | --- |
+| lijunhua | http://localhost:18080/?internal=1 | 内部测试、建档、发布寻源、发起审批 |
+| admin | http://localhost:18080/?internal=1 | 系统管理、流程管理及审批 |
+| lixiaolong | http://localhost:18080/?portal=1 | 受邀供应商报价与业务测试 |
+| gysadmin | http://localhost:18080/?portal=1 | 本供应商资料、资质及联系人管理 |
 
-发起人登录信息在 `.runtime/workspace-access.md`；独立SQE、采购经理、流程管理员在 `.runtime/approval-access.md`。脚本不重置已有账号或密码。门户联系人可由内部管理员开通独立账号，也可通过内部管理员生成的单次注册邀请自主注册。原有验证码策略保留。
+密码统一在 `artifacts/SRM-local-review/runtime/登录账号.txt` 本机查看，不在聊天、日志或Git中公开。两个门户账号绑定到用户当前寻源邀请的供应商，门户登录后默认打开寻源列表。发布寻源不会自动创建登录用户；新增供应商的门户账号由内部管理员在联系人中开通。
+
+四账号的配置、权限和验证说明见 [FOUR_ACCOUNT_PROFILE.md](docs/review/FOUR_ACCOUNT_PROFILE.md)。`node scripts/configure-review-accounts.mjs` 对当前已配置实例仅检查，不重置密码或生成额外用户。完整验收脚本在四账号模式下使用 `node scripts/test-four-account-review.mjs`，不再创建早期批量验收账号。
+
+旧 `.runtime/workspace-access.md`、`.runtime/approval-access.md` 和历史验证报告中的账号属于归档记录，不再是本机登录清单。W1–2开发初始化流程与本机验收包的四账号配置独立，请以当前 `runtime/登录账号.txt` 为准。
 
 数据库、加密与存储凭证首次生成于被Git忽略、权限600的 `.runtime/` 文件。不要提交、打印或用于生产。MySQL/Redis/MinIO仅绑定本机13306/16379/19000。MinIO从官方固定源码构建，不依赖镜像仓库登录；本机使用独立私有桶，下载受供应商与组织权限约束。
 
-启动会保留数据库卷，备份并执行Flyway V1–V5迁移；已有未知表结构或无法确定的敏感数据不会被猜测转换。Flowable建表自动升级仅限srm-local开发配置；生产必须单独审核升级和密钥注入。
+迁移脚本已扩展至V9；开发实例使用Flyway，本机验收包使用保留runtime和数据卷的原位升级脚本。升级前备份，遇到未知表结构或密钥不匹配时停止，不猜测转换。Flowable建表自动升级仅限srm-local开发配置；生产必须单独审核升级和密钥注入。
 
 ## 验证
 
@@ -56,3 +62,7 @@ python scripts/test-lifecycle-browser.py
 用户电脑本地验收：[启动说明](deploy/review/README.md) · [入口修复与实测](docs/review/README.md)。先完整解压验收包并启动，再打开本机18080入口；不是云环境预览地址。
 
 无法下载构件时可从源码生成本地验收包：在WSL、Docker可访问的前提下执行 `bash scripts/build-local-review.sh`，然后执行 `bash artifacts/SRM-local-review/start.sh`。镜像和Maven/npm依赖首次下载需联网，宿主机仅需Git、Python3和Docker；完整交接见 docs/review/LOCAL_CODEX_HANDOFF.md。
+
+## 阶段代码同步
+
+按用户要求，每个阶段完成验证后，及时提交源码、验证证据和验收文档，并推送至GitHub交付分支 `codex/srm-local-delivery-20261027`。数据库备份、运行凭证、真实密码、私有附件及构建产物不上传。实现状态和真实联调／业务签收状态分开记录。

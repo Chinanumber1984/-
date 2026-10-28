@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "checkedAt": "2026-10-28T02:03:48.420449+00:00",
+  "originalSupplierLifecycleRowsPreserved": 14,
+  "fields": [
+    "status",
+    "tier",
+    "rowVersion"
+  ],
+  "originalAccountsAndKeysUnchanged": true,
+  "source": "full private pre-W12 database/runtime backup; no restore or deletion of business tables"
+}

@@ -1,0 +1,9 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:01:20.168Z",
+  "checks": [
+    "single_use_stomp_ticket_replay_denied",
+    "live_portal_role_revocation_denies_existing_socket",
+    "logout_denies_existing_socket_and_future_delivery"
+  ]
+}

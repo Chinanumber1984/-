@@ -11,7 +11,7 @@ export SRM_MIGRATION_USER=root SRM_MIGRATION_PASSWORD="$SRM_DB_PASSWORD"
 history=$(printf "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='snowy' AND TABLE_NAME='flyway_schema_history';\n" | sql)
 version=0
 if [[ "$history" == 1 ]]; then version=$(printf "SELECT COALESCE(MAX(CAST(version AS UNSIGNED)),0) FROM snowy.flyway_schema_history WHERE success=1;\n" | sql); fi
-if [[ "$version" -lt 6 ]]; then
+if [[ "$version" -lt 9 ]]; then
   mkdir -p .runtime/backups
   backup=".runtime/backups/snowy-before-migration-$(date +%Y%m%d%H%M%S).sql.gz"
   "${compose[@]}" exec -T mysql sh -c 'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysqldump -uroot --single-transaction --no-tablespaces --skip-lock-tables snowy' | gzip > "$backup"

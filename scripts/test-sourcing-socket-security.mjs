@@ -1,0 +1,13 @@
+import {call,login,sql} from './test-performance-api.mjs'
+import {socket} from './sourcing-test-client.mjs'
+import {frame,parseFrame} from '../snowy-admin-web/src/workspace/sourcingRealtime.mjs'
+import {readFileSync,writeFileSync} from 'node:fs'
+import {createRequire} from 'node:module'
+import assert from 'node:assert/strict'
+const require=createRequire('/tmp/srm-sourcing-test/package.json'),WS=require('ws'),f=JSON.parse(readFileSync('.runtime/sourcing/fixture.json')),cp='/client/c/srm/v1/sourcing',pt=await login(f.otherPortal,'c'),checks=[],pass=n=>{checks.push(n);console.log('PASS:',n)},sleep=ms=>new Promise(r=>setTimeout(r,ms))
+async function raw(ticket){const ws=new WS('ws://localhost:18080/api/srm-sourcing-ws',['v12.stomp'],{origin:'http://localhost:18080'});const message=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('ticket handshake timeout')),10000);ws.on('error',reject);ws.on('open',()=>ws.send(frame('CONNECT',{'accept-version':'1.2',ticket})));ws.on('message',data=>{const f=parseFrame(String(data).replace(/\0$/,''));if(f?.command==='CONNECTED'||f?.command==='ERROR'){clearTimeout(timer);resolve(f.command)}})});return {ws,message}}
+const ticket=await call(cp+'/socket-ticket',pt,{rfqId:f.auction});assert.equal(ticket.expiresIn,30);const first=await raw(ticket.ticket);assert.equal(first.message,'CONNECTED');try{const second=await raw(ticket.ticket);assert.equal(second.message,'ERROR');second.ws.close()}finally{first.ws.close()}pass('single_use_stomp_ticket_replay_denied')
+let c=await socket(pt,f.auction);const contact=sql(`SELECT ID FROM SRM_SUPPLIER_CONTACT WHERE SUPPLIER_ID='${f.secondSupplier}' AND ACCOUNT_ID IS NOT NULL LIMIT 1`),old=sql(`SELECT ROLES FROM SRM_SUPPLIER_CONTACT WHERE ID='${contact}'`)
+try{sql(`UPDATE SRM_SUPPLIER_CONTACT SET ROLES=JSON_ARRAY('SHIP') WHERE ID='${contact}'`);c.ws.send(frame('SEND',{destination:'/app/bid/snapshot'},'{}'));await sleep(500);assert.ok(c.messages.some(x=>x.error)||c.ws.readyState!==1)}finally{sql(`UPDATE SRM_SUPPLIER_CONTACT SET ROLES='${old.replaceAll("'","''")}' WHERE ID='${contact}'`);c.close()}pass('live_portal_role_revocation_denies_existing_socket')
+const fresh=await login(f.otherPortal,'c');c=await socket(fresh,f.auction);try{await call('/auth/c/doLogout',fresh);c.ws.send(frame('SEND',{destination:'/app/bid/snapshot'},'{}'));await sleep(500);assert.ok(c.messages.some(x=>x.error)||c.ws.readyState!==1)}finally{c.close()}pass('logout_denies_existing_socket_and_future_delivery')
+writeFileSync('docs/sourcing/socket-security-verification.json',JSON.stringify({result:'passed',date:new Date().toISOString(),checks},null,2)+'\n')

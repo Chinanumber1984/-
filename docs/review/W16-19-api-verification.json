@@ -1,0 +1,25 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T07:32:16.792Z",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "four_accounts_and_signed_ERP_master_PO_sandbox_idempotent_delivery",
+    "supplier_change_waits_for_official_ERP_version_and_requires_reconfirmation",
+    "multi_batch_ASN_server_serialized_quantity_ceiling_and_replay",
+    "partial_vs_final_actual_receipts_and_snapshotted_tolerance_difference",
+    "signed_MES_reference_and_supplier_scoped_delivery_dashboard",
+    "immutable_receipt_price_reconciliation_and_duplicate_allocation_early_invoice_denied",
+    "real_Flowable_dispute_manager_review_no_self_approval_and_bilateral_reconfirmation",
+    "private_invoice_attachment_exact_amount_and_internal_finance_push_boundary",
+    "accepted_then_timeout_retry_preserves_remote_idempotency_and_financial_ack_not_transport",
+    "internal_finance_payment_application_delivered_without_marking_invoice_paid",
+    "signed_finance_partial_and_full_payment_receipts",
+    "HMAC_tamper_expiry_nonce_replay_event_conflict_version_gap_and_semantic_duplicates",
+    "real_manager_manual_receipt_reversal_and_signed_ERP_actual_receipt_source_boundary",
+    "source_receipt_allocated_snapshot_is_immutable_invoice_rejection_revision_old_ACK_and_private_download",
+    "both_supplier_users_denied_cross_supplier_order_and_dashboard_access",
+    "realm_admin_and_supplier_server_authorization_and_safe_monitor"
+  ],
+  "testData": "New explicitly labelled SANDBOX business probes; no additional users; real vendor ERP/finance acceptance pending",
+  "realExternalSystemsVerified": false
+}

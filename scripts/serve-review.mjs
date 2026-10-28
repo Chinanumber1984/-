@@ -53,5 +53,16 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='HEAD')res.end();else createReadStream(actual).on('error',()=>res.destroy()).pipe(res)
  }catch{fail(res,500,'Review request failed')}
 })
+// Only the dedicated STOMP endpoint may upgrade; never accept credentials in a URL.
+server.on('upgrade',(req,socket,head)=>{
+ try{
+  const authority=new URL('http://'+req.headers.host)
+  if((!local.has(authority.hostname)&&!allowed.has(authority.hostname))||req.url!=='/api/srm-sourcing-ws'||req.headers.origin!==('http://'+req.headers.host)||String(req.headers.upgrade).toLowerCase()!=='websocket'){socket.end('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');return}
+  const headers={...req.headers,host:backend.host};delete headers['forwarded'];delete headers['x-forwarded-for'];delete headers['x-forwarded-host']
+  const upstream=http.request({hostname:backend.hostname,port:backend.port||80,method:'GET',path:'/srm-sourcing-ws',headers})
+  upstream.on('upgrade',(response,remote,remaining)=>{socket.write('HTTP/1.1 101 Switching Protocols\r\n'+Object.entries(response.headers).map(([k,v])=>k+': '+v).join('\r\n')+'\r\n\r\n');if(remaining.length)socket.write(remaining);if(head.length)remote.write(head);remote.pipe(socket);socket.pipe(remote);remote.on('error',()=>socket.destroy());socket.on('error',()=>remote.destroy());socket.on('close',()=>remote.destroy());remote.on('close',()=>socket.destroy())})
+  upstream.on('response',()=>socket.end('HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\n\r\n'));upstream.on('error',()=>socket.destroy());upstream.end()
+ }catch{socket.destroy()}
+})
 server.headersTimeout=15000;server.requestTimeout=120000
 server.listen(port,host,()=>console.log('Built review gateway ready on port '+port+'; backend stays private.'))

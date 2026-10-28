@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:01:14.120Z",
+  "checks": [
+    "invalid_deadline_invites_duplicates_and_strategy_denied",
+    "non_invited_portal_hidden_and_frozen_supplier_blocked",
+    "explicit_unit_price_permission_grants_view_without_changing_default",
+    "real_comparison_xlsx_export",
+    "published_without_offer_can_withdraw"
+  ]
+}

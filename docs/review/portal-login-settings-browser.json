@@ -1,0 +1,15 @@
+{
+  "result": "passed",
+  "date": "2026-10-28",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "internal_admin_frontend_switch_persists_C_realm_captcha_off",
+    "supplier_actual_login_succeeds_without_captcha_fields_when_disabled",
+    "captcha_can_be_reenabled_and_supplier_login_with_real_captcha_works",
+    "final_portal_captcha_off_internal_login_configuration_unchanged"
+  ],
+  "initialPortalCaptcha": "true",
+  "finalPortalCaptcha": "false",
+  "internalCaptchaUnchanged": true,
+  "credentialsChanged": false
+}

@@ -1,0 +1,23 @@
+{
+  "result": "passed",
+  "date": "2026-10-28",
+  "entry": "http://localhost:18080/",
+  "accounts": [
+    "lijunhua",
+    "admin",
+    "lixiaolong",
+    "gysadmin"
+  ],
+  "checks": [
+    "supplier_ppap_submit",
+    "SQE_ppap_supplement_request",
+    "admin_ppap_second_revision_approved",
+    "supplier_structured_D1_D8_reply",
+    "SQE_verification_effectiveness_and_SCAR_closure",
+    "risk_high_red_light_and_freeze_suggestion_only",
+    "sandbox_ERP_QMS_traceable_scoring_browser",
+    "portal_admin_own_PPAP_private_download_and_no_internal_controls"
+  ],
+  "realExternalSystemsVerified": false,
+  "captchaPolicyUnchanged": true
+}

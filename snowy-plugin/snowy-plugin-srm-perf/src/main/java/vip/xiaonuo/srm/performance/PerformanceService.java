@@ -40,6 +40,7 @@ public class PerformanceService implements SrmPerformanceApi {
  }
  private Map<String,Object> templateFor(String month){return db.queryForMap("SELECT * FROM SRM_PERF_TEMPLATE WHERE EFFECTIVE_PERIOD<=? ORDER BY EFFECTIVE_PERIOD DESC,ID DESC LIMIT 1",month);}
  private void noPending(String sid,String month){require(db.queryForObject("SELECT COUNT(*) FROM SRM_PERF_APPEAL a JOIN SRM_SCORECARD c ON c.ID=a.SCORE_ID WHERE c.SUPPLIER_ID=? AND c.PERIOD=? AND a.STATUS='PENDING'",Long.class,sid,month)==0,409,"评分有待复核申诉，不能覆盖复核依据");}
+ @Transactional public Map<String,Object> recordTrustedSource(Context a,String sid,String month,List<BigDecimal> values,String mode,String reference){writable(a);period(month);scores(values);require(Set.of("SANDBOX","LIVE").contains(mode),400,"来源模式无效");access.requireSupplier(a,sid,true);noPending(sid,month);String iid=addInput(a,new Input(sid,month,mode.equals("LIVE")?"ERP_QMS":"SANDBOX_ERP_QMS",reference,values),null,mode.equals("LIVE")?"ERP_QMS":"SANDBOX_ERP_QMS");return Map.of("inputId",iid,"score",compute(a,sid,month));}
  private String addInput(Context a,Input p,String batch,String type){
   long revision=db.queryForObject("SELECT COALESCE(MAX(REVISION),0)+1 FROM SRM_PERF_INPUT WHERE SUPPLIER_ID=? AND PERIOD=?",Long.class,p.supplierId(),p.period());
   var s=access.requireSupplier(a,p.supplierId(),false);String input=id();
@@ -74,7 +75,7 @@ public class PerformanceService implements SrmPerformanceApi {
   access.recordEvent(a,sid,scoreId,"PERFORMANCE_CALCULATED",Map.of("period",month,"revision",revision,"inputId",input.get("ID"),"templateVersion",template.get("ID"),"eliminationSuggested",grade.equals("ELIMINATION_SUGGESTED")));
   return detail(a,scoreId);
  }
- private void syncTier(Context a,String sid,String month,String grade){if(month.equals(db.queryForObject("SELECT MAX(PERIOD) FROM SRM_SCORECARD WHERE SUPPLIER_ID=?",String.class,sid)))access.applyPerformanceTier(a,sid,grade.equals("ELIMINATION_SUGGESTED")?"WATCH":grade);}
+ private void syncTier(Context a,String sid,String month,String grade){String source=db.queryForObject("SELECT i.SOURCE_TYPE FROM SRM_SCORECARD c JOIN SRM_PERF_INPUT i ON i.ID=c.INPUT_ID WHERE c.SUPPLIER_ID=? AND c.PERIOD=?",String.class,sid,month);if("SANDBOX_ERP_QMS".equals(source))return;if(month.equals(db.queryForObject("SELECT MAX(PERIOD) FROM SRM_SCORECARD WHERE SUPPLIER_ID=?",String.class,sid)))access.applyPerformanceTier(a,sid,grade.equals("ELIMINATION_SUGGESTED")?"WATCH":grade);}
  private Map<String,Object> rawScore(Context a,String cid,boolean lock){
   readable(a);var rows=db.queryForList("SELECT * FROM SRM_SCORECARD WHERE ID=?",cid);require(rows.size()==1,404,"评分不存在或无权访问");access.requireSupplier(a,str(rows.get(0),"SUPPLIER_ID"),lock);
   return lock?db.queryForMap("SELECT * FROM SRM_SCORECARD WHERE ID=? FOR UPDATE",cid):rows.get(0);
@@ -116,6 +117,7 @@ public class PerformanceService implements SrmPerformanceApi {
   if(p.approve()){addInput(a,new Input(str(c,"SUPPLIER_ID"),str(c,"PERIOD"),"HISTORICAL","appeal:"+aid+";input:"+c.get("INPUT_ID"),p.correctedScores()),null,"APPEAL_CORRECTION");compute(a,str(c,"SUPPLIER_ID"),str(c,"PERIOD"));}
   access.recordEvent(a,str(c,"SUPPLIER_ID"),aid,"PERFORMANCE_APPEAL_REVIEWED",Map.of("approved",p.approve(),"scoreId",cid));return detail(a,cid);
  }
+ public Weights weightsFor(YearMonth month){var t=templateFor(month.toString());return new Weights(number(t,"ID"),decimals(json(object(t.get("CONFIG")).get("weights"))));}
  public Summary scopedSummary(Context a,String sid,String end,int months){readable(a);var s=access.requireSupplier(a,sid,false);return summary(sid,s.orgId(),period(end),months);}
  public Summary summary(String sid,String trustedOrgId,YearMonth end,int months){
   require(trustedOrgId!=null&&!trustedOrgId.isBlank(),403,"缺少可信组织");require(months>=1&&months<=36,400,"趋势月份须在1~36之间");period(end.toString());

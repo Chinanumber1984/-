@@ -1,0 +1,33 @@
+{
+  "result": "passed",
+  "date": "2026-10-28",
+  "entry": "http://localhost:18080/",
+  "accounts": [
+    {
+      "account": "lijunhua",
+      "realm": "b",
+      "loginFormAndLandingPassed": true,
+      "invitedRfqVisible": false
+    },
+    {
+      "account": "admin",
+      "realm": "b",
+      "loginFormAndLandingPassed": true,
+      "invitedRfqVisible": false
+    },
+    {
+      "account": "lixiaolong",
+      "realm": "c",
+      "loginFormAndLandingPassed": true,
+      "invitedRfqVisible": true
+    },
+    {
+      "account": "gysadmin",
+      "realm": "c",
+      "loginFormAndLandingPassed": true,
+      "invitedRfqVisible": true
+    }
+  ],
+  "captchaPolicyUnchanged": true,
+  "passwordsPrinted": false
+}

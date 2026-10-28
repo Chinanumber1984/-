@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:06:08.070Z",
+  "entry": "http://localhost:18080/",
+  "checks": [
+    "fresh_credential_login_private_qualification_upload_and_validation",
+    "sqe_first_approval_keeps_supplier_under_review",
+    "manager_second_approval_qualifies_supplier_with_signed_audit"
+  ],
+  "retainedIsolatedTestSupplier": true
+}

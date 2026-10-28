@@ -5,5 +5,7 @@ import java.util.*;
 /** For authorized server-side sourcing callers only; trustedOrgId must come from the session. */
 public interface SrmPerformanceApi {
  record Summary(String supplierId,String endPeriod,int requestedMonths,int validMonths,boolean insufficientHistory,boolean requiresApprovedException,List<String> missingPeriods,List<BigDecimal> averageScores,BigDecimal averageTotal,List<Map<String,Object>> trend) {}
+ record Weights(long version,List<BigDecimal> weights) {}
+ Weights weightsFor(YearMonth period);
  Summary summary(String supplierId,String trustedOrgId,YearMonth endPeriod,int months);
 }

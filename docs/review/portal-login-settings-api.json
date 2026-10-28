@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T09:07:32.642Z",
+  "checks": [
+    "internal_tester_and_portal_admin_cannot_change_global_login_captcha",
+    "enabled_captcha_is_enforced_by_server_even_when_client_omits_fields",
+    "portal_captcha_disabled_internal_flag_passwords_and_cryptographic_keys_preserved"
+  ],
+  "finalPortalCaptcha": false,
+  "internalConfigurationUnchanged": true,
+  "credentialsChanged": false
+}

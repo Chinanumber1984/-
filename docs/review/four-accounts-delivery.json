@@ -1,0 +1,28 @@
+{
+  "result": "passed",
+  "verifiedAt": "2026-10-28T03:43:40.795872+00:00",
+  "activeInternalAccounts": [
+    "lijunhua",
+    "admin"
+  ],
+  "activeSupplierAccounts": [
+    "lixiaolong",
+    "gysadmin"
+  ],
+  "internalEntry": "http://localhost:18080/?internal=1",
+  "portalEntry": "http://localhost:18080/?portal=1",
+  "supplierBinding": "Both supplier accounts are bound to the supplier invited by the user-published RFQ",
+  "apiCheckGroups": 7,
+  "actualBrowserLogins": 4,
+  "userPublishedRfqUntouched": true,
+  "businessHistoryRetained": true,
+  "oldAccountsDisabledAndSessionsRevoked": true,
+  "databaseCredentialsAndEncryptionKeysUnchanged": true,
+  "startupScriptVerified": true,
+  "workflowInitializerUsesAdmin": true,
+  "workspaceAssetsSHA256": {
+    "assets/workspace-zQL-p0ea.js": "c7e0b6a3955b1ce5057b9666b9e664ba485e59f1a5853a39fd8c24361e15ab46",
+    "assets/workspace-C2pUUvLL.css": "72fb0ea6be298db52df1480a95cd34a65887863c7c27f684327165ac007f9256"
+  },
+  "passwordLocation": "Private runtime/登录账号.txt; no passwords in this report"
+}

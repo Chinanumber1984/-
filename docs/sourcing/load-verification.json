@@ -1,0 +1,28 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:02:02.854Z",
+  "entry": "http://localhost:18080/",
+  "distinctInvitedSuppliers": 50,
+  "simultaneousAuthenticatedConnections": 50,
+  "rounds": [
+    {
+      "round": 1,
+      "receivers": 50,
+      "maxMs": 146
+    },
+    {
+      "round": 2,
+      "receivers": 50,
+      "maxMs": 142
+    },
+    {
+      "round": 3,
+      "receivers": 50,
+      "maxMs": 130
+    }
+  ],
+  "p95EndToEndMs": 144,
+  "maxEndToEndMs": 146,
+  "target500msMet": true,
+  "notes": "Synthetic isolated accounts/suppliers; duration includes durable SQL write and authorization checks for each recipient; no external WAN clients."
+}

@@ -1,0 +1,7 @@
+{
+  "result": "passed",
+  "scope": "All original supplier business columns; only target supplier ROW_VERSION/UPDATE_TIME/UPDATE_USER excluded for the audited sandbox tier correction",
+  "auditedCorrection": "Sandbox score incorrectly changed target tier; restored via authorized tier API. Original QUALIFIED tier and lifecycle restored; optimistic version and audit history were retained. Sandbox score master-tier sync disabled in final source.",
+  "businessColumnsSHA256": "a0343e9df61c424ab02ab1cd8e225f0634ec4050bfd9af514ddb616866122004",
+  "originalSupplierIds": 121
+}

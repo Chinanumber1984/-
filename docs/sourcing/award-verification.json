@@ -1,0 +1,8 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:01:06.522Z",
+  "checks": [
+    "authorized_manager_transfer_and_assignee_guard_and_rejection",
+    "candidate_reassignment_new_flow_no_self_approval_and_configurable_loss_reason"
+  ]
+}

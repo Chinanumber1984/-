@@ -1,0 +1,8 @@
+{
+    "checkedAt":  "2026-10-28T09:30:57.6357848+08:00",
+    "browser":  "Windows Microsoft Edge headless",
+    "result":  "passed",
+    "loginFormRendered":  true,
+    "httpStatus":  200,
+    "entry":  "http://localhost:18080/"
+}

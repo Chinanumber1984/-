@@ -1,0 +1,410 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SRM W16–19 procurement collaboration contract (implementation in progress)",
+    "version": "1.0.0",
+    "description": "Server-validated DTOs in CollaborationInputs.java. Prices include tax; immutable receipts/reconciliation snapshots; versioned commands, no arbitrary status/org updates. Real vendor adapters await actual interface documents."
+  },
+  "servers": [
+    {
+      "url": "/api/srm/v1/collaboration"
+    },
+    {
+      "url": "/api/client/c/srm/v1/collaboration"
+    }
+  ],
+  "security": [
+    {
+      "token": []
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "get": {
+        "summary": "GET /orders",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "GET /orders/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/orders/{id}/confirm": {
+      "post": {
+        "summary": "POST /orders/{id}/confirm",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/orders/{id}/change-requests": {
+      "get": {
+        "summary": "GET /orders/{id}/change-requests",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /orders/{id}/change-requests",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/orders/{id}/asns": {
+      "get": {
+        "summary": "GET /orders/{id}/asns",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /orders/{id}/asns",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/asns/{id}": {
+      "get": {
+        "summary": "GET /asns/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/asns/{id}/tracking": {
+      "post": {
+        "summary": "POST /asns/{id}/tracking",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/asns/{id}/receipts": {
+      "get": {
+        "summary": "GET /asns/{id}/receipts",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /asns/{id}/receipts",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/receipts": {
+      "get": {
+        "summary": "GET /receipts",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/receipts/{id}/reversal": {
+      "post": {
+        "summary": "POST /receipts/{id}/reversal",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "summary": "GET /dashboard",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/policy": {
+      "get": {
+        "summary": "GET /policy",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /policy",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations": {
+      "get": {
+        "summary": "GET /reconciliations",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /reconciliations",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}": {
+      "get": {
+        "summary": "GET /reconciliations/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/confirm": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/confirm",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/difference": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/difference",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/discussion": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/discussion",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/resolve": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/resolve",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/escalate": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/escalate",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/withdraw": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/withdraw",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/files": {
+      "post": {
+        "summary": "POST /reconciliations/{id}/files",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/reconciliations/{id}/invoices": {
+      "get": {
+        "summary": "GET /reconciliations/{id}/invoices",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /reconciliations/{id}/invoices",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/files/{id}": {
+      "get": {
+        "summary": "GET /files/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/invoices/{id}": {
+      "get": {
+        "summary": "GET /invoices/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/invoices/{id}/revise": {
+      "post": {
+        "summary": "POST /invoices/{id}/revise",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/invoices/{id}/push": {
+      "post": {
+        "summary": "POST /invoices/{id}/push",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/cases": {
+      "get": {
+        "summary": "GET /cases",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/cases/{id}": {
+      "get": {
+        "summary": "GET /cases/{id}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/cases/{id}/tasks/{tid}": {
+      "post": {
+        "summary": "POST /cases/{id}/tasks/{tid}",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/cases/{id}/withdraw": {
+      "post": {
+        "summary": "POST /cases/{id}/withdraw",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "summary": "GET /notices",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/sandbox/orders": {
+      "post": {
+        "summary": "POST /sandbox/orders",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    },
+    "/sandbox/commands": {
+      "post": {
+        "summary": "POST /sandbox/commands",
+        "responses": {
+          "200": {
+            "description": "CommonResult; business code 200/400/401/403/404/409/503. Scope and identity are server-derived."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "token": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<template><Workspace :initial-token="token" :initial-view="route.query.view==='approvals'?'approvals':'suppliers'" embedded /></template>
+<template><Workspace :initial-token="token" :initial-view="['approvals','performance','sourcing'].includes(route.query.view)?route.query.view:'suppliers'" embedded /></template>
 <script setup>
 import {useRoute} from 'vue-router'
 const route=useRoute()

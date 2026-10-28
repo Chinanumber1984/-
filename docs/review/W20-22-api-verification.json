@@ -1,0 +1,23 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T08:42:09.089Z",
+  "checks": [
+    "PPAP_private_attachments_real_Flowable_SQE_return_resubmit_and_immutable_revisions",
+    "structured_D1_D8_REQUIRED_SQE_redo_verification_and_evidence_based_effectiveness_closure",
+    "repeated_defect_escalation_INTERNAL_risk_and_supplier_quality_notice",
+    "risk_INTERNAL_only_assessment_red_light_sourcing_live_snapshot_and_manager_disposition",
+    "high_risk_suggestion_starts_original_FREEZE_Flowable_self_approval_denied_and_controlled_unfreeze",
+    "both_portal_quality_users_denied_cross_supplier_cases_and_cannot_access_internal_risks",
+    "authenticated_ERP_QMS_traceable_quality_deductions_idempotent_recalculation_and_mode_isolation",
+    "QMS_HMAC_tamper_duplicate_and_source_correction_new_basis_prevents_stale_score_publication",
+    "private_quality_attachment_hash_and_exactly_four_enabled_accounts_preserved"
+  ],
+  "realExternalSystemsVerified": false,
+  "testRecords": "P7 and SANDBOX labelled; current portal supplier status retained; controlled freeze/unfreeze used a newly onboarded isolated supplier",
+  "accounts": [
+    "lijunhua",
+    "admin",
+    "lixiaolong",
+    "gysadmin"
+  ]
+}

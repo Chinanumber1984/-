@@ -1,0 +1,23 @@
+{
+  "result": "passed",
+  "date": "2026-10-28",
+  "entry": "http://localhost:18080/",
+  "accounts": [
+    "lijunhua",
+    "lixiaolong",
+    "admin",
+    "gysadmin"
+  ],
+  "checks": [
+    "tester_browser_generates_signed_sandbox_ERP_order",
+    "supplier_browser_confirms_order_and_submits_batched_ASN_tracking",
+    "buyer_browser_posts_actual_receipt_builds_and_confirms_reconciliation",
+    "supplier_browser_bilateral_confirmation_private_upload_and_invoice_registration",
+    "internal_finance_browser_push_separate_ACK_and_signed_sandbox_payment",
+    "system_admin_browser_sees_safe_inbox_outbox_monitor",
+    "portal_admin_browser_reads_own_supplier_invoice_without_internal_controls"
+  ],
+  "captchaPolicyUnchanged": true,
+  "realExternalSystemsVerified": false,
+  "testRecordsPrefix": "BROWSER-"
+}

@@ -7,6 +7,9 @@ public interface SrmSupplierAccessApi {
  }
  record Supplier(String id,String orgId,String name,String category,String status,String tier) {}
  Context current();
+ Context socketContext(String token,boolean portal);
+ boolean canViewUnitPrice(Context actor);
+ List<Map<String,Object>> sourcingReviewers(String orgId,String requesterId,String rfqCreatorId);
  Supplier requireSupplier(Context actor,String supplierId,boolean lock);
  void recordEvent(Context actor,String supplierId,String subjectId,String action,Map<String,Object> metadata);
  void applyPerformanceTier(Context actor,String supplierId,String tier);

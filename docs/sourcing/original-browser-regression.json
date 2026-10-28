@@ -1,0 +1,6 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "ownerLoginAfterRestart": true,
+  "qualifiedSupplierAfterRestart": true
+}

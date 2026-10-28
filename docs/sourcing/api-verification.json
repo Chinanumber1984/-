@@ -1,0 +1,24 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T02:00:51.448Z",
+  "entry": "http://localhost:18080",
+  "checks": [
+    "anonymous_and_shipping_roles_denied",
+    "draft_idempotency_and_org_self_portal_isolation",
+    "withdrawn_unpublished_draft_never_leaks_to_portal_or_notices",
+    "masked_benchmark_survives_blind_draft_edit",
+    "private_specs_draft_edit_publication_and_immutable_lines",
+    "extension_and_supplier_notice",
+    "multi_round_total_idempotency_masking_and_cipher_at_rest",
+    "public_qa_and_private_conversation_isolation",
+    "landed_comparison_actual_performance_and_no_history_null",
+    "award_requires_current_complete_certificates_before_flow_start",
+    "real_flowable_award_no_self_explicit_exception_risk_and_private_results",
+    "stomp_bid_committed_receipt_anonymous_board_anti_snipe_and_replay",
+    "concurrent_stomp_bids_single_version_winner",
+    "missing_cache_pauses_new_bids_without_persistence_and_sql_recovery",
+    "sourcing_supplier_audit_signatures"
+  ],
+  "syntheticFixtures": "Retained W10 history supplier and fresh isolated no-history supplier; fresh supplier qualified by constrained SQL only for load setup.",
+  "externalRisk": "manual evidence only; P7 external integration pending"
+}

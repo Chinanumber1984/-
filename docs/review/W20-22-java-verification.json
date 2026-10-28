@@ -1,0 +1,8 @@
+{
+  "result": "passed",
+  "tests": 39,
+  "failures": 0,
+  "errors": 0,
+  "build": "P7 current backend; Maven reactor including existing core, sourcing, performance, collaboration and integration tests",
+  "realExternalSystemsVerified": false
+}

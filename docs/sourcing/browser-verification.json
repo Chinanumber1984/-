@@ -1,0 +1,16 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "date": "2026-10-28",
+  "checks": [
+    "internal_sourcing_navigation",
+    "rfq_detail_and_immutable_quote_history",
+    "comparison_panel_real_performance",
+    "create_and_edit_draft_in_browser",
+    "line_specific_private_spec_upload_and_supplier_candidate_search",
+    "portal_private_award_result_and_role_controls",
+    "native_browser_stomp_connection_anonymous_board",
+    "browser_bid_receipt_and_own_rank_update",
+    "manager_named_candidate_selection_and_readable_review_basis"
+  ]
+}

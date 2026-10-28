@@ -130,6 +130,10 @@ public class GlobalConfigure implements WebMvcConfigurer {
             "/auth/c/register",
             "/srm/public/register",
             "/srm/public/categories",
+            // Handshake only; STOMP CONNECT consumes a single-use authenticated ticket.
+            "/srm-sourcing-ws",
+            "/srm-integration/v1/ingress/*",
+            "/srm-integration/v1/invoices/*/revisions/*/file",
             "/auth/c/getEmailValidCode",
             "/auth/c/doLoginByEmail",
             "/auth/c/doLoginByOtp",

@@ -1,0 +1,10 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080/",
+  "firstLevel": "设置",
+  "secondLevel": "门户登录设置",
+  "setting": "供应商门户图片验证码",
+  "expandCollapseVerified": true,
+  "directLinkAutoExpandsGroup": true,
+  "savedCaptchaSettingPreserved": true
+}

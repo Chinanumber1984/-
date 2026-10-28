@@ -1,0 +1,42 @@
+{
+  "result": "passed",
+  "date": "2026-10-28T03:31:06.622Z",
+  "entry": "http://localhost:18080/",
+  "internalEntry": "http://localhost:18080/?internal=1",
+  "portalEntry": "http://localhost:18080/?portal=1",
+  "activeAccounts": [
+    {
+      "account": "lijunhua",
+      "realm": "b",
+      "name": "内部测试人员"
+    },
+    {
+      "account": "admin",
+      "realm": "b",
+      "name": "管理员"
+    },
+    {
+      "account": "lixiaolong",
+      "realm": "c",
+      "name": "供应商测试人员"
+    },
+    {
+      "account": "gysadmin",
+      "realm": "c",
+      "name": "供应商门户管理员"
+    }
+  ],
+  "checks": [
+    "exactly_two_internal_and_two_supplier_accounts_enabled",
+    "four_real_logins_roles_and_trusted_supplier_bindings",
+    "both_supplier_accounts_see_the_real_published_rfq_and_only_their_supplier",
+    "supplier_tester_quotes_and_portal_admin_reads_same_supplier_history_on_isolated_probe",
+    "portal_identity_cannot_cross_suppliers_or_enter_internal_realm",
+    "lijunhua_submits_admin_runs_sqe_and_manager_nodes_and_self_review_stays_denied",
+    "legacy_sessions_revoked_and_no_task_assigned_to_disabled_users"
+  ],
+  "existingUserRfqUnchanged": true,
+  "keysPreserved": true,
+  "oldUsers": "disabled; rows and business history retained",
+  "testData": "New clearly named probe RFQ and onboarding supplier; no extra accounts"
+}
