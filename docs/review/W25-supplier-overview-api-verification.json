@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "date": "2026-10-29T06:42:03.693Z",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "checks": [
+    "performance detail list is supplier-filtered within trusted session scope",
+    "performance supplier filter rejects another organization",
+    "supplier score trend remains bound to the selected supplier",
+    "internal quality risk detail list is supplier-filtered",
+    "quality risk supplier filter rejects another organization",
+    "purchase order detail list is supplier-filtered and omits unit price",
+    "order supplier filter rejects another organization",
+    "portal performance remains limited to the bound supplier",
+    "portal cannot select a foreign supplier performance record",
+    "internal quality risks stay unavailable to supplier portal"
+  ],
+  "scope": "read-only; clone database; no business records changed"
+}

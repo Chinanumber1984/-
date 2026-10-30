@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080",
+  "date": "2026-10-29T06:55:47.892Z",
+  "checks": [
+    "performance overview filtered to selected supplier",
+    "cross-organization performance filter rejected",
+    "quality risk overview filtered to selected supplier",
+    "cross-organization risk filter rejected",
+    "order overview filtered; no unit-price field in rows",
+    "cross-organization order filter rejected"
+  ],
+  "mutation": "read-only business data; APP-device smoke token only; original browser PC session untouched"
+}

@@ -11,7 +11,7 @@ import static vip.xiaonuo.srm.collaboration.CollaborationInputs.*;
 @RestController @RequiredArgsConstructor @RequestMapping({"/srm/v1/collaboration","/client/c/srm/v1/collaboration"})
 public class CollaborationController {
  final SrmSupplierAccessApi access;final OrdersService orders;final SettlementService settlements;final InvoiceService invoices;final CollaborationCases cases;final CollaborationSandbox sandbox;
- @GetMapping("/orders") public CommonResult<?> get0(@RequestParam(defaultValue="1")int current,@RequestParam(defaultValue="20")int size,@RequestParam(defaultValue="")String searchKey,@RequestParam(defaultValue="")String status){return CommonResult.data(orders.page(access.current(),current,size,searchKey,status));}
+ @GetMapping("/orders") public CommonResult<?> get0(@RequestParam(defaultValue="1")int current,@RequestParam(defaultValue="20")int size,@RequestParam(defaultValue="")String searchKey,@RequestParam(defaultValue="")String status,@RequestParam(defaultValue="")String supplierId){return CommonResult.data(orders.page(access.current(),current,size,searchKey,status,supplierId));}
  @GetMapping("/orders/{id}") public CommonResult<?> get1(@PathVariable String id){return CommonResult.data(orders.detail(access.current(),id));}
  @GetMapping("/asns/{id}") public CommonResult<?> get2(@PathVariable String id){return CommonResult.data(orders.asn(access.current(),id));}
  @GetMapping("/receipts") public CommonResult<?> get3(@RequestParam(defaultValue="")String supplierId){return CommonResult.data(orders.receipts(access.current(),supplierId));}

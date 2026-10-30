@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "checks": [
+    "internal supplier detail renders 绩效 with scoped records/empty state",
+    "internal supplier detail renders 质量风险 with scoped records/empty state",
+    "internal supplier detail renders 采购订单 with scoped records/empty state",
+    "supplier portal detail hides internal performance, risk and procurement tabs"
+  ],
+  "screenshots": 1,
+  "savedSettingsChanged": false
+}

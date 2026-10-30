@@ -96,7 +96,11 @@ public class PerformanceService implements SrmPerformanceApi {
   if(a.organizationIds().isEmpty())return "1=0";args.addAll(a.organizationIds());return "s.ORG_ID IN ("+String.join(",",Collections.nCopies(a.organizationIds().size(),"?"))+")";
  }
  public Map<String,Object> page(Context a,int page,int size,String month,String category,String grade){
+  return page(a,page,size,month,category,grade,"");
+ }
+ public Map<String,Object> page(Context a,int page,int size,String month,String category,String grade,String supplierId){
   readable(a);require(page>=1&&page<=100000&&size>=1&&size<=100,400,"分页参数超出范围");var args=new ArrayList<Object>();String where="s.DELETE_FLAG='NOT_DELETE' AND "+scope(a,args);
+  if(supplierId!=null&&!supplierId.isBlank()){access.requireSupplier(a,supplierId,false);where+=" AND s.ID=?";args.add(supplierId);}
   if(!month.isBlank()){period(month);where+=" AND c.PERIOD=?";args.add(month);}if(!category.isBlank()){where+=" AND s.CATEGORY=?";args.add(category);}if(!grade.isBlank()){require(Set.of("STRATEGIC","PREFERRED","QUALIFIED","WATCH","ELIMINATION_SUGGESTED").contains(grade),400,"不支持的绩效等级");where+=" AND c.GRADE=?";args.add(grade);}
   String from=" FROM SRM_SCORECARD c JOIN SRM_SUPPLIER s ON s.ID=c.SUPPLIER_ID AND s.ORG_ID=c.ORG_ID WHERE "+where;
   long count=db.queryForObject("SELECT COUNT(*)"+from,Long.class,args.toArray());args.add(size);args.add((page-1)*size);
