@@ -21,3 +21,7 @@ scripts/test-review-package.py通过实际打包目录启动的服务，在同�
 ## W23–24本地总体验收准备
 
 P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis/后端重启证据在 `P8-*-verification.json`。业务签收矩阵和本地试点手册见 [pilot](../pilot/README.md)。共114个编号、84项标记已实现、30项PARTIAL；114项当前均待业务逐项按PRD特异AC和G1–G6验收。P8自动验证不关闭需求或替代业务签字。
+
+## W26供应商门户工作台
+
+隔离副本自动验证：[`W26-portal-dashboard-api-verification.json`](W26-portal-dashboard-api-verification.json)（8项）、[`W26-portal-dashboard-browser-verification.json`](W26-portal-dashboard-browser-verification.json)（6项）。手工步骤见 [W26测试用例](../pilot/W26-供应商门户工作台测试用例.md)。验证通过后在原18080主入口更新页面；FR-POR-103仍待业务人员整体验收。

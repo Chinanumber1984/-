@@ -1,0 +1,15 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "checks": [
+    "supplier workbench is the portal landing page with RFQ, auction, reconciliation and SCAR cards",
+    "RFQ card opens the existing supplier-scoped sourcing workflow",
+    "reconciliation card opens the existing collaboration workflow",
+    "SCAR card opens the existing quality workflow",
+    "performance card opens the existing performance workflow",
+    "portal cards follow the signed-in contact role set"
+  ],
+  "screenshots": 1,
+  "savedSettingsChanged": false
+}

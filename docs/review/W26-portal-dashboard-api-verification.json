@@ -1,0 +1,27 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "date": "2026-10-31T09:23:00.220Z",
+  "checks": [
+    "RFQ dashboard source contains only invitations bound to the logged-in supplier",
+    "sourcing reminders load through the portal-scoped source API",
+    "reconciliation summary/detail stays in supplier scope",
+    "SCAR summary/detail stays in supplier scope",
+    "performance overview contains only the bound supplier scores",
+    "qualification alerts contain only the bound supplier",
+    "quality notices can be read without changing quality records",
+    "collaboration notices can be read without changing reconciliation records"
+  ],
+  "counts": {
+    "rfqs": 2,
+    "sourceNotices": 4,
+    "reconciliations": 6,
+    "scars": 8,
+    "scores": 1,
+    "alerts": 0,
+    "qualityNotices": 50,
+    "collaborationNotices": 65
+  },
+  "mutation": "GET-only business queries; APP-device auth session; no fixture changes"
+}
