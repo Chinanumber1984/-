@@ -11,6 +11,7 @@ public class SrmApprovalController {
  @PostMapping("/suppliers/{sid}/approvals") @CommonLog(value="SRM提交审批",safe=true) public CommonResult<?> submit(@PathVariable String sid,@Valid @RequestBody Submit p){return CommonResult.data(service.submit(identity.current(),sid,p));}
  @GetMapping("/suppliers/{sid}/approvals") public CommonResult<?> list(@PathVariable String sid){return CommonResult.data(service.list(identity.current(),sid));}
  @GetMapping("/approvals/tasks") public CommonResult<?> tasks(){return CommonResult.data(service.inbox(identity.current()));}
+ @GetMapping("/approvals/history") public CommonResult<?> history(@RequestParam(defaultValue="1")int current,@RequestParam(defaultValue="20")int size,@RequestParam(defaultValue="")String status,@RequestParam(defaultValue="")String kind){return CommonResult.data(service.history(identity.current(),current,size,status,kind));}
  @PostMapping("/approvals/{aid}/withdraw") @CommonLog(value="SRM撤回申请",safe=true) public CommonResult<?> withdraw(@PathVariable String aid,@Valid @RequestBody Withdrawal p){return CommonResult.data(service.withdraw(identity.current(),aid,p.comment()));}
  @GetMapping("/approvals/{aid}") public CommonResult<?> detail(@PathVariable String aid){return CommonResult.data(service.detail(identity.current(),aid));}
  @GetMapping("/approvals/{aid}/tasks/{tid}/candidates") public CommonResult<?> candidates(@PathVariable String aid,@PathVariable String tid){return CommonResult.data(service.candidates(identity.current(),aid,tid));}

@@ -25,3 +25,7 @@ P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis
 ## W26供应商门户工作台
 
 隔离副本自动验证：[`W26-portal-dashboard-api-verification.json`](W26-portal-dashboard-api-verification.json)（8项）、[`W26-portal-dashboard-browser-verification.json`](W26-portal-dashboard-browser-verification.json)（6项）。手工步骤见 [W26测试用例](../pilot/W26-供应商门户工作台测试用例.md)。验证通过后在原18080主入口更新页面；FR-POR-103仍待业务人员整体验收。
+
+## W27已办/审批历史
+
+隔离副本自动验证见 [`W27-approval-history-api-verification.json`](W27-approval-history-api-verification.json) 与 [`W27-approval-history-browser-verification.json`](W27-approval-history-browser-verification.json)；主实例18080升级后只读冒烟见 [`W27-main-deployment-verification.json`](W27-main-deployment-verification.json)。手工步骤见 [W27审批历史测试用例](../pilot/W27-审批历史测试用例.md)。FR-FLOW-203仍待业务整体验收。

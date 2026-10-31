@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "date": "2026-10-31T13:18:38.515Z",
+  "checks": [
+    "history list contains completed approvals only and every row opens a scope-checked detail",
+    "status and business-type filters return matching history",
+    "invalid status and oversized page are rejected",
+    "supplier portal cannot call internal approval history"
+  ],
+  "recordsVisibleToAdmin": 16,
+  "mutation": "clone-only PC auth sessions and GET-only business queries; no approval or supplier rows changed"
+}

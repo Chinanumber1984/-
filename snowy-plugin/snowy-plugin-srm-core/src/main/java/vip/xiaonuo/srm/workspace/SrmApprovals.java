@@ -61,6 +61,19 @@ public class SrmApprovals {
    try{for(var t:flow.tasks(str(l,"PROCESS_INSTANCE_ID")))if(canTask(a,l,t)){var r=new LinkedHashMap<String,Object>(t);var supplier=suppliers.supplier(a,str(l,"SUPPLIER_ID"),false);r.put("supplierName",supplier.get("NAME"));r.put("supplierCode",supplier.get("SUPPLIER_CODE"));r.put("approvalId",l.get("ID"));r.put("supplierId",l.get("SUPPLIER_ID"));r.put("kind",l.get("BUSINESS_TYPE"));result.add(r);}}catch(vip.xiaonuo.common.exception.CommonException e){if(e.getCode()!=404)throw e;}
   }return result;
  }
+ public Map<String,Object> history(SrmActor a,int current,int size,String status,String kind){
+  require(!a.portal(),403,"审批历史仅内部用户可查");require(current>=1&&current<=100000&&size>=1&&size<=100,400,"分页参数超出范围");
+  var args=new ArrayList<Object>();String scope=suppliers.where(a,args).replaceAll("\\bORG_ID\\b","s.ORG_ID").replaceAll("\\bID\\b","s.ID").replaceAll("\\bCREATE_USER\\b","s.CREATE_USER");
+  String where="s.DELETE_FLAG='NOT_DELETE' AND l.SUPPLIER_ID=s.ID AND l.STATUS<>'PENDING' AND "+scope;
+  boolean auditAll=a.superUser()||a.roles().contains("SYS-ADMIN");
+  if(!auditAll){where+=" AND (l.REQUESTED_BY=? OR EXISTS(SELECT 1 FROM SRM_APPROVAL_ACTION own WHERE own.APPROVAL_ID=l.ID AND own.ACTOR_ID=?))";args.add(a.userId());args.add(a.userId());}
+  if(status!=null&&!status.isBlank()){require(Set.of("APPROVED","REJECTED","RETURNED","WITHDRAWN").contains(status),400,"不支持的审批状态筛选");where+=" AND l.STATUS=?";args.add(status);}
+  if(kind!=null&&!kind.isBlank()){require(KINDS.contains(kind),400,"不支持的审批类型筛选");where+=" AND l.BUSINESS_TYPE=?";args.add(kind);}
+  long total=db.queryForObject("SELECT COUNT(*) FROM SRM_APPROVAL_LINK l JOIN SRM_SUPPLIER s ON s.ID=l.SUPPLIER_ID WHERE "+where,Long.class,args.toArray());
+  args.add(size);args.add((current-1)*size);
+  var records=db.queryForList("SELECT l.ID AS id,l.BUSINESS_TYPE AS kind,l.STATUS AS status,l.SUPPLIER_ID AS supplierId,s.NAME AS supplierName,l.REQUESTED_BY AS requestedBy,l.CREATED_AT AS createdAt,l.COMPLETED_AT AS completedAt FROM SRM_APPROVAL_LINK l JOIN SRM_SUPPLIER s ON s.ID=l.SUPPLIER_ID WHERE "+where+" ORDER BY COALESCE(l.COMPLETED_AT,l.CREATED_AT) DESC,l.ID DESC LIMIT ? OFFSET ?",args.toArray());
+  return Map.of("records",records,"total",total,"current",current,"size",size);
+ }
  public List<Map<String,Object>> list(SrmActor a,String sid){suppliers.supplier(a,sid,false);return db.queryForList("SELECT ID AS id,BUSINESS_TYPE AS kind,STATUS AS status,REQUESTED_BY AS requestedBy,CREATED_AT AS createdAt,COMPLETED_AT AS completedAt FROM SRM_APPROVAL_LINK WHERE SUPPLIER_ID=? ORDER BY CREATED_AT DESC",sid);}
  public Map<String,Object> detail(SrmActor a,String aid){var l=link(aid,false);suppliers.supplier(a,str(l,"SUPPLIER_ID"),false);var r=new LinkedHashMap<String,Object>();for(String[] f:new String[][]{{"id","ID"},{"kind","BUSINESS_TYPE"},{"status","STATUS"},{"supplierId","SUPPLIER_ID"},{"requestedBy","REQUESTED_BY"},{"createdAt","CREATED_AT"}})r.put(f[0],l.get(f[1]));var payload=JSONUtil.parseObj(clear(l.get("PAYLOAD_CIPHER")));r.put("supplierName",suppliers.supplier(a,str(l,"SUPPLIER_ID"),false).get("NAME"));r.put("reason",payload.getStr("reason"));r.put("changes",a.sensitive()?payload.get("changes"):Map.of("notice","敏感变更内容仅字段授权人员可见"));r.put("before",a.sensitive()?JSONUtil.parseObj(clear(l.get("SNAPSHOT_CIPHER"))):Map.of());r.put("tasks",flow.tasks(str(l,"PROCESS_INSTANCE_ID")));r.put("history",flow.history(str(l,"PROCESS_INSTANCE_ID")));r.put("actions",db.queryForList("SELECT ID AS id,TASK_ID AS taskId,ACTION AS action,ACTOR_ID AS actorId,TARGET_ID AS targetId,COMMENT_CIPHER AS comment,CREATED_AT AS time FROM SRM_APPROVAL_ACTION WHERE APPROVAL_ID=? ORDER BY CREATED_AT,ID",aid).stream().map(m->{m.put("comment",clear(m.get("comment")));return m;}).toList());return r;}
  @Transactional public Map<String,Object> decide(SrmActor a,String aid,String tid,Decision p){

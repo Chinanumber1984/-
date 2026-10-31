@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "project": "srm-drill-p8-20261028",
+  "checks": [
+    "completed approval detail renders historical Flowable node, assignee and timestamps",
+    "supplier portal hides internal approval workbench"
+  ],
+  "screenshots": 1,
+  "businessRowsChanged": false
+}

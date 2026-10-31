@@ -1,0 +1,12 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080",
+  "date": "2026-10-31T13:22:32.047Z",
+  "visibleRecords": 8,
+  "checks": [
+    "APP-device internal authentication preserved the browser PC session",
+    "main endpoint returns only completed approval records",
+    "sample history records open through scoped detail"
+  ],
+  "mutation": "read-only approval queries; APP auth session only"
+}

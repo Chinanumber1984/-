@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: SRM lifecycle first release
-  version: 0.3.0
+  version: 0.4.0
   description: Actual endpoints. Internal and portal identities are separate; portal cannot use internal tasks or workflow administration. Business codes are inside Snowy CommonResult.
 servers:
   - url: /srm/v1
@@ -31,6 +31,18 @@ paths:
       summary: Internal role, organization, data-scope and assignment filtered tasks
       responses:
         '200': {description: CommonResult with tasks and supplier names. Portal forbidden.}
+  /approvals/history:
+    get:
+      summary: Paginated completed lifecycle approvals for the caller's scope
+      description: Internal only. Applicants and recorded actors see their own requests/actions. SYS-ADMIN and superAdmin see the caller's existing supplier data scope. Supports completed status and business kind filters; never returns pending tasks.
+      parameters:
+        - {name: current, in: query, schema: {type: integer, minimum: 1, default: 1}}
+        - {name: size, in: query, schema: {type: integer, minimum: 1, maximum: 100, default: 20}}
+        - {name: status, in: query, schema: {type: string, enum: [APPROVED, REJECTED, RETURNED, WITHDRAWN]}}
+        - {name: kind, in: query, schema: {type: string, enum: [ONBOARD, CHANGE, FREEZE, UNFREEZE, ELIMINATE]}}
+      responses:
+        '200': {description: CommonResult with scoped summaries and completed timestamps; portal forbidden.}
+        '400': {description: Invalid page, status or business type.}
   /approvals/{aid}:
     parameters:
       - $ref: '#/components/parameters/approvalId'
