@@ -1,0 +1,21 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080",
+  "date": "2026-11-02T04:00:57.600Z",
+  "checks": [
+    "HTTP 200 from Windows/WSL localhost entry with W29 workspace asset",
+    "APP-device auth preserved the user's PC session",
+    "public registration categories load through main entry",
+    "internal category dictionary remains readable",
+    "portal category list contains enabled categories only",
+    "main sourcing candidates retain exact category filter",
+    "main sourcing service rejects disabled or unknown categories",
+    "portal cannot maintain categories"
+  ],
+  "preservation": {
+    "accountsAndKeyFilesMatchPreUpgrade": true,
+    "databaseBackupGzipValid": true,
+    "backup": ".runtime/upgrades/20261102-115856-2"
+  },
+  "mutation": "read-only queries; APP-device sessions only"
+}

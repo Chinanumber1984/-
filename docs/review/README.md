@@ -33,3 +33,7 @@ P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis
 ## W28交付异常风险队列
 
 隔离副本自动验证见 [`W28-risk-queue-api-verification.json`](W28-risk-queue-api-verification.json) 与 [`W28-risk-queue-browser-verification.json`](W28-risk-queue-browser-verification.json)；主实例18080升级后APP设备只读冒烟见 [`W28-main-deployment-verification.json`](W28-main-deployment-verification.json)。手工步骤见 [W28测试用例](../pilot/W28-交付异常风险队列测试用例.md)。内部风险列表支持类型、状态、等级组合筛选并标出来源分类；FR-COL-302仍待业务人员整体验收。
+
+## W29品类字典与寻源范围
+
+隔离副本自动验证见 [`W29-category-scope-api-verification.json`](W29-category-scope-api-verification.json) 与 [`W29-category-scope-browser-verification.json`](W29-category-scope-browser-verification.json)；主实例18080升级后只读冒烟见 [`W29-main-deployment-verification.json`](W29-main-deployment-verification.json)。手工步骤见 [W29测试用例](../pilot/W29-品类字典与寻源范围测试用例.md)。已停用品类不出现在公开注册/门户列表，候选供应商接口也拒绝查询；FR-CORE-105仍待业务人员整体验收。

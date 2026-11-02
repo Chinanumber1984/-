@@ -1,0 +1,18 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "date": "2026-11-02T03:57:24.656Z",
+  "checks": [
+    "authorized category create and read",
+    "category update increments row version",
+    "stale category version rejected",
+    "disabled category is absent from public registration and portal lists and rejected by sourcing candidates",
+    "active candidates remain restricted to the requested exact category",
+    "supplier portal cannot create or maintain category dictionary"
+  ],
+  "retainedFixtures": {
+    "activeCategory": "W29_VERIFY_MVYQ9VRX",
+    "disabledCategory": "W29_OFF_MVYQ9VRX"
+  },
+  "mutation": "W29-labeled isolated category rows only; no supplier or sourcing business rows changed"
+}

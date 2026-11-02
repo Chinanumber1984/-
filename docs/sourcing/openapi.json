@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "title": "SRM sourcing W12–15",
-    "version": "1.0.0",
-    "description": "Same authenticated gateway at /api. REST deliberately has no bid creation endpoint: STOMP /api/srm-sourcing-ws, CONNECT ticket from /socket-ticket, SEND /app/bid/submit, private queues /user/queue/sourcing-state and /user/queue/sourcing-acks. See README.md for concurrency/price rules and Java validated records for exact DTO contracts."
+    "version": "1.1.0",
+    "description": "Same authenticated gateway at /api. REST deliberately has no bid creation endpoint: STOMP /api/srm-sourcing-ws, CONNECT ticket from /socket-ticket, SEND /app/bid/submit, private queues /user/queue/sourcing-state and /user/queue/sourcing-acks. Candidate lookup only accepts enabled categories and returns qualified suppliers in the caller's organization with the exact same category. See README.md for concurrency/price rules and Java validated records for exact DTO contracts."
   },
   "servers": [
     {
@@ -67,7 +67,10 @@
     "/candidates": {
       "get": {
         "summary": "GET /candidates",
-        "parameters": [],
+        "parameters": [
+          {"name":"category","in":"query","required":true,"schema":{"type":"string"},"description":"Enabled SRM category code; missing or disabled codes return 400."},
+          {"name":"searchKey","in":"query","required":false,"schema":{"type":"string"},"description":"Optional supplier name/code search within the caller's organization and exact category."}
+        ],
         "responses": {
           "200": {
             "description": "CommonResult; code 200 success, 400 validation,401 login,403 role,404 scope,409 conflict,503 temporarily unavailable",

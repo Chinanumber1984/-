@@ -25,9 +25,9 @@ public class SrmRegistration {
   db.update("UPDATE SRM_REGISTRATION_INVITE SET USED_AT=NOW(3),SUPPLIER_ID=? WHERE ID=?",sid,invite.get("ID"));service.audit(system,sid,sid,"SUPPLIER_REGISTERED",Map.of("entry","INVITATION"));return Map.of("supplierCode",supplier.get("supplierCode"),"status","POTENTIAL","nextStep","登录供应商门户，补齐品类要求的资质后提交准入；注册不跳过资质门槛");
  }
  @RestController @RequiredArgsConstructor public static class Controller {
-  private final SrmRegistration service;private final SrmIdentity identity;
+  private final SrmRegistration service;private final SrmIdentity identity;private final SrmWorkspaceService workspace;
   @PostMapping("/srm/v1/registration-invitations") @CommonLog(value="SRM注册邀请",safe=true) public CommonResult<?> invite(){return CommonResult.data(service.invite(identity.current()));}
-  @GetMapping("/srm/public/categories") public CommonResult<?> categories(){return CommonResult.data(service.service.categories().stream().filter(c->Boolean.TRUE.equals(c.get("enabled"))).map(c->Map.of("code",c.get("code"),"name",c.get("name"))).toList());}
+  @GetMapping("/srm/public/categories") public CommonResult<?> categories(){return CommonResult.data(workspace.categories().stream().filter(c->Boolean.TRUE.equals(c.get("enabled"))).map(c->Map.of("code",c.get("code"),"name",c.get("name"))).toList());}
   @PostMapping("/srm/public/register") @CommonLog(value="SRM供应商注册",safe=true) public CommonResult<?> register(@Valid @RequestBody Register p){return CommonResult.data(service.register(p));}
  }
 }

@@ -1,0 +1,10 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081/",
+  "date": "2026-11-02",
+  "checks": [
+    "category dictionary shows enabled and disabled W29 rows",
+    "new RFQ category selector excludes disabled category"
+  ],
+  "mutation": "read-only UI inspection"
+}
