@@ -56,7 +56,7 @@ FR-COL-203,收货登记,已实现（未等于业务验收）,待业务逐项验�
 FR-COL-204,收货容差校验,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
 FR-COL-205,逾期预警,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
 FR-COL-301,交付进度看板,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
-FR-COL-302,交付异常预警,部分实现,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,补齐该编号PARTIAL内容；验证PRD全部特异AC及G1–G6；业务负责人记录实际结果并签收。
+FR-COL-302,交付异常预警,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/review/W28-risk-queue-api-verification.json; docs/review/W28-risk-queue-browser-verification.json; docs/pilot/W28-交付异常风险队列测试用例.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
 FR-COL-401,对账单生成,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
 FR-COL-402,对账差异处理,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。
 FR-COL-403,双方对账确认,已实现（未等于业务验收）,待业务逐项验收,docs/review/W16-19-api-verification.json; docs/collaboration/README.md,按PRD逐项验证全部特异AC及G1–G6；业务负责人记录实际结果并签收。

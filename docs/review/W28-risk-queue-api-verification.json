@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "date": "2026-10-31T13:54:16.957Z",
+  "checks": [
+    "paged internal risk list includes origin classification",
+    "risk type, lifecycle status and severity filters return only matching rows",
+    "compound risk filters are combined with AND",
+    "unsupported filter values are rejected",
+    "supplier portal cannot access internal risk queue"
+  ],
+  "mutation": "read-only; no business rows changed"
+}

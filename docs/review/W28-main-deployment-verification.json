@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18080",
+  "date": "2026-10-31T14:00:50.110Z",
+  "checks": [
+    "APP-device auth did not evict the user's PC session",
+    "main entry riskType filtering",
+    "main entry status filtering",
+    "main entry level filtering",
+    "main entry rejects unsupported filter values",
+    "portal account remains denied from internal risk queue"
+  ],
+  "mutation": "read-only risk queries; APP-device sessions only"
+}

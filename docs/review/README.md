@@ -29,3 +29,7 @@ P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis
 ## W27已办/审批历史
 
 隔离副本自动验证见 [`W27-approval-history-api-verification.json`](W27-approval-history-api-verification.json) 与 [`W27-approval-history-browser-verification.json`](W27-approval-history-browser-verification.json)；主实例18080升级后只读冒烟见 [`W27-main-deployment-verification.json`](W27-main-deployment-verification.json)。手工步骤见 [W27审批历史测试用例](../pilot/W27-审批历史测试用例.md)。FR-FLOW-203仍待业务整体验收。
+
+## W28交付异常风险队列
+
+隔离副本自动验证见 [`W28-risk-queue-api-verification.json`](W28-risk-queue-api-verification.json) 与 [`W28-risk-queue-browser-verification.json`](W28-risk-queue-browser-verification.json)；主实例18080升级后APP设备只读冒烟见 [`W28-main-deployment-verification.json`](W28-main-deployment-verification.json)。手工步骤见 [W28测试用例](../pilot/W28-交付异常风险队列测试用例.md)。内部风险列表支持类型、状态、等级组合筛选并标出来源分类；FR-COL-302仍待业务人员整体验收。

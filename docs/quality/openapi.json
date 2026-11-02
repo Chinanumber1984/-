@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "title": "SRM W20–22 local quality and risk contract",
-    "version": "1.0.0",
-    "description": "Typed inputs are derived from QualityInputs.java. Identity, org and supplier scopes are server-derived. Portal can only submit/read its own quality cases. Source ERP/QMS contracts are described in INTEGRATION.md. Real vendor validation pending."
+    "version": "1.1.0",
+    "description": "Typed inputs are derived from QualityInputs.java. Identity, org and supplier scopes are server-derived. Portal can only submit/read its own quality cases; the internal risk queue is denied to portal identities. Risk list filters are validated against server allowlists. Source ERP/QMS contracts are described in INTEGRATION.md. Real vendor validation pending."
   },
   "servers": [
     {
@@ -330,6 +330,41 @@
           }
         },
         "parameters": [
+          {
+            "name": "supplierId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "riskType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["DELIVERY_EXCEPTION", "CERTIFICATE_EXPIRED", "COMPLIANCE_BLACKLIST", "SCAR_OVERDUE", "REPEATED_DEFECT", "SEVERE_QUALITY"]
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["PENDING", "ASSESSED", "WARNING", "DISPOSED"]
+            }
+          },
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["HIGH", "MEDIUM", "LOW"]
+            }
+          },
           {
             "name": "current",
             "in": "query",

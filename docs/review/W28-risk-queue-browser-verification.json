@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081/",
+  "date": "2026-10-31",
+  "checks": [
+    "delivery exception filter is visible and limits browser rows",
+    "status filter combines with selected risk type",
+    "source classification and detail action render"
+  ],
+  "mutation": "read-only business data; browser login only"
+}
