@@ -1,0 +1,13 @@
+{
+  "result": "passed",
+  "date": "2026-11-02T07:09:34.973Z",
+  "entry": "http://localhost:18080",
+  "checks": [
+    "main Windows browser entry serves built workspace",
+    "APP internal session authenticates without replacing PC session",
+    "main backend SRM module is healthy after W30 release",
+    "portal remains denied from internal quality-risk list"
+  ],
+  "mutation": "read-only requests; APP-device sessions only; no risk or supplier lifecycle changes",
+  "primaryDatabaseAndKeys": "retained; upgrade backup verified"
+}

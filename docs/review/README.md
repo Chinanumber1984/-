@@ -37,3 +37,7 @@ P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis
 ## W29品类字典与寻源范围
 
 隔离副本自动验证见 [`W29-category-scope-api-verification.json`](W29-category-scope-api-verification.json) 与 [`W29-category-scope-browser-verification.json`](W29-category-scope-browser-verification.json)；主实例18080升级后只读冒烟见 [`W29-main-deployment-verification.json`](W29-main-deployment-verification.json)。手工步骤见 [W29测试用例](../pilot/W29-品类字典与寻源范围测试用例.md)。已停用品类不出现在公开注册/门户列表，候选供应商接口也拒绝查询；FR-CORE-105仍待业务人员整体验收。
+
+## W30高风险自动冻结建议
+
+隔离副本 API 与浏览器检查见 [`W30-risk-freeze-api-verification.json`](W30-risk-freeze-api-verification.json) 和 [`W30-risk-freeze-browser-verification.json`](W30-risk-freeze-browser-verification.json)。SQE高风险评估自动创建原FREEZE审批；经理批准前供应商不变，重复评估不重复建单，申请人不能自审。主实例未升级。手工用例见 [W30测试用例](../pilot/W30-高风险自动冻结建议测试用例.md)。

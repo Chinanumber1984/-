@@ -1,0 +1,9 @@
+{
+  "result": "passed",
+  "entry": "http://localhost:18081",
+  "checks": [
+    "quality_panel_renders_high_risk_original_freeze_approval",
+    "duplicate_manual_submit_action_hidden_after_automatic_submission"
+  ],
+  "scope": "isolated clone only"
+}

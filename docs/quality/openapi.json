@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "SRM W20–22 local quality and risk contract",
-    "version": "1.1.0",
-    "description": "Typed inputs are derived from QualityInputs.java. Identity, org and supplier scopes are server-derived. Portal can only submit/read its own quality cases; the internal risk queue is denied to portal identities. Risk list filters are validated against server allowlists. Source ERP/QMS contracts are described in INTEGRATION.md. Real vendor validation pending."
+    "title": "SRM local quality and risk contract",
+    "version": "1.2.0",
+    "description": "Typed inputs are derived from QualityInputs.java. Identity, org and supplier scopes are server-derived. Portal can only submit/read its own quality cases; the internal risk queue is denied to portal identities. Risk list filters are validated against server allowlists. A high-risk assessment by an internal SQE automatically submits the existing FREEZE approval flow; it never freezes the supplier directly, and the requester cannot self-approve. Source ERP/QMS contracts are described in INTEGRATION.md. Real vendor validation pending."
   },
   "servers": [
     {
@@ -425,7 +425,7 @@
     },
     "/risks/{id}/assess": {
       "post": {
-        "summary": "POST /risks/{id}/assess",
+        "summary": "POST /risks/{id}/assess; HIGH automatically submits the existing FREEZE approval flow",
         "responses": {
           "200": {
             "description": "CommonResult JSON; inspect business code. 200 success; 400 validation; 401 login; 403 role; 404 scope; 409 version/state conflict; 503 integration unavailable."

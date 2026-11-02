@@ -1,0 +1,21 @@
+{
+  "result": "passed",
+  "date": "2026-11-02T06:58:03.876Z",
+  "entry": "http://localhost:18081",
+  "checks": [
+    "non_high_assessment_does_not_submit_freeze",
+    "high_assessment_automatically_submits_pending_original_flow_and_requester_cannot_self_approve",
+    "repeat_high_assessment_keeps_same_approval_without_freezing_supplier",
+    "manager_approval_freezes_supplier_and_existing_unfreeze_flow_restores_qualified",
+    "supplier_portal_cannot_access_internal_risk_queue"
+  ],
+  "supplierId": "2117149199419904000",
+  "riskId": "2117149211558219776",
+  "approvalId": "2117149212141228032",
+  "accountAliases": [
+    "lijunhua",
+    "admin",
+    "lixiaolong"
+  ],
+  "scope": "isolated recovery clone; supplier restored to QUALIFIED; primary data untouched"
+}

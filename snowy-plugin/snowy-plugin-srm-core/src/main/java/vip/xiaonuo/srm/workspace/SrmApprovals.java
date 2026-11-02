@@ -27,8 +27,14 @@ public class SrmApprovals {
  private boolean pending(String sid){return db.queryForObject("SELECT COUNT(*) FROM SRM_APPROVAL_LINK WHERE SUPPLIER_ID=? AND STATUS='PENDING'",Long.class,sid)>0;}
  private Map<String,Object> link(String id,boolean lock){var r=db.queryForList("SELECT * FROM SRM_APPROVAL_LINK WHERE ID=?"+(lock?" FOR UPDATE":""),id);require(r.size()==1,404,"申请不存在");return r.get(0);}
  private String clear(Object c){return c==null?"":codec.decrypt(String.valueOf(c));}
- @Transactional public Map<String,Object> submit(SrmActor a,String sid,Submit p){
-  require(KINDS.contains(p.kind()),400,"不支持的申请类型");if(Set.of("ONBOARD","CHANGE").contains(p.kind()))a.requireManage();else require(a.canClassify(),403,"生命周期申请仅采购经理可发起");
+ @Transactional public Map<String,Object> submit(SrmActor a,String sid,Submit p){return submit(a,sid,p,false);}
+ @Transactional public Map<String,Object> submitRiskSuggestion(SrmActor a,String sid,Submit p){
+  require(!a.portal()&&a.roles().contains("SQE")&&p.kind().equals("FREEZE"),403,"仅内部SQE可提交高风险冻结建议");
+  var roles=new HashSet<>(a.roles());roles.add("CAT-MGR");
+  return submit(new SrmActor(a.userId(),a.orgId(),a.supplierId(),roles,a.allOrganizations(),a.organizationIds(),a.ownOnly(),a.sensitive(),false),sid,p,true);
+ }
+ private Map<String,Object> submit(SrmActor a,String sid,Submit p,boolean riskSuggestion){
+  require(KINDS.contains(p.kind()),400,"不支持的申请类型");if(Set.of("ONBOARD","CHANGE").contains(p.kind()))a.requireManage();else require(a.canClassify()||(riskSuggestion&&p.kind().equals("FREEZE")&&a.roles().contains("SQE")),403,"生命周期申请仅采购经理可发起");
   var s=suppliers.supplier(a,sid,true);String hash=DigestUtil.sha256Hex(JSONUtil.toJsonStr(new com.fasterxml.jackson.databind.ObjectMapper().convertValue(p,Map.class)));
   var prior=db.queryForList("SELECT * FROM SRM_APPROVAL_LINK WHERE ORG_ID=? AND REQUEST_KEY=?",s.get("ORG_ID"),p.requestKey());
   if(!prior.isEmpty()){var old=prior.get(0);require(sid.equals(old.get("SUPPLIER_ID"))&&a.userId().equals(old.get("REQUESTED_BY"))&&hash.equals(old.get("REQUEST_HASH")),409,"幂等键已用于其他请求");return detail(a,str(old,"ID"));}
