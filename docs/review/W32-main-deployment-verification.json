@@ -1,0 +1,22 @@
+{
+  "result": "passed",
+  "date": "2026-11-03T04:01:33.455Z",
+  "entry": "http://localhost:18080",
+  "definitions": 8,
+  "categories": [
+    "ONBOARD",
+    "CHANGE",
+    "FREEZE",
+    "UNFREEZE",
+    "ELIMINATE",
+    "AWARD",
+    "COL_REVIEW",
+    "QUALITY_REVIEW"
+  ],
+  "checks": [
+    "all eight internal process categories are present in Flowable definitions",
+    "served workspace bundle labels and maps all eight categories",
+    "APP-device read-only request left browser session and process definitions unchanged"
+  ],
+  "mutation": "read-only; no definition published, suspended or uploaded"
+}
