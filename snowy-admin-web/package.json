@@ -37,6 +37,7 @@
     "@wangeditor/editor-for-vue": "5.1.12",
     "ant-design-vue": "4.2.6",
     "axios": "1.7.9",
+    "bpmn-js": "18.31.1",
     "codemirror": "5.65.19",
     "cropperjs": "1.6.2",
     "dayjs": "1.11.19",
@@ -84,14 +85,14 @@
     "prettier": "3.3.3",
     "rollup-plugin-visualizer": "5.12.0",
     "tailwindcss": "3.4.13",
+    "terser": "5.39.0",
     "typescript": "5.7.2",
     "unplugin-auto-import": "0.18.3",
     "unplugin-vue-components": "0.27.4",
     "vite": "5.4.21",
     "vite-plugin-compression": "0.5.1",
     "vite-plugin-vue-setup-extend": "0.4.0",
-    "vue-eslint-parser": "9.3.2",
-    "terser": "5.39.0"
+    "vue-eslint-parser": "9.3.2"
   },
   "browserslist": [
     "> 1%",

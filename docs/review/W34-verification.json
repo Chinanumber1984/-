@@ -1,0 +1,26 @@
+{
+  "result": "passed",
+  "date": "2026-11-03T15:24:55.704Z",
+  "entry": "http://localhost:18080",
+  "build": {
+    "package": "artifacts/SRM-W34-review",
+    "backend": "33 Maven reactor modules built successfully",
+    "flowableTests": "4 passed, 0 failed",
+    "frontend": "npm ci succeeded; Vite transformed 461 modules and built the workspace",
+    "note": "Vite reports the combined workspace JavaScript chunk at 879 kB; build succeeds."
+  },
+  "deployment": {
+    "backup": ".runtime/upgrades/20261103-232235-2352463",
+    "databaseDumpGzipVerified": true,
+    "accountsAndBackendCredentialHashesMatchBackup": true,
+    "publicKeyUnchanged": true,
+    "databaseAndKeysPreserved": true
+  },
+  "definitionCount": 8,
+  "checks": [
+    "admin APP session reads existing definition and BPMN XML",
+    "18080 serves bundled graphical BPMN editor and publish controls",
+    "workflow definitions and versions unchanged by smoke"
+  ],
+  "mutation": "read-only; no process uploaded, published, suspended or activated"
+}

@@ -1,10 +1,11 @@
 <script setup>
 import {computed,onMounted,ref} from 'vue'
+import {portalCapabilities} from './portalCapabilities.mjs'
 const props=defineProps({api:Function,context:Object,alerts:{type:Array,default:()=>[]}})
 const emit=defineEmits(['navigate'])
 const busy=ref(false),error=ref(''),rfqs=ref([]),reconciliations=ref([]),scars=ref([]),scores=ref([]),notices=ref([]),loaded=ref(false)
 const roles=props.context.roles||[]
-const permissions={sourcing:roles.some(r=>['ADMIN','QUOTE'].includes(r)),collaboration:roles.some(r=>['ADMIN','SHIP','FINANCE'].includes(r)),quality:roles.some(r=>['ADMIN','QUALITY'].includes(r)),performance:roles.some(r=>['ADMIN','QUOTE','QUALITY','FINANCE'].includes(r))}
+const permissions=portalCapabilities(roles)
 const activeRfqs=computed(()=>rfqs.value.filter(r=>r.status==='PUBLISHED'))
 const openAuctions=computed(()=>activeRfqs.value.filter(r=>r.strategy==='AUCTION'))
 const quoteRfqs=computed(()=>activeRfqs.value.filter(r=>r.strategy!=='AUCTION'))
@@ -21,7 +22,8 @@ async function load(){
  busy.value=true;error.value='';rfqs.value=[];reconciliations.value=[];scars.value=[];scores.value=[];notices.value=[]
  const jobs=[]
  if(permissions.sourcing){jobs.push(['rfqs',()=>props.api('/sourcing/rfqs?current=1&size=100')]);jobs.push(['sourceNotices',()=>props.api('/sourcing/notices')])}
- if(permissions.collaboration){jobs.push(['reconciliations',()=>props.api('/collaboration/reconciliations?current=1&size=100')]);jobs.push(['collabNotices',()=>props.api('/collaboration/notices')])}
+ if(permissions.settlements)jobs.push(['reconciliations',()=>props.api('/collaboration/reconciliations?current=1&size=100')])
+ if(permissions.collaboration)jobs.push(['collabNotices',()=>props.api('/collaboration/notices')])
  if(permissions.quality){jobs.push(['scars',()=>props.api('/quality/cases?kind=SCAR&current=1&size=100')]);jobs.push(['qualityNotices',()=>props.api('/quality/notices')])}
  if(permissions.performance)jobs.push(['scores',()=>props.api('/performance/scores?current=1&size=100')])
  const results=await Promise.allSettled(jobs.map(([,fn])=>fn())),failed=[]
@@ -38,7 +40,7 @@ onMounted(load)
   <div class="portal-dashboard-grid">
    <article class="portal-summary-card"><span>待处理询价</span><strong>{{permissions.sourcing?quoteRfqs.length:'—'}}</strong><small>已发布并邀请本供应商</small><button class="text-btn" :disabled="!permissions.sourcing" @click="emit('navigate','sourcing')">查看询价</button></article>
    <article class="portal-summary-card"><span>进行中竞价</span><strong>{{permissions.sourcing?openAuctions.length:'—'}}</strong><small>仅统计本供应商受邀场次</small><button class="text-btn" :disabled="!permissions.sourcing" @click="emit('navigate','sourcing')">进入竞价</button></article>
-   <article class="portal-summary-card"><span>待我确认的对账</span><strong>{{permissions.collaboration?needRecon.length:'—'}}</strong><small>{{permissions.collaboration?disputedRecon.length:'—'}} 笔存在差异或待协商</small><button class="text-btn" :disabled="!permissions.collaboration" @click="emit('navigate','collaboration')">查看对账</button></article>
+   <article v-if="permissions.settlements" class="portal-summary-card"><span>待我确认的对账</span><strong>{{needRecon.length}}</strong><small>{{disputedRecon.length}} 笔存在差异或待协商</small><button class="text-btn" @click="emit('navigate','collaboration')">查看对账</button></article>
    <article class="portal-summary-card"><span>未关闭 SCAR</span><strong>{{permissions.quality?openScars.length:'—'}}</strong><small>质量整改与 8D 跟进</small><button class="text-btn" :disabled="!permissions.quality" @click="emit('navigate','quality')">查看质量事项</button></article>
   </div>
   <div class="portal-dashboard-lower">
