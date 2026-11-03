@@ -1,0 +1,11 @@
+{
+  "result": "passed",
+  "date": "2026-11-03T03:51:02.477Z",
+  "entry": "http://localhost:18080",
+  "checks": [
+    "18080 serves the W31 workspace bundle and profile controls",
+    "critical profile edit remains denied by the server with no profile mutation",
+    "APP-device smoke preserved PC browser session"
+  ],
+  "mutation": "read-only; attempted critical edit was rejected; supplier profile unchanged"
+}

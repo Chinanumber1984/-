@@ -41,3 +41,7 @@ P8隔离恢复、四账号浏览器/API、迁移哈希、10k列表性能和Redis
 ## W30高风险自动冻结建议
 
 隔离副本 API 与浏览器检查见 [`W30-risk-freeze-api-verification.json`](W30-risk-freeze-api-verification.json) 和 [`W30-risk-freeze-browser-verification.json`](W30-risk-freeze-browser-verification.json)。SQE高风险评估自动创建原FREEZE审批；经理批准前供应商不变，重复评估不重复建单，申请人不能自审。主实例未升级。手工用例见 [W30测试用例](../pilot/W30-高风险自动冻结建议测试用例.md)。
+
+## W31已准入供应商资料维护
+
+已准入档案页面将注册地址维护与关键资料审批分开，淘汰档案不显示编辑入口。隔离生命周期回归脚本增加了已准入地址修改及关键字段保留断言。完整交付构建、18080部署和只读主实例冒烟通过；报告见 [`W31-main-deployment-verification.json`](W31-main-deployment-verification.json)，手工步骤见 [W31测试用例](../pilot/W31-已准入供应商资料维护测试用例.md)。主实例未写入测试地址。FR-CORE-104/501仍待业务整体验收。
