@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-04",
+  "environment": "isolated Docker recovery clone; localhost:18081",
+  "sourceBackupIntegrity": "passed: stable database table checksums and attachment SHA-256 hashes",
+  "originalInstanceModified": false,
+  "checks": {
+    "collaborationApi": {"result": "passed", "count": 16},
+    "qualityRiskApi": {"result": "passed", "count": 9},
+    "portalDashboardApi": {"result": "passed", "count": 8, "mutation": "read-only"},
+    "approvalHistoryApi": {"result": "passed", "count": 4},
+    "riskQueueApi": {"result": "passed", "count": 4, "mutation": "read-only"},
+    "categoryScopeApi": {"result": "passed", "count": 6},
+    "riskFreezeApi": {"result": "passed", "count": 5},
+    "lifecycleApi": {"result": "passed", "count": 34},
+    "supplierWorkspaceApi": {"result": "partial", "passedChecks": 30, "blockedAt": "legacy assertion expected STORAGE_ENGINE=MINIO; recovered local bundle reports LOCAL", "passedBeforeBlock": "authentication, roles, supplier scope, encryption, attachment roundtrip, certificates, contacts, portal login, tier, audit, warning, export"},
+    "browserEntry": {"result": "http-200", "healthz": "http-200", "visualBrowserAutomation": "not-run; Playwright browser unavailable in this WSL session"}
+  },
+  "externalSystemIntegrations": "not-tested; all callbacks were local sandbox simulations",
+  "mainInstanceBusinessWrites": false,
+  "manualAcceptance": "pending user execution of docs/pilot/SRM-全模块业务流手工验收用例.md"
+}
