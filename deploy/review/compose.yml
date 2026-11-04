@@ -49,7 +49,7 @@ services:
     command: [node, scripts/serve-review.mjs]
     environment:
       SRM_REVIEW_HOST: 0.0.0.0
-      SRM_REVIEW_ALLOWED_HOSTS: localhost,127.0.0.1
+      SRM_REVIEW_ALLOWED_HOSTS: ${SRM_REVIEW_ALLOWED_HOSTS:-localhost,127.0.0.1}
       SRM_REVIEW_BACKEND: http://backend:8080
     ports: ['127.0.0.1:${SRM_REVIEW_PORT:-18080}:5176']
     volumes:
