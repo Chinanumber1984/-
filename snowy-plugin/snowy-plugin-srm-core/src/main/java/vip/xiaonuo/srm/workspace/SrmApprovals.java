@@ -24,6 +24,13 @@ public class SrmApprovals {
  @Value("${srm.approval.eliminate-at-limit:true}") private boolean eliminateAtLimit;
  @Value("${srm.approval.initial-tier:QUALIFIED}")private String initialTier;
  static final Set<String> KINDS=Set.of("ONBOARD","CHANGE","FREEZE","UNFREEZE","ELIMINATE");
+ static String onboardingDecisionComment(String action,String categoryNecessity,String performanceConclusion,String comment){
+  require(categoryNecessity!=null&&Set.of("REQUIRED","NOT_REQUIRED").contains(categoryNecessity),400,"请选择品类必要性结论");
+  require(performanceConclusion!=null&&Set.of("ACCEPT","CONDITIONAL","REJECT").contains(performanceConclusion),400,"请选择绩效评估结论");
+  require("REJECT".equals(action)=="REJECT".equals(performanceConclusion),400,"绩效结论与审批动作不一致");
+  String perf=switch(performanceConclusion){case "ACCEPT"->"通过";case "CONDITIONAL"->"有条件通过";default->"不通过";};
+  return "[准入决策] 品类必要性="+(categoryNecessity.equals("REQUIRED")?"必要":"非必要")+"；绩效结论="+perf+"\n"+comment;
+ }
  private boolean pending(String sid){return db.queryForObject("SELECT COUNT(*) FROM SRM_APPROVAL_LINK WHERE SUPPLIER_ID=? AND STATUS='PENDING'",Long.class,sid)>0;}
  private Map<String,Object> link(String id,boolean lock){var r=db.queryForList("SELECT * FROM SRM_APPROVAL_LINK WHERE ID=?"+(lock?" FOR UPDATE":""),id);require(r.size()==1,404,"申请不存在");return r.get(0);}
  private String clear(Object c){return c==null?"":codec.decrypt(String.valueOf(c));}
@@ -81,15 +88,18 @@ public class SrmApprovals {
   return Map.of("records",records,"total",total,"current",current,"size",size);
  }
  public List<Map<String,Object>> list(SrmActor a,String sid){suppliers.supplier(a,sid,false);return db.queryForList("SELECT ID AS id,BUSINESS_TYPE AS kind,STATUS AS status,REQUESTED_BY AS requestedBy,CREATED_AT AS createdAt,COMPLETED_AT AS completedAt FROM SRM_APPROVAL_LINK WHERE SUPPLIER_ID=? ORDER BY CREATED_AT DESC",sid);}
- public Map<String,Object> detail(SrmActor a,String aid){var l=link(aid,false);suppliers.supplier(a,str(l,"SUPPLIER_ID"),false);var r=new LinkedHashMap<String,Object>();for(String[] f:new String[][]{{"id","ID"},{"kind","BUSINESS_TYPE"},{"status","STATUS"},{"supplierId","SUPPLIER_ID"},{"requestedBy","REQUESTED_BY"},{"createdAt","CREATED_AT"}})r.put(f[0],l.get(f[1]));var payload=JSONUtil.parseObj(clear(l.get("PAYLOAD_CIPHER")));r.put("supplierName",suppliers.supplier(a,str(l,"SUPPLIER_ID"),false).get("NAME"));r.put("reason",payload.getStr("reason"));r.put("changes",a.sensitive()?payload.get("changes"):Map.of("notice","敏感变更内容仅字段授权人员可见"));r.put("before",a.sensitive()?JSONUtil.parseObj(clear(l.get("SNAPSHOT_CIPHER"))):Map.of());r.put("tasks",flow.tasks(str(l,"PROCESS_INSTANCE_ID")));r.put("history",flow.history(str(l,"PROCESS_INSTANCE_ID")));r.put("actions",db.queryForList("SELECT ID AS id,TASK_ID AS taskId,ACTION AS action,ACTOR_ID AS actorId,TARGET_ID AS targetId,COMMENT_CIPHER AS comment,CREATED_AT AS time FROM SRM_APPROVAL_ACTION WHERE APPROVAL_ID=? ORDER BY CREATED_AT,ID",aid).stream().map(m->{m.put("comment",clear(m.get("comment")));return m;}).toList());return r;}
+ public Map<String,Object> detail(SrmActor a,String aid){var l=link(aid,false);suppliers.supplier(a,str(l,"SUPPLIER_ID"),false);var r=new LinkedHashMap<String,Object>();for(String[] f:new String[][]{{"id","ID"},{"kind","BUSINESS_TYPE"},{"status","STATUS"},{"supplierId","SUPPLIER_ID"},{"requestedBy","REQUESTED_BY"},{"createdAt","CREATED_AT"}})r.put(f[0],l.get(f[1]));var payload=JSONUtil.parseObj(clear(l.get("PAYLOAD_CIPHER")));var supplierInfo=suppliers.supplier(a,str(l,"SUPPLIER_ID"),false);r.put("supplierName",supplierInfo.get("NAME"));r.put("supplierCategory",supplierInfo.get("CATEGORY"));r.put("reason",payload.getStr("reason"));r.put("changes",a.sensitive()?payload.get("changes"):Map.of("notice","敏感变更内容仅字段授权人员可见"));r.put("before",a.sensitive()?JSONUtil.parseObj(clear(l.get("SNAPSHOT_CIPHER"))):Map.of());r.put("tasks",flow.tasks(str(l,"PROCESS_INSTANCE_ID")));r.put("history",flow.history(str(l,"PROCESS_INSTANCE_ID")));r.put("actions",db.queryForList("SELECT ID AS id,TASK_ID AS taskId,ACTION AS action,ACTOR_ID AS actorId,TARGET_ID AS targetId,COMMENT_CIPHER AS comment,CREATED_AT AS time FROM SRM_APPROVAL_ACTION WHERE APPROVAL_ID=? ORDER BY CREATED_AT,ID",aid).stream().map(m->{m.put("comment",clear(m.get("comment")));return m;}).toList());return r;}
  @Transactional public Map<String,Object> decide(SrmActor a,String aid,String tid,Decision p){
   // Lock the aggregate before the link everywhere to prevent lock-order inversions.
   var first=link(aid,false);var s=suppliers.supplier(a,str(first,"SUPPLIER_ID"),true);var l=link(aid,true);require(str(l,"STATUS").equals("PENDING"),409,"申请已处理");
   var t=flow.task(tid);require(flow.tasks(str(l,"PROCESS_INSTANCE_ID")).stream().anyMatch(x->tid.equals(x.get("id"))),404,"任务不属于该申请");require(canTask(a,l,t),403,"无任务处理权限或不能审核本人申请");
   require(Set.of("CLAIM","APPROVE","REJECT","RETURN","TRANSFER","ADD_SIGN").contains(p.action()),400,"不支持的审批动作");
   boolean sub="ADD_SIGN".equals(t.get("node"));if(sub)require(p.action().equals("APPROVE")||p.action().equals("REJECT"),400,"加签任务仅支持同意或驳回");
+  boolean onboardingManager="ONBOARD".equals(l.get("BUSINESS_TYPE"))&&"manager".equals(t.get("node"))&&Set.of("APPROVE","REJECT").contains(p.action());
+  String actionComment=p.comment();
+  if(onboardingManager)actionComment=onboardingDecisionComment(p.action(),p.categoryNecessity(),p.performanceConclusion(),p.comment());
   if(Set.of("TRANSFER","ADD_SIGN").contains(p.action())){require(p.targetId()!=null&&!p.targetId().equals(a.userId())&&!p.targetId().equals(l.get("REQUESTED_BY")),400,"请选择其他审批人");require(eligible(l,role(t)).contains(p.targetId()),403,"接收人不具备当前组织、角色或数据权限");}
-  db.update("INSERT INTO SRM_APPROVAL_ACTION(ID,APPROVAL_ID,TASK_ID,ACTION,ACTOR_ID,TARGET_ID,COMMENT_CIPHER,CREATED_AT) VALUES(?,?,?,?,?,?,?,NOW(3))",id(),aid,tid,p.action(),a.userId(),p.targetId(),codec.encrypt(p.comment()));
+  db.update("INSERT INTO SRM_APPROVAL_ACTION(ID,APPROVAL_ID,TASK_ID,ACTION,ACTOR_ID,TARGET_ID,COMMENT_CIPHER,CREATED_AT) VALUES(?,?,?,?,?,?,?,NOW(3))",id(),aid,tid,p.action(),a.userId(),p.targetId(),codec.encrypt(actionComment));
   switch(p.action()){
    case "CLAIM" -> flow.claim(tid,a.userId());
    case "TRANSFER" -> {flow.transfer(tid,p.targetId());notifyTasks(l);}
