@@ -93,7 +93,7 @@ public class SrmWorkspaceService {
   String bank=p.bankAccount()==null?str(s,"BANK_ACCOUNT"):p.bankAccount().isBlank()?"":codec.encrypt(p.bankAccount());
   String bankName=p.bankName()==null?str(s,"BANK_NAME"):p.bankName(),address=p.address()==null?str(s,"ADDRESS"):p.address();
   boolean keyChanged=!p.name().trim().equals(str(s,"NAME"))||!p.category().equals(str(s,"CATEGORY"))||!bankName.equals(str(s,"BANK_NAME"))||!credit.equals(codec.decrypt(str(s,"CREDIT_CODE"))) || (p.bankAccount()!=null&&!p.bankAccount().equals(str(s,"BANK_ACCOUNT").isBlank()?"":codec.decrypt(str(s,"BANK_ACCOUNT"))));
-  require(!keyChanged||Set.of("POTENTIAL","CORRECTION").contains(str(s,"STATUS")),409,"已准入供应商关键字段变更请提交变更审批");
+  require(!keyChanged,409,"关键字段变更请提交变更审批");
   try{db.update("UPDATE SRM_SUPPLIER SET NAME=?,CATEGORY=?,ADDRESS=?,BANK_NAME=?,CREDIT_CODE=?,CREDIT_CODE_FINGERPRINT=?,BANK_ACCOUNT=?,UPDATE_TIME=NOW(),UPDATE_USER=?,ROW_VERSION=ROW_VERSION+1 WHERE ID=? AND ROW_VERSION=?",p.name().trim(),p.category(),address,bankName,codec.encrypt(credit),codec.creditFingerprint(str(s,"ORG_ID"),credit),bank.isBlank()?null:bank,a.userId(),sid,p.rowVersion());}
   catch(DuplicateKeyException e){throw new CommonException(409,"供应商编码已存在，或当前组织已存在此信用代码对应的供应商");}
   profileVersion(a,s,db.queryForMap("SELECT * FROM SRM_SUPPLIER WHERE ID=?",sid));
