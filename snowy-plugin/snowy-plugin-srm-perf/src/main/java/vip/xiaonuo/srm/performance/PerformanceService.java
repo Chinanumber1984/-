@@ -86,6 +86,9 @@ public class PerformanceService implements SrmPerformanceApi {
  }
  public Map<String,Object> detail(Context a,String cid){
   var c=rawScore(a,cid,false);var out=view(c);var s=access.requireSupplier(a,str(c,"SUPPLIER_ID"),false);out.put("supplierName",s.name());out.put("category",s.category());
+  var sourceRows=db.queryForList("SELECT ID AS id,REVISION AS revision,SOURCE_TYPE AS sourceType,SOURCE_REF AS sourceRef,SCORES AS scores,IMPORT_ID AS importId,CREATED_BY AS createdBy,CREATED_AT AS createdAt FROM SRM_PERF_INPUT WHERE ID=? AND SUPPLIER_ID=? AND PERIOD=?",c.get("INPUT_ID"),c.get("SUPPLIER_ID"),c.get("PERIOD"));
+  require(sourceRows.size()==1,409,"评分关联的来源输入记录不存在，不能显示数据来源追溯");var source=sourceRows.get(0);var evidence=new LinkedHashMap<String,Object>();
+  for(String key:List.of("id","revision","sourceType","sourceRef","createdAt"))evidence.put(key,source.get(key));evidence.put("scores",decimals(source.get("scores")));if(!a.portal()){evidence.put("importId",source.get("importId"));evidence.put("createdBy",source.get("createdBy"));}out.put("sourceEvidence",evidence);
   out.put("history",db.queryForList("SELECT REVISION AS revision,SNAPSHOT AS snapshot,CREATED_AT AS createdAt FROM SRM_PERF_SCORE_VERSION WHERE SCORE_ID=? ORDER BY REVISION DESC",cid).stream().map(r->{r.put("snapshot",object(r.get("snapshot")));return r;}).toList());
   out.put("appeals",db.queryForList("SELECT ID AS id,SCORE_VERSION AS scoreVersion,STATUS AS status,REASON AS reason,REVIEW_COMMENT AS reviewComment,CREATED_AT AS createdAt,REVIEWED_AT AS reviewedAt FROM SRM_PERF_APPEAL WHERE SCORE_ID=? ORDER BY CREATED_AT DESC",cid));return out;
  }
