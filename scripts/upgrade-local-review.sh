@@ -26,7 +26,7 @@ if [[ -f initialize-collaboration-sandbox.mjs ]]; then cp -a initialize-collabor
 sha256sum runtime/accounts.json runtime/backend.env runtime/compose.env runtime/99-accounts.sql > "$srm_backup/credential-hashes.txt"
 printf "CREATE TABLE IF NOT EXISTS SRM_REVIEW_MIGRATION (VERSION int PRIMARY KEY,CHECKSUM char(64) NOT NULL,STATUS varchar(16) NOT NULL,APPLIED_AT datetime(3) NULL);\n" | srm_sql
 declare -A srm_states srm_checksums srm_paths
-for srm_version in 6 7 8 9; do
+for srm_version in 6 7 8 9 10; do
  srm_candidates=("$srm_repo"/deploy/migrations/sql/V"$srm_version"__*.sql)
  [[ ${#srm_candidates[@]} == 1 && -f "${srm_candidates[0]}" ]] || { echo 'Missing or ambiguous migration.' >&2; exit 1; }
  srm_paths[$srm_version]=${srm_candidates[0]}
@@ -40,7 +40,7 @@ for srm_version in 6 7 8 9; do
  srm_states[$srm_version]=$srm_existing
  [[ -z "$srm_existing" || "$srm_existing" == "$srm_checksum:APPLIED" || "$srm_existing" == "$srm_checksum:STARTED" ]] || { echo 'Migration checksum conflict; application retained.' >&2; exit 1; }
  if [[ -z "$srm_existing" ]]; then
-  if [[ "$srm_version" == 6 ]]; then srm_table_list="'SRM_PERF_TEMPLATE','SRM_PERF_IMPORT','SRM_PERF_INPUT','SRM_SCORECARD','SRM_PERF_SCORE_VERSION','SRM_PERF_APPEAL'"; elif [[ "$srm_version" == 7 ]]; then srm_table_list="'SRM_SRC_RFQ','SRM_SRC_INVITE','SRM_SRC_QUOTE','SRM_SRC_BID','SRM_SRC_QUESTION','SRM_SRC_FILE','SRM_SRC_RISK','SRM_SRC_AWARD','SRM_SRC_AWARD_ACTION','SRM_SRC_NOTICE','SRM_SRC_EVENT'"; elif [[ "$srm_version" == 8 ]]; then srm_table_list="'SRM_COL_PO','SRM_XCH_CONNECTOR','SRM_COL_RECON','SRM_COL_INVOICE'"; else srm_table_list="'SRM_QL_CASE','SRM_QL_RISK','SRM_QL_INSPECTION'"; fi
+  if [[ "$srm_version" == 6 ]]; then srm_table_list="'SRM_PERF_TEMPLATE','SRM_PERF_IMPORT','SRM_PERF_INPUT','SRM_SCORECARD','SRM_PERF_SCORE_VERSION','SRM_PERF_APPEAL'"; elif [[ "$srm_version" == 7 ]]; then srm_table_list="'SRM_SRC_RFQ','SRM_SRC_INVITE','SRM_SRC_QUOTE','SRM_SRC_BID','SRM_SRC_QUESTION','SRM_SRC_FILE','SRM_SRC_RISK','SRM_SRC_AWARD','SRM_SRC_AWARD_ACTION','SRM_SRC_NOTICE','SRM_SRC_EVENT'"; elif [[ "$srm_version" == 8 ]]; then srm_table_list="'SRM_COL_PO','SRM_XCH_CONNECTOR','SRM_COL_RECON','SRM_COL_INVOICE'"; elif [[ "$srm_version" == 9 ]]; then srm_table_list="'SRM_QL_CASE','SRM_QL_RISK','SRM_QL_INSPECTION'"; else srm_table_list="'SRM_WORKFLOW_CATEGORY_MAP'"; fi
   srm_tables=$(printf "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='snowy' AND TABLE_NAME IN (%s);\n" "$srm_table_list" | srm_sql)
   [[ "$srm_tables" == 0 ]] || { echo 'Unknown existing schema retained; manual migration review required.' >&2; exit 1; }
  fi
@@ -59,7 +59,7 @@ srm_restore(){
  bash start.sh > "$srm_backup/restore.log" 2>&1 || true
 }
 trap srm_restore ERR
-for srm_version in 6 7 8 9; do
+for srm_version in 6 7 8 9 10; do
  srm_checksum=${srm_checksums[$srm_version]}
  if [[ "${srm_states[$srm_version]}" != "$srm_checksum:APPLIED" ]]; then
   printf "INSERT IGNORE INTO SRM_REVIEW_MIGRATION VALUES(%s,'%s','STARTED',NULL);\n" "$srm_version" "$srm_checksum" | srm_sql

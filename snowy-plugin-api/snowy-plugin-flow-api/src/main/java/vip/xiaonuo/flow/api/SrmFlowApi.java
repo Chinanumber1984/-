@@ -13,8 +13,9 @@ public interface SrmFlowApi {
  boolean ended(String processId);
  List<Map<String,Object>> history(String processId);
  List<Map<String,Object>> definitions();
- String publish(String kind);
- String publishXml(String kind,String xml);
+ String publish(String kind,String categoryCode);
+ String publishXml(String kind,String categoryCode,String xml);
+ void updateCategory(String kind,String categoryCode);
  String exportXml(String definitionId);
  void suspend(String definitionId,boolean suspended);
 }
